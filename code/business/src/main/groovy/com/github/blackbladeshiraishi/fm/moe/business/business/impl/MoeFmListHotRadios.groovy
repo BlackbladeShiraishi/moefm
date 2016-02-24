@@ -3,6 +3,8 @@ package com.github.blackbladeshiraishi.fm.moe.business.business.impl
 import com.github.blackbladeshiraishi.fm.moe.business.business.ListHotRadios
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import groovy.json.JsonSlurper
+import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -23,6 +25,8 @@ class MoeFmListHotRadios implements ListHotRadios {
         return parseText(response.body().string())
     }
 
+    // ↓ for access of JsonSlurper().parseText()
+    @TypeChecked(TypeCheckingMode.SKIP)
     private List<Radio> parseText(String body) {
         List<Radio> result = []
         def obj = new JsonSlurper().parseText(body)
