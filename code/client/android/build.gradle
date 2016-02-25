@@ -31,6 +31,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
     lintOptions {
         // TODO remove this when https://issues.apache.org/jira/browse/GROOVY-7296 resolved
         // groovy runtime library have some references to invalid package on Android
