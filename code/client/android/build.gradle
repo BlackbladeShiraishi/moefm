@@ -12,6 +12,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'groovyx.grooid.groovy-android'
 
 android {
     compileSdkVersion 23
@@ -21,8 +22,8 @@ android {
         applicationId "com.github.blackbladeshiraishi.fm.moe.client.android"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode version.versionCode
+        versionName version.versionName
     }
     buildTypes {
         release {
@@ -30,10 +31,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        // TODO remove this when https://issues.apache.org/jira/browse/GROOVY-7296 resolved
+        // groovy runtime library have some references to invalid package on Android
+        warning 'InvalidPackage'
+    }
+}
+
+androidGroovy {
+    options {
+        configure(groovyOptions) {
+            encoding = 'UTF-8'
+            configurationScript = file "$rootDir/config/groovy/compiler-config.groovy"
+        }
+        sourceCompatibility = '1.7'
+        targetCompatibility = '1.7'
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+    compile 'org.codehaus.groovy:groovy:2.4.6:grooid'
+    compile (project(':business:impl-moefm')) {
+        // use the 'grooid' classifier of groovy library as above
+        exclude group: 'org.codehaus.groovy', module: 'groovy'
+    }
     compile 'com.android.support:appcompat-v7:23.2.0'
+    testCompile 'junit:junit:4.12'
 }
