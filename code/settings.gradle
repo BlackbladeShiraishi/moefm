@@ -9,4 +9,4 @@ rootProject.name = 'moefm'
 
 include ':domain'
 include ':business:interface'
-include ':business:impl:moefm'
+include ':business:impl-moefm'

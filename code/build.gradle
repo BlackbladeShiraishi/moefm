@@ -5,7 +5,7 @@ javaSubprojects << ':business:interface'
 
 def groovySubprojects = []
 groovySubprojects << ':domain'
-groovySubprojects << ':business:impl:moefm'
+groovySubprojects << ':business:impl-moefm'
 
 javaSubprojects.each { projectPath ->
     project(projectPath) {
