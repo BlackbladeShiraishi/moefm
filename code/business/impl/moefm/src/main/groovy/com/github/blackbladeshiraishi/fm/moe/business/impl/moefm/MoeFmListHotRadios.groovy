@@ -1,4 +1,4 @@
-package com.github.blackbladeshiraishi.fm.moe.business.business.impl
+package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm
 
 import com.github.blackbladeshiraishi.fm.moe.business.business.ListHotRadios
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio

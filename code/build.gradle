@@ -1,15 +1,33 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 def javaSubprojects = []
+javaSubprojects << ':business:interface'
 
 def groovySubprojects = []
 groovySubprojects << ':domain'
-groovySubprojects << ':business'
+groovySubprojects << ':business:impl:moefm'
+
+javaSubprojects.each { projectPath ->
+    project(projectPath) {
+        apply plugin: 'java'
+    }
+}
+
+groovySubprojects.each { projectPath ->
+    project(projectPath) {
+
+        apply plugin: 'groovy'
+
+        dependencies {
+            compile 'org.codehaus.groovy:groovy:2.4.6:indy'
+        }
+
+    }
+}
 
 (javaSubprojects + groovySubprojects).each { projectPath ->
     project(projectPath) {
 
-        apply plugin: 'java'
         apply plugin: 'checkstyle'
         apply plugin: 'pmd'
         apply plugin: 'findbugs'
@@ -32,18 +50,6 @@ groovySubprojects << ':business'
 
         findbugs {
             excludeFilter = rootProject.file 'config/findbugs/excludeFilter.xml'
-        }
-
-    }
-}
-
-groovySubprojects.each { projectPath ->
-    project(projectPath) {
-
-        apply plugin: 'groovy'
-
-        dependencies {
-            compile 'org.codehaus.groovy:groovy:2.4.6:indy'
         }
 
     }
