@@ -59,6 +59,22 @@ dependencies {
         // use the 'grooid' classifier of groovy library as above
         exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
+
     compile 'com.android.support:appcompat-v7:23.2.0'
+
     testCompile 'junit:junit:4.12'
+}
+
+
+// for VectorDrawable support library when use Android Plugin for Gradle *1.5.0 or lower*
+// see http://developer.android.com/tools/support-library/index.html
+android {
+    defaultConfig {
+        // Stops the Gradle’s automatic rasterization of vectors
+        //generatedDensities = [] // 1.3.1 doesn't has this feature
+    }
+    // Flag that tells aapt to keep the attribute ids
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
 }
