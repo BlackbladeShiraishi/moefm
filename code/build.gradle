@@ -19,7 +19,7 @@ groovySubprojects.each { projectPath ->
         apply plugin: 'groovy'
 
         dependencies {
-            compile 'org.codehaus.groovy:groovy:2.4.6:indy'
+            compile 'org.codehaus.groovy:groovy:2.4.6'
         }
 
     }
