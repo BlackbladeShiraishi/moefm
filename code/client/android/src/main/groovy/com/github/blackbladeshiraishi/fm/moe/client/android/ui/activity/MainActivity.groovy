@@ -2,6 +2,11 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.MoeFms
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
@@ -13,13 +18,17 @@ import rx.schedulers.Schedulers
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView mainTextView
+    HotRadiosAdapter hotRadiosAdapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mainTextView = findViewById(R.id.main_text) as TextView
+        hotRadiosAdapter = new HotRadiosAdapter()
+        (findViewById(R.id.hot_radios_list) as RecyclerView).with {
+            adapter = hotRadiosAdapter
+            layoutManager = new LinearLayoutManager(this)
+        }
     }
 
     @Override
@@ -48,10 +57,49 @@ public class MainActivity extends AppCompatActivity {
     private void test(String apiKey) {
         getHostRadiosObservable(apiKey)
                 .subscribeOn(Schedulers.io())
-                .map { it.with { "\nid: $id, title:$title" as String } }
-                .concatWith(Observable.just('\n--- radio over ---'))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ mainTextView.append it }, { mainTextView.append "\n--- $it ---" })
+                .subscribe { Radio radio ->
+                    hotRadiosAdapter.with {
+                        radios << radio
+                        notifyItemInserted(radios.size() - 1)
+                    }
+                }
     }
 
+    private static class HotRadiosViewHolder extends RecyclerView.ViewHolder {
+
+        TextView title
+
+        HotRadiosViewHolder(View itemView) {
+            super(itemView)
+            title = itemView as TextView
+        }
+    }
+
+    private static class HotRadiosAdapter extends RecyclerView.Adapter<HotRadiosViewHolder> {
+
+        List<Radio> radios = []
+
+        @Override
+        HotRadiosViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            def rootView = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.list_item_hot_radio, parent, false)
+            return new HotRadiosViewHolder(rootView)
+        }
+
+        @Override
+        void onBindViewHolder(HotRadiosViewHolder holder, int position) {
+            holder.title.text = radios[position].title
+        }
+
+        @Override
+        int getItemCount() {
+            return radios.size()
+        }
+
+        @Override
+        long getItemId(int position) {
+            return radios[position].id
+        }
+    }
 }
