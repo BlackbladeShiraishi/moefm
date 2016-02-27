@@ -18,88 +18,88 @@ import rx.schedulers.Schedulers
 
 public class MainActivity extends AppCompatActivity {
 
-    HotRadiosAdapter hotRadiosAdapter
+  HotRadiosAdapter hotRadiosAdapter
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+    hotRadiosAdapter = new HotRadiosAdapter()
+    (findViewById(R.id.hot_radios_list) as RecyclerView).with {
+      adapter = hotRadiosAdapter
+      layoutManager = new LinearLayoutManager(this)
+    }
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart()
+    test(getString(R.string.moefm_api_key))
+  }
+
+  private static List<Radio> getHotRadios(String apiKey) {
+    MoeFms.listHotRadios(MoeFms.newRetrofit(), apiKey)
+  }
+
+  private static Observable<Radio> getHostRadiosObservable(String apiKey) {
+    Observable
+        .create({Observer<List<Radio>> subscriber ->
+          try {
+            subscriber.onNext(getHotRadios(apiKey))
+            subscriber.onCompleted()
+          } catch (Throwable e) {
+            subscriber.onError(e)
+          }
+        } as Observable.OnSubscribe<List<Radio>>)
+        .flatMap {Observable.from it}
+  }
+
+  private void test(String apiKey) {
+    getHostRadiosObservable(apiKey)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {Radio radio ->
+          hotRadiosAdapter.with {
+            radios << radio
+            notifyItemInserted(radios.size() - 1)
+          }
+        }
+  }
+
+  private static class HotRadiosViewHolder extends RecyclerView.ViewHolder {
+
+    TextView title
+
+    HotRadiosViewHolder(View itemView) {
+      super(itemView)
+      title = itemView as TextView
+    }
+  }
+
+  private static class HotRadiosAdapter extends RecyclerView.Adapter<HotRadiosViewHolder> {
+
+    List<Radio> radios = []
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        hotRadiosAdapter = new HotRadiosAdapter()
-        (findViewById(R.id.hot_radios_list) as RecyclerView).with {
-            adapter = hotRadiosAdapter
-            layoutManager = new LinearLayoutManager(this)
-        }
+    HotRadiosViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+      def rootView = LayoutInflater.from(parent.context)
+          .inflate(R.layout.list_item_hot_radio, parent, false)
+      return new HotRadiosViewHolder(rootView)
     }
 
     @Override
-    protected void onStart() {
-        super.onStart()
-        test(getString(R.string.moefm_api_key))
+    void onBindViewHolder(HotRadiosViewHolder holder, int position) {
+      holder.title.text = radios[position].title
     }
 
-    private static List<Radio> getHotRadios(String apiKey) {
-        MoeFms.listHotRadios(MoeFms.newRetrofit(), apiKey)
+    @Override
+    int getItemCount() {
+      return radios.size()
     }
 
-    private static Observable<Radio> getHostRadiosObservable(String apiKey) {
-        Observable
-                .create({ Observer<List<Radio>> subscriber ->
-                    try {
-                        subscriber.onNext(getHotRadios(apiKey))
-                        subscriber.onCompleted()
-                    } catch (Throwable e) {
-                        subscriber.onError(e)
-                    }
-                } as Observable.OnSubscribe<List<Radio>>)
-                .flatMap { Observable.from it }
+    @Override
+    long getItemId(int position) {
+      return radios[position].id
     }
-
-    private void test(String apiKey) {
-        getHostRadiosObservable(apiKey)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { Radio radio ->
-                    hotRadiosAdapter.with {
-                        radios << radio
-                        notifyItemInserted(radios.size() - 1)
-                    }
-                }
-    }
-
-    private static class HotRadiosViewHolder extends RecyclerView.ViewHolder {
-
-        TextView title
-
-        HotRadiosViewHolder(View itemView) {
-            super(itemView)
-            title = itemView as TextView
-        }
-    }
-
-    private static class HotRadiosAdapter extends RecyclerView.Adapter<HotRadiosViewHolder> {
-
-        List<Radio> radios = []
-
-        @Override
-        HotRadiosViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            def rootView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.list_item_hot_radio, parent, false)
-            return new HotRadiosViewHolder(rootView)
-        }
-
-        @Override
-        void onBindViewHolder(HotRadiosViewHolder holder, int position) {
-            holder.title.text = radios[position].title
-        }
-
-        @Override
-        int getItemCount() {
-            return radios.size()
-        }
-
-        @Override
-        long getItemId(int position) {
-            return radios[position].id
-        }
-    }
+  }
 }

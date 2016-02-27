@@ -5,14 +5,14 @@ import retrofit2.Retrofit
 
 class MoeFms {
 
-    static Retrofit newRetrofit() {
-        new Retrofit.Builder()
-                .baseUrl("http://moe.fm")
-                .build();
-    }
+  static Retrofit newRetrofit() {
+    new Retrofit.Builder()
+        .baseUrl("http://moe.fm")
+        .build();
+  }
 
-    static List<Radio> listHotRadios(Retrofit retrofit, String apiKey) {
-        new MoeFmListHotRadios(retrofit: retrofit, apiKey: apiKey).execute()
-    }
+  static List<Radio> listHotRadios(Retrofit retrofit, String apiKey) {
+    new MoeFmListHotRadios(retrofit: retrofit, apiKey: apiKey).execute()
+  }
 
 }

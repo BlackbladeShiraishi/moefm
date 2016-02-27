@@ -13,36 +13,36 @@ import retrofit2.http.Query
 
 class MoeFmListHotRadios implements ListHotRadios {
 
-    String apiKey
+  String apiKey
 
-    Retrofit retrofit
+  Retrofit retrofit
 
-    @Override
-    List<Radio> execute() {
-        MoeFmService service = retrofit.create(MoeFmService);
+  @Override
+  List<Radio> execute() {
+    MoeFmService service = retrofit.create(MoeFmService);
 
-        def response = service.listHotRadios(apiKey).execute()
-        return parseText(response.body().string())
+    def response = service.listHotRadios(apiKey).execute()
+    return parseText(response.body().string())
+  }
+
+  // ↓ for access of JsonSlurper().parseText()
+  @TypeChecked(TypeCheckingMode.SKIP)
+  private List<Radio> parseText(String body) {
+    List<Radio> result = []
+    def obj = new JsonSlurper().parseText(body)
+    obj.response.hot_radios.each {rawRadio ->
+      def radio = new Radio()
+      radio.id = rawRadio.wiki_id
+      radio.title = rawRadio.wiki_title
+      result << radio
     }
+    return result
+  }
 
-    // ↓ for access of JsonSlurper().parseText()
-    @TypeChecked(TypeCheckingMode.SKIP)
-    private List<Radio> parseText(String body) {
-        List<Radio> result = []
-        def obj = new JsonSlurper().parseText(body)
-        obj.response.hot_radios.each { rawRadio ->
-            def radio = new Radio()
-            radio.id = rawRadio.wiki_id
-            radio.title = rawRadio.wiki_title
-            result << radio
-        }
-        return result
-    }
-
-    public static interface MoeFmService {
-        //http://moe.fm/explore?api=json&hot_radios=1&api_key={api_key}
-        @GET('explore?api=json&hot_radios=1')
-        Call<ResponseBody> listHotRadios(@Query('api_key') String apiKey);
-    }
+  public static interface MoeFmService {
+    //http://moe.fm/explore?api=json&hot_radios=1&api_key={api_key}
+    @GET('explore?api=json&hot_radios=1')
+    Call<ResponseBody> listHotRadios(@Query('api_key') String apiKey);
+  }
 
 }

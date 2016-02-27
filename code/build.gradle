@@ -7,116 +7,123 @@ def groovySubprojects = []
 groovySubprojects << ':domain'
 groovySubprojects << ':business:impl-moefm'
 
-javaSubprojects.each { projectPath ->
-    project(projectPath) {
-        apply plugin: 'java'
-    }
+javaSubprojects.each {projectPath ->
+  project(projectPath) {
+    apply plugin: 'java'
+  }
 }
 
-groovySubprojects.each { projectPath ->
-    project(projectPath) {
+groovySubprojects.each {projectPath ->
+  project(projectPath) {
 
-        apply plugin: 'groovy'
+    apply plugin: 'groovy'
 
-        dependencies {
-            compile 'org.codehaus.groovy:groovy:2.4.6'
-        }
-
+    dependencies {
+      compile 'org.codehaus.groovy:groovy:2.4.6'
     }
+
+  }
 }
 
-(javaSubprojects + groovySubprojects).each { projectPath ->
-    project(projectPath) {
+(javaSubprojects + groovySubprojects).each {projectPath ->
+  project(projectPath) {
 
-        apply plugin: 'checkstyle'
-        apply plugin: 'pmd'
-        apply plugin: 'findbugs'
+    apply plugin: 'checkstyle'
+    apply plugin: 'pmd'
+    apply plugin: 'findbugs'
 
-        sourceCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_7
 
-        dependencies {
-            compile 'com.google.code.findbugs:jsr305:3.0.1'
-            testCompile 'junit:junit:4.12'
-        }
-
-        checkstyle {
-            //toolVersion = "6.2"
-            configFile = rootProject.file 'config/checkstyle/checkstyle.xml'
-        }
-
-        pmd {
-            ruleSets = ["java-basic", "java-braces"/*, "java-junit"*/]
-        }
-
-        findbugs {
-            excludeFilter = rootProject.file 'config/findbugs/excludeFilter.xml'
-        }
-
+    dependencies {
+      compile 'com.google.code.findbugs:jsr305:3.0.1'
+      testCompile 'junit:junit:4.12'
     }
+
+    checkstyle {
+      //toolVersion = "6.2"
+      configFile = rootProject.file 'config/checkstyle/checkstyle.xml'
+    }
+
+    pmd {
+      ruleSets = ["java-basic", "java-braces"/*, "java-junit"*/]
+    }
+
+    findbugs {
+      excludeFilter = rootProject.file 'config/findbugs/excludeFilter.xml'
+    }
+
+  }
 }
 
 
 allprojects {
-    group = 'com.github.blackbladeshiraishi.fm.moe'
-    version = new Version('0.1.0-SNAPSHOT')
-    status = version.status
+  group = 'com.github.blackbladeshiraishi.fm.moe'
+  version = new Version('0.1.0-SNAPSHOT')
+  status = version.status
 
-    repositories {
-        jcenter()
-        mavenCentral()
-        maven { url "http://maven.oschina.net/content/groups/public/" }
-    }
+  repositories {
+    jcenter()
+    mavenCentral()
+    maven {url "http://maven.oschina.net/content/groups/public/"}
+  }
 
-    tasks.findAll{ task -> [JavaCompile, Javadoc, GroovyCompile/*, Groovydoc*/].any{it.isInstance(task)} }.each{ task ->
-        task.options.encoding = 'UTF-8'
-    }
+  tasks.findAll {
+    task -> [JavaCompile, Javadoc, GroovyCompile/*, Groovydoc*/].any {it.isInstance(task)}
+  }.each {task ->
+    task.options.encoding = 'UTF-8'
+  }
 
-    tasks.withType(GroovyCompile) { task ->
-        task.groovyOptions.with {
-            configurationScript = file "$rootDir/config/groovy/compiler-config.groovy"
-            //optimizationOptions.indy = true
-        }
+  tasks.withType(GroovyCompile) {task ->
+    task.groovyOptions.with {
+      configurationScript = file "$rootDir/config/groovy/compiler-config.groovy"
+      //optimizationOptions.indy = true
     }
+  }
 
 }
 
 task clean(type: Delete) {
-    delete rootProject.buildDir
+  delete rootProject.buildDir
 }
 
-
 import java.text.SimpleDateFormat
+
 class Version {
-    String originalVersion
-    String versionName
-    int versionCode
-    String status
-    Date buildTime
-    Version(String versionValue) {
-        if (versionValue =~ /\d{2,}/) {
-            throw new GradleException("versionValue(${versionValue}) contains number more than 9.")
-        }
-        buildTime = new Date()
-        originalVersion = versionValue
-        String originalVersionCodeString;
-        if (originalVersion.endsWith('-SNAPSHOT')) {
-            status = 'integration'
-            originalVersionCodeString = originalVersion.substring(0, originalVersion.length() - '-SNAPSHOT'.length())
-            versionName = originalVersionCodeString + '-' + getTimestamp()
-        } else {
-            status = 'release'
-            versionName = versionValue
-            originalVersionCodeString = versionValue
-        }
-        versionCode = originalVersionCodeString.replace('.', '').toInteger();
+
+  String originalVersion
+  String versionName
+  int versionCode
+  String status
+  Date buildTime
+
+  Version(String versionValue) {
+    if (versionValue =~ /\d{2,}/) {
+      throw new GradleException("versionValue(${versionValue}) contains number more than 9.")
     }
-    String getTimestamp() {
-        // Convert local file timestamp to UTC
-        def format = new SimpleDateFormat('yyyyMMddHHmmss')
-        format.setCalendar(Calendar.getInstance(TimeZone.getTimeZone('UTC')));
-        return format.format(buildTime)
+    buildTime = new Date()
+    originalVersion = versionValue
+    String originalVersionCodeString;
+    if (originalVersion.endsWith('-SNAPSHOT')) {
+      status = 'integration'
+      originalVersionCodeString = originalVersion.
+          substring(0, originalVersion.length() - '-SNAPSHOT'.length())
+      versionName = originalVersionCodeString + '-' + getTimestamp()
+    } else {
+      status = 'release'
+      versionName = versionValue
+      originalVersionCodeString = versionValue
     }
-    String toString() {
-        versionName
-    }
+    versionCode = originalVersionCodeString.replace('.', '').toInteger();
+  }
+
+  String getTimestamp() {
+    // Convert local file timestamp to UTC
+    def format = new SimpleDateFormat('yyyyMMddHHmmss')
+    format.setCalendar(Calendar.getInstance(TimeZone.getTimeZone('UTC')));
+    return format.format(buildTime)
+  }
+
+  String toString() {
+    versionName
+  }
 }
