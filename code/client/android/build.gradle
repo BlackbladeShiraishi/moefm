@@ -63,7 +63,7 @@ androidGroovy {
 
 dependencies {
   compile 'org.codehaus.groovy:groovy:2.4.6:grooid'
-  compile(project(':business:impl-moefm')) {
+  compile(project(':facade')) {
     // use the 'grooid' classifier of groovy library as above
     exclude group: 'org.codehaus.groovy', module: 'groovy'
   }
