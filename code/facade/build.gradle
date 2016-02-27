@@ -1,3 +1,9 @@
 dependencies {
   compile project(':business:impl-moefm')
+  compile 'io.reactivex:rxjava:1.1.0'
+  /*//bug see https://github.com/ReactiveX/RxGroovy/issues/7
+  compile ('io.reactivex:rxgroovy:1.0.3') {
+      // use the 'grooid' classifier of groovy library as above
+      exclude group: 'org.codehaus.groovy', module: 'groovy-all'
+  }*/
 }
