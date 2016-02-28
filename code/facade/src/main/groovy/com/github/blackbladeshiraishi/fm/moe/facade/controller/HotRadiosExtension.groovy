@@ -20,7 +20,7 @@ class HotRadiosExtension {
   /**
    * suggest {@link Observable#subscribeOn(rx.Scheduler) .subscribe(Schedulers.io())}
    */
-  Observable<Radio> hotRadios() {
+  Observable<List<Radio>> hotRadios() {
     return Observable.create({Subscriber<List<Radio>> subscriber ->
       try {
         def result = getHotRadios()
@@ -32,7 +32,6 @@ class HotRadiosExtension {
         subscriber.onError(e)
       }
     } as Observable.OnSubscribe<List<Radio>>)
-    .flatMap {Observable.from it}
   }
 
   synchronized private List<Radio> getHotRadios() {
