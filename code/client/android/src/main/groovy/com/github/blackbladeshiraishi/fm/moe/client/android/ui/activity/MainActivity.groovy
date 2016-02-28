@@ -8,12 +8,9 @@ import android.os.IBinder
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import com.github.blackbladeshiraishi.fm.moe.client.android.service.ControllerService
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter.RadiosAdapter
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import com.github.blackbladeshiraishi.fm.moe.facade.controller.Controller
 import rx.android.schedulers.AndroidSchedulers
@@ -55,43 +52,6 @@ public class MainActivity extends AppCompatActivity {
     super.onStop()
   }
 
-
-  private static class RadiosViewHolder extends RecyclerView.ViewHolder {
-
-    TextView title
-
-    RadiosViewHolder(View itemView) {
-      super(itemView)
-      title = itemView as TextView
-    }
-  }
-
-  private static class RadiosAdapter extends RecyclerView.Adapter<RadiosViewHolder> {
-
-    List<Radio> radios = []
-
-    @Override
-    RadiosViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-      def rootView = LayoutInflater.from(parent.context)
-          .inflate(R.layout.list_item_hot_radio, parent, false)
-      return new RadiosViewHolder(rootView)
-    }
-
-    @Override
-    void onBindViewHolder(RadiosViewHolder holder, int position) {
-      holder.title.text = radios[position].title
-    }
-
-    @Override
-    int getItemCount() {
-      return radios.size()
-    }
-
-    @Override
-    long getItemId(int position) {
-      return radios[position].id
-    }
-  }
 
   private class ControllerServiceConnection implements ServiceConnection {
 

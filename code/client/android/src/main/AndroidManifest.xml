@@ -18,8 +18,7 @@
         </activity>
         <service
                 android:name=".service.ControllerService"
-                android:exported="false"
-        />
+                android:exported="false"/>
     </application>
 
 </manifest>
