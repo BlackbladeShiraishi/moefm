@@ -11,9 +11,6 @@ import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-import javax.inject.Singleton
-
-@Singleton
 class MoeFmListHotRadios implements ListHotRadios {
 
   String apiKey

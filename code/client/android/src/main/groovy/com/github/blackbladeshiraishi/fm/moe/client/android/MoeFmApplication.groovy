@@ -2,7 +2,8 @@ package com.github.blackbladeshiraishi.fm.moe.client.android
 
 import android.app.Application
 import android.content.Context
-import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.inject.MoeFmModule
+import com.github.blackbladeshiraishi.fm.moe.client.android.inject.AppComponent
+import com.github.blackbladeshiraishi.fm.moe.client.android.inject.MoeFmModule
 
 class MoeFmApplication extends Application {
 

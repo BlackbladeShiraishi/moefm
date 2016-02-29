@@ -1,4 +1,4 @@
-package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.inject;
+package com.github.blackbladeshiraishi.fm.moe.client.android.inject;
 
 import com.github.blackbladeshiraishi.fm.moe.business.business.ListHotRadios;
 import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.MoeFms;
