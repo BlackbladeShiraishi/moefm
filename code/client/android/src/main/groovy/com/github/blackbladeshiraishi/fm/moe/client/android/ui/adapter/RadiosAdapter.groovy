@@ -38,9 +38,9 @@ class RadiosAdapter extends RecyclerView.Adapter<RadiosViewHolder> {
     return radios[position].id
   }
 
-  private static class RadiosViewHolder extends RecyclerView.ViewHolder {
+  static class RadiosViewHolder extends RecyclerView.ViewHolder {
 
-    TextView title
+    private TextView title
 
     RadiosViewHolder(View itemView) {
       super(itemView)
