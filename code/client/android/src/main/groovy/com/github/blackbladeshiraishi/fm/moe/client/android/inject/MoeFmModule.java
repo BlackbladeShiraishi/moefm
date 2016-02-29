@@ -2,6 +2,8 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.inject;
 
 import com.github.blackbladeshiraishi.fm.moe.business.business.RadioService;
 import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.MoeFms;
+import com.github.blackbladeshiraishi.fm.moe.client.android.inject.qualifier.MoeFm;
+import com.github.blackbladeshiraishi.fm.moe.client.android.inject.qualifier.MoeFou;
 
 import javax.inject.Singleton;
 
@@ -19,8 +21,16 @@ public class MoeFmModule {
   }
 
   @Provides
+  @MoeFm
   @Singleton
-  RadioService privideRadioService(Retrofit retrofit) {
+  RadioService privideMoeFmRadioService(@MoeFm Retrofit retrofit) {
+    return MoeFms.newMoeFmRadioService(retrofit, apiKey);
+  }
+
+  @Provides
+  @MoeFou
+  @Singleton
+  RadioService privideMoeFouRadioService(@MoeFou Retrofit retrofit) {
     return MoeFms.newMoeFmRadioService(retrofit, apiKey);
   }
 

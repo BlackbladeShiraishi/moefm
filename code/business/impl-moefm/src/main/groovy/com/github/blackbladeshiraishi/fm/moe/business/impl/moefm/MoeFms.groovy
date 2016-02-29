@@ -5,7 +5,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 
 class MoeFms {
 
-  static Retrofit newRetrofit() {
+  static Retrofit newMoeFmRetrofit() {
     new Retrofit.Builder()
         .baseUrl("http://moe.fm/")
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

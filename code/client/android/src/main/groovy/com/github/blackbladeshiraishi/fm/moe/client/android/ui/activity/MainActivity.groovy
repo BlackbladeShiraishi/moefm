@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
       layoutManager = new LinearLayoutManager(this)
     }
 
-    MoeFmApplication.get(this).appComponent.radioService.hotRadios()
+    MoeFmApplication.get(this).appComponent.moeFmRadioService.hotRadios()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {Radio hotRadio ->
