@@ -2,7 +2,9 @@ package com.github.blackbladeshiraishi.fm.moe.client.android
 
 import android.app.Application
 import android.content.Context
+import com.frogermcs.dagger2metrics.Dagger2Metrics;
 import com.github.blackbladeshiraishi.fm.moe.client.android.inject.AppComponent
+import com.github.blackbladeshiraishi.fm.moe.client.android.inject.DaggerAppComponent
 import com.github.blackbladeshiraishi.fm.moe.client.android.inject.MoeFmModule
 
 class MoeFmApplication extends Application {
@@ -16,9 +18,9 @@ class MoeFmApplication extends Application {
   @Override
   void onCreate() {
     super.onCreate()
-//    if (BuildConfig.DEBUG) {
-//      Dagger2Metrics.enableCapturing(this);
-//    }
+    if (BuildConfig.DEBUG) {
+      Dagger2Metrics.enableCapturing(this);
+    }
 
     init();
   }
