@@ -8,10 +8,7 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter.RadiosAdapter
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
-import rx.Observable
-import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
-import rx.functions.Action1
 import rx.schedulers.Schedulers
 
 public class MainActivity extends AppCompatActivity {
@@ -27,31 +24,15 @@ public class MainActivity extends AppCompatActivity {
       layoutManager = new LinearLayoutManager(this)
     }
 
-    final def listHotRadios = MoeFmApplication.get(this).appComponent.listHotRadios
-    Observable
-        .create({Subscriber<List<Radio>> subscriber ->
-          try {
-            def result = listHotRadios.execute()
-            if (!subscriber.unsubscribed) {
-              subscriber.onNext(result)
-              subscriber.onCompleted()
-            }
-          } catch (Throwable e) {
-            subscriber.onError(e)
-          }
-        } as Observable.OnSubscribe<List<Radio>>)
+    MoeFmApplication.get(this).appComponent.radioService.hotRadios()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<List<Radio>>() {
-          @Override
-          void call(List<Radio> hotRadios) {
-            hotRadiosAdapter.with {
-              radios.clear()
-              radios.addAll(hotRadios)
-              notifyDataSetChanged()
-            }
+        .subscribe {Radio hotRadio ->
+          hotRadiosAdapter.with {
+            radios.add(hotRadio)
+            notifyItemInserted(radios.size() - 1)
           }
-        })
+        }
   }
 
 }
