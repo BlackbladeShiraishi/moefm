@@ -7,7 +7,14 @@ class MoeFms {
 
   static Retrofit newRetrofit() {
     new Retrofit.Builder()
-        .baseUrl("http://moe.fm")
+        .baseUrl("http://moe.fm/")
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .build();
+  }
+
+  static Retrofit mewMoeFouRetrofit() {
+    new Retrofit.Builder()
+        .baseUrl("https://api.moefou.org/")
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .build();
   }

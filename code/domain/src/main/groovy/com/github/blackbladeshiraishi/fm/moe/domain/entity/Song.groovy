@@ -4,4 +4,11 @@ class Song {
 
   long id
   String title
+  List<File> files
+
+  static class File {
+    String quality
+    String url
+  }
+
 }
