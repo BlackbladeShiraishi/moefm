@@ -50,7 +50,7 @@ public class RadioActivity extends AppCompatActivity {
       layoutManager = new LinearLayoutManager(this)
     }
 
-    MoeFmApplication.get(this).appComponent.moeFouRadioService.radioSongs(radio)
+    MoeFmApplication.get(this).appComponent.radioService.radioSongs(radio)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {Song song ->

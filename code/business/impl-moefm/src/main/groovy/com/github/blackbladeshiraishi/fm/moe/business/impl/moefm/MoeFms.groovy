@@ -19,8 +19,14 @@ class MoeFms {
         .build();
   }
 
-  static MoeFmRadioService newMoeFmRadioService(Retrofit retrofit, String apiKey) {
-    new MoeFmRadioService(retrofit, apiKey)
+  static MoeFmRadioService newMoeFmRadioService(
+      Retrofit moeFmRetrofit, Retrofit moeFouRetrofit, String apiKey) {
+    new MoeFmRadioService(
+        moeFmRetrofit.create(MoeFmService), moeFouRetrofit.create(MoeFouService), apiKey)
+  }
+
+  static MoeFmRadioService newMoeFmRadioService(String apiKey) {
+    newMoeFmRadioService(newMoeFmRetrofit(), mewMoeFouRetrofit(), apiKey)
   }
 
 }

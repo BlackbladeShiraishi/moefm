@@ -4,7 +4,6 @@ import com.github.blackbladeshiraishi.fm.moe.business.business.RadioService
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import groovy.json.JsonSlurper
-import retrofit2.Retrofit
 import rx.Observable
 
 import javax.annotation.Nonnull
@@ -17,10 +16,16 @@ class MoeFmRadioService implements RadioService {
 
   final MoeFmService moeFmService
 
-  MoeFmRadioService(@Nonnull final Retrofit retrofit, @Nonnull final String apiKey) {
+  final MoeFouService moeFouService
+
+  MoeFmRadioService(
+      @Nonnull final MoeFmService moeFmService,
+      @Nonnull final MoeFouService moeFouService,
+      @Nonnull final String apiKey) {
     assert apiKey != null
     this.apiKey = apiKey
-    moeFmService = retrofit.create(MoeFmService)
+    this.moeFmService = moeFmService
+    this.moeFouService = moeFouService
   }
 
   @Override
@@ -32,7 +37,7 @@ class MoeFmRadioService implements RadioService {
 
   @Override
   Observable<Song> radioSongs(Radio radio) {
-    return moeFmService.radioSongs(apiKey, radio.id)
+    return moeFouService.radioSongs(apiKey, radio.id)
         .map{jsonParser.parseRadioSongs(it.string())}
         .flatMap{Observable.from(it)}
   }
