@@ -11,6 +11,7 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -18,12 +19,20 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.activity.RadioActivity"/>
+
+        <activity android:name=".ui.activity.PlayListActivity"
+                  android:launchMode="singleTask"
+                  android:taskAffinity=""
+                  android:excludeFromRecents="true"
+                  android:label="@string/activity_title_play_list"/>
 
         <service
                 android:name=".service.MusicService"
                 android:enabled="true"
                 android:exported="true"/>
+
     </application>
 
 </manifest>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MoeFM</string>
+    <string name="activity_title_play_list">正在播放</string>
 </resources>

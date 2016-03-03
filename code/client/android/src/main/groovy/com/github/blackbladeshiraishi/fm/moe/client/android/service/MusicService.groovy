@@ -1,10 +1,14 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.service
 
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
+import android.support.v7.app.NotificationCompat
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication
+import com.github.blackbladeshiraishi.fm.moe.client.android.R
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.PlayListActivity
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 
 class MusicService extends Service {
@@ -28,6 +32,8 @@ class MusicService extends Service {
   void onCreate() {
     super.onCreate()
     MoeFmApplication.get(this).createPlaySongComponent()
+
+    setForegroundNotification()
   }
 
   @Override
@@ -59,6 +65,20 @@ class MusicService extends Service {
   @Override
   IBinder onBind(Intent intent) {
     return null
+  }
+
+  private void setForegroundNotification() {
+    def builder = new NotificationCompat.Builder(this)
+    builder.with {
+      style = new NotificationCompat.MediaStyle()
+      smallIcon = R.drawable.ic_play_arrow_white_24dp
+      contentTitle = "Playing"//TODO
+      contentText = "Playing Song"//TODO
+      def intent = PlayListActivity.buildIntent(this)
+      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK
+      contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+    startForeground(R.id.playing_songs, builder.build())
   }
 
 }
