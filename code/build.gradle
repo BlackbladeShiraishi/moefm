@@ -1,10 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 def javaSubprojects = []
-javaSubprojects << ':business:interface'
 
 def groovySubprojects = []
 groovySubprojects << ':domain'
+groovySubprojects << ':business:interface'
 groovySubprojects << ':business:impl-moefm'
 groovySubprojects << ':facade'
 
