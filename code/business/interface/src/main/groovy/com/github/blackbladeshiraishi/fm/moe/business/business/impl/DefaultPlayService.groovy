@@ -103,7 +103,18 @@ class DefaultPlayService implements PlayService {
       return
     }
     this.state = state
-    eventBus.onNext(new PlayService.StateChangeEvent(state, null, location))//TODO location,reason
+
+    def reason = null//TODO
+    def location = this.location//TODO location
+    def event
+    if (state == PlayService.State.Playing) {
+      event = new PlayService.PlayEvent(reason, location)
+    } else if (state == PlayService.State.Pausing) {
+      event = new PlayService.PauseEvent(reason, location)
+    } else {
+      event = new PlayService.StateChangeEvent(state, reason, location)
+    }
+    eventBus.onNext(event)
   }
 
   @Override
@@ -141,9 +152,14 @@ class DefaultPlayService implements PlayService {
     if (this.location == location) {
       return
     }
-    this.location = location
-    if (state == PlayService.State.Playing) {
+    def oldLocation = this.location
+    def playingWhenChangeLocation = state == PlayService.State.Playing
+    if (playingWhenChangeLocation) {
       pause()
+    }
+    this.location = location
+    eventBus.onNext(new PlayService.LocationChangeEvent(state, null, oldLocation, location))
+    if (playingWhenChangeLocation && !isPlayCompleted()) {
       play()
     }
   }
