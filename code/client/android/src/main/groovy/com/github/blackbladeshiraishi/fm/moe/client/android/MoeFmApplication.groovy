@@ -6,10 +6,16 @@ import com.frogermcs.dagger2metrics.Dagger2Metrics;
 import com.github.blackbladeshiraishi.fm.moe.client.android.inject.AppComponent
 import com.github.blackbladeshiraishi.fm.moe.client.android.inject.DaggerAppComponent
 import com.github.blackbladeshiraishi.fm.moe.client.android.inject.MoeFmModule
+import com.github.blackbladeshiraishi.fm.moe.client.android.inject.PlaySongComponent
+
+import javax.annotation.Nonnull
+import javax.annotation.Nullable
 
 class MoeFmApplication extends Application {
 
   private AppComponent appComponent
+
+  private PlaySongComponent playSongComponent
 
   static MoeFmApplication get(Context context) {
     context.getApplicationContext() as MoeFmApplication
@@ -33,6 +39,20 @@ class MoeFmApplication extends Application {
 
   AppComponent getAppComponent() {
     appComponent
+  }
+
+  @Nonnull
+  PlaySongComponent createPlaySongComponent() {
+    playSongComponent = appComponent.newPlaySongComponent()
+  }
+
+  void releasePlaySongComponent() {
+    playSongComponent = null
+  }
+
+  @Nullable
+  PlaySongComponent getPlaySongComponent() {
+    playSongComponent
   }
 
 }

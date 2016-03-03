@@ -14,4 +14,6 @@ public interface AppComponent {
 
   RadioService getRadioService();
 
+  PlaySongComponent newPlaySongComponent();
+
 }

@@ -31,10 +31,15 @@ public interface Player {
    */
   void unsetSong();
 
+  enum State {
+    PLAYING,
+    PAUSING
+  }
 
   enum Reason {
     PLAY_COMPlETED,
-    STOP_COMMAND
+    STOP_COMMAND,
+    EXCEPTION_NO_FILES
   }
 
   class Event {
@@ -71,6 +76,7 @@ public interface Player {
     }
   }
 
+  //TODO TickEvent Pool
   class TickEvent extends Event {
 
     public TickEvent(Song song, int duration, int position) {

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
+import com.github.blackbladeshiraishi.fm.moe.client.android.service.MusicService
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 
 class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
@@ -23,7 +24,8 @@ class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
   void onBindViewHolder(SongsViewHolder holder, int position) {
     holder.with {
       title.text = songs[position].title
-      //TODO
+      //TODO duplication?
+      title.onClickListener = {MusicService.playSong(title.context, songs[position])}//TODO posi
     }
   }
 
