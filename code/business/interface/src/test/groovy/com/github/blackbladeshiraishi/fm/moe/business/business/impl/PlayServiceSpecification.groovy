@@ -190,4 +190,221 @@ class PlayServiceSpecification extends Specification {
     player.counter == 9
   }
 
+  def "send events when play"() {
+    given:
+    def playList = new DefaultPlayList()
+    (0..2).each {
+      playList.add(new Song(id: it, title: "song $it"))
+    }
+    def player = new MockPlayer()
+    def playService = new DefaultPlayService(playList, player)
+    List<PlayService.Event> events = []
+    playService.eventBus().subscribe{ events << it}
+
+    assert events.isEmpty()
+    assert playService.state == PlayService.State.Pausing
+
+    when: "start play"
+    playService.play()
+    then:
+    playService.state == PlayService.State.Playing
+    events.size() == 1
+    events[0].with isPlayEvent(0)
+
+    when: "1st play completed"
+    player.playCompletedNow()
+    then:
+    events.size() == 4
+    events[1].with isPauseEvent(0)
+    events[2].with isLocationChangeEvent(0, 1)
+    events[3].with isPlayEvent(1)
+
+    when: "2ed play completed"
+    player.playCompletedNow()
+    then:
+    events.size() == 7
+    events[4].with isPauseEvent(1)
+    events[5].with isLocationChangeEvent(1, 2)
+    events[6].with isPlayEvent(2)
+
+    when: "3rd(last) play completed"
+    player.playCompletedNow()
+    then:
+    events.size() == 9
+    events[7].with isPauseEvent(2)
+    events[8].with isLocationChangeEvent(2, 3)
+
+    playService.location == 3
+    playService.state == PlayService.State.Pausing
+    player.counter == 3
+  }
+
+  def "change location when playing"() {
+    given:
+    def playList = new DefaultPlayList()
+    (0..2).each {
+      playList.add(new Song(id: it, title: "song $it"))
+    }
+    def player = new MockPlayer()
+    def playService = new DefaultPlayService(playList, player)
+    List<PlayService.Event> events = []
+    playService.eventBus().subscribe{ events << it}
+
+    assert events.isEmpty()
+    assert playService.state == PlayService.State.Pausing
+
+    when: "start play"
+    playService.play()
+    then:
+    playService.state == PlayService.State.Playing
+    events.size() == 1
+    events[0].with isPlayEvent(0)
+
+    when: "change location to 2"
+    playService.setLocation(2)
+    then:
+    playService.state == PlayService.State.Playing
+    events.size() == 4
+    events[1].with isPauseEvent(0)
+    events[2].with isLocationChangeEvent(0, 2)
+    events[3].with isPlayEvent(2)
+
+    when: "change back location 0"
+    playService.setLocation(0)
+    then:
+    playService.state == PlayService.State.Playing
+    events.size() == 7
+    events[4].with isPauseEvent(2)
+    events[5].with isLocationChangeEvent(2, 0)
+    events[6].with isPlayEvent(0)
+
+    when: "change location to 3(last)"
+    playService.setLocation(3)
+    then:
+    playService.state == PlayService.State.Pausing
+    events.size() == 9
+    events[7].with isPauseEvent(0)
+    events[8].with isLocationChangeEvent(0, 3)
+
+    playService.location == 3
+    player.counter == 0
+  }
+
+  def "skip to next and skip to previous"() {
+    given:
+    def playList = new DefaultPlayList()
+    (0..2).each {
+      playList.add(new Song(id: it, title: "song $it"))
+    }
+    def player = new MockPlayer()
+    def playService = new DefaultPlayService(playList, player)
+    List<PlayService.Event> events = []
+    playService.eventBus().subscribe{ events << it}
+
+    assert events.isEmpty()
+    assert playService.state == PlayService.State.Pausing
+
+    when: "start play"
+    playService.play()
+    then:
+    playService.state == PlayService.State.Playing
+    events.size() == 1
+    events[0].with isPlayEvent(0)
+
+    when: "change location to 1(skip to next)"
+    playService.setLocation(1)
+    then:
+    playService.state == PlayService.State.Playing
+    events.size() == 4
+    events[1].with isPauseEvent(0)
+    events[2].with isLocationChangeEvent(0, 1)
+    events[3].with isPlayEvent(1)
+
+    when: "change back location 2(skip to next)"
+    playService.setLocation(2)
+    then:
+    playService.state == PlayService.State.Playing
+    events.size() == 7
+    events[4].with isPauseEvent(1)
+    events[5].with isLocationChangeEvent(1, 2)
+    events[6].with isPlayEvent(2)
+
+    when: "change location to 1(skip to previous)"
+    playService.setLocation(1)
+    then:
+    playService.state == PlayService.State.Playing
+    events.size() == 10
+    events[7].with isPauseEvent(2)
+    events[8].with isLocationChangeEvent(2, 1)
+    events[9].with isPlayEvent(1)
+
+    when: "change back location 2(skip to next)"
+    playService.setLocation(2)
+    then:
+    playService.state == PlayService.State.Playing
+    events.size() == 13
+    events[10].with isPauseEvent(1)
+    events[11].with isLocationChangeEvent(1, 2)
+    events[12].with isPlayEvent(2)
+
+    when: "change location to 3(skip to last)"
+    playService.setLocation(3)
+    then:
+    playService.state == PlayService.State.Pausing
+    events.size() == 15
+    events[13].with isPauseEvent(2)
+    events[14].with isLocationChangeEvent(2, 3)
+
+    when: "change location to 2(skip to previous from last)"
+    playService.setLocation(2)
+    then:
+    playService.state == PlayService.State.Pausing
+    events.size() == 16
+    events[15].with isLocationChangeEvent(3, 2)
+
+    when: "start play"
+    playService.play()
+    then:
+    playService.state == PlayService.State.Playing
+    events.size() == 17
+    events[16].with isPlayEvent(2)
+
+    when: "play complete"
+    player.playCompletedNow()
+    then:
+    playService.state == PlayService.State.Pausing
+    events.size() == 19
+    events[17].with isPauseEvent(2)
+    events[18].with isLocationChangeEvent(2, 3)
+
+    playService.location == 3
+    player.counter == 1
+  }
+
+  Closure<Boolean> isPauseEvent(int assertLocation) {
+    return {
+      delegate.class == PlayService.PauseEvent &&
+      location == assertLocation &&
+      state == PlayService.State.Pausing
+    }
+  }
+
+  Closure<Boolean> isPlayEvent(int assertLocation) {
+    return {
+      delegate.class == PlayService.PlayEvent &&
+      location == assertLocation &&
+      state == PlayService.State.Playing
+    }
+  }
+
+  Closure<Boolean> isLocationChangeEvent(int assertOldLocation, int assertNewLocation) {
+    return {
+      delegate.class == PlayService.LocationChangeEvent &&
+      oldLocation == assertOldLocation &&
+      newLocation == assertNewLocation &&
+      location == assertNewLocation &&
+      state == PlayService.State.Pausing //only change at PAUSING state
+    }
+  }
+
 }
