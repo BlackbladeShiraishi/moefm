@@ -25,7 +25,11 @@ class SongsAdapter extends RecyclerView.Adapter<SongsViewHolder> {
     holder.with {
       title.text = songs[position].title
       //TODO duplication?
-      title.onClickListener = {MusicService.playSong(title.context, songs[position])}//TODO posi
+      title.onClickListener = {
+        if (adapterPosition != RecyclerView.NO_POSITION) {
+          MusicService.playSong(title.context, songs[adapterPosition])
+        }
+      }
     }
   }
 

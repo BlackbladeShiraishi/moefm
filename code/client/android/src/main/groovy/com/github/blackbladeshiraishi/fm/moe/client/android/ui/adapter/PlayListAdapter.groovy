@@ -82,6 +82,11 @@ class PlayListAdapter extends RecyclerView.Adapter<SongsViewHolder> {
         songTitle = "[${stateString}]$songTitle"//TODO
       }
       title.text = songTitle
+      title.onClickListener = {
+        if (adapterPosition != RecyclerView.NO_POSITION) {
+          playService.location = adapterPosition
+        }
+      }
     }
   }
 

@@ -24,7 +24,11 @@ class RadiosAdapter extends RecyclerView.Adapter<RadiosViewHolder> {
   void onBindViewHolder(RadiosViewHolder holder, int position) {
     holder.with {
       title.text = radios[position].title
-      title.setOnClickListener{RadioActivity.startThis(title.context, radios[position])}//TODO posi
+      title.setOnClickListener {
+        if (adapterPosition != RecyclerView.NO_POSITION) {
+          RadioActivity.startThis(title.context, radios[adapterPosition])
+        }
+      }
     }
   }
 
