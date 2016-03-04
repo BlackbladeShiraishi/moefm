@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.github.blackbladeshiraishi.fm.moe.business.business.PlayList
+import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import rx.Subscription
 import rx.subscriptions.Subscriptions
@@ -18,10 +19,12 @@ import javax.annotation.Nonnull
 class PlayListAdapter extends RecyclerView.Adapter<SongsViewHolder> {
 
   @Nonnull final PlayList playList
-  @Nonnull final Subscription subscription
+  @Nonnull final PlayService playService
+  @Nonnull private final Subscription subscription
 
-  PlayListAdapter(@Nonnull PlayList playList) {
+  PlayListAdapter(@Nonnull PlayList playList, @Nonnull PlayService playService) {
     this.playList = playList
+    this.playService = playService
     subscription = Subscriptions.from(
         playList.eventBus().ofType(PlayList.AddSongEvent).subscribe{PlayList.AddSongEvent event ->
           notifyItemInserted(event.location)
@@ -31,12 +34,31 @@ class PlayListAdapter extends RecyclerView.Adapter<SongsViewHolder> {
         },
         playList.eventBus().ofType(PlayList.MoveSongEvent).subscribe{PlayList.MoveSongEvent event->
           notifyItemMoved(event.oldLocation, event.newLocation)
+        },
+
+        playService.eventBus().subscribe{PlayService.Event event ->
+          if (event.location < playList.size()) {
+            notifyItemChanged(event.location)
+          }
+          if (event instanceof PlayService.LocationChangeEvent) {
+            if (event.oldLocation < playList.size()) {
+              notifyItemChanged(event.oldLocation)
+            }
+          }
         }
     )
   }
 
   void release() {
-    subscription.unsubscribe()
+    if (!subscription.unsubscribed) {
+      subscription.unsubscribe()
+    }
+  }
+
+  @Override
+  protected void finalize() throws Throwable {
+    release()
+    super.finalize()
   }
 
   @Override
@@ -49,7 +71,17 @@ class PlayListAdapter extends RecyclerView.Adapter<SongsViewHolder> {
   @Override
   void onBindViewHolder(SongsViewHolder holder, int position) {
     holder.with {
-      title.text = playList.get(position).title
+      String songTitle = playList.get(position).title
+      if (position == playService.location) {
+        def stateString = playService.state.toString()
+        if (playService.state == PlayService.State.Playing) {
+          stateString = title.context.getString(R.string.state_playing)
+        } else if (playService.state == PlayService.State.Pausing) {
+          stateString = title.context.getString(R.string.state_pausing)
+        }
+        songTitle = "[${stateString}]$songTitle"//TODO
+      }
+      title.text = songTitle
     }
   }
 

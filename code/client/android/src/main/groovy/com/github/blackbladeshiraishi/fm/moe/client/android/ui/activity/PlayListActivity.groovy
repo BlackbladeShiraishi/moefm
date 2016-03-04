@@ -34,11 +34,11 @@ public class PlayListActivity extends AppCompatActivity {
   protected void onStart() {
     super.onStart()
 
-    MoeFmApplication application = MoeFmApplication.get(this)
-    if (application.playSongComponent == null) {
+    def playSongComponent = MoeFmApplication.get(this).playSongComponent
+    if (playSongComponent == null) {
       Toast.makeText(this, "not playing", Toast.LENGTH_LONG).show()//TODO improve this
     }
-    adapter = new PlayListAdapter(application.playSongComponent.playList)
+    adapter = new PlayListAdapter(playSongComponent.playList, playSongComponent.playService)
     recyclerView.adapter = adapter
   }
 

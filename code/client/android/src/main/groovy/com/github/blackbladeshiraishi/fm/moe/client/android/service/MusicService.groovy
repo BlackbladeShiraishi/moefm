@@ -6,10 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.support.v7.app.NotificationCompat
+import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.PlayListActivity
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
+
+import javax.annotation.Nullable
 
 class MusicService extends Service {
 
@@ -21,6 +24,7 @@ class MusicService extends Service {
     intent.putExtra(EXTRA_SONG, song)
     return intent
   }
+
   static void playSong(Context context, Song song) {
     context.startService(buildPlaySongIntent(context, song))
   }
@@ -68,12 +72,31 @@ class MusicService extends Service {
   }
 
   private void setForegroundNotification() {
+    bindPlayService()
+  }
+
+  private void bindPlayService() {
+    MoeFmApplication.get(this).playSongComponent.with {
+      playService.eventBus().subscribe {PlayService.Event event ->
+        Song song = event.location < playList.size() ? playList.get(event.location) : null
+        updateNotification(song, event.state)
+      }
+    }
+  }
+
+  private void updateNotification(@Nullable Song song, PlayService.State state) {
+    def contentTitleString = state.toString()
+    if (state == PlayService.State.Playing) {
+      contentTitleString = getString(R.string.state_playing)
+    } else if (state == PlayService.State.Pausing) {
+      contentTitleString = getString(R.string.state_pausing)
+    }
     def builder = new NotificationCompat.Builder(this)
     builder.with {
       style = new NotificationCompat.MediaStyle()
       smallIcon = R.drawable.ic_play_arrow_white_24dp
-      contentTitle = "Playing"//TODO
-      contentText = "Playing Song"//TODO
+      contentTitle = contentTitleString
+      contentText = song?.title
       def intent = PlayListActivity.buildIntent(this)
       intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK
       contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
