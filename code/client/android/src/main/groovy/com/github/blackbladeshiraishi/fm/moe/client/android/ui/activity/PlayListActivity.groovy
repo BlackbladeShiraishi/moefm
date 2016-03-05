@@ -10,10 +10,15 @@ import android.widget.Toast
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter.PlayListAdapter
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.MediaPlayControllerViewHolder
+import com.github.blackbladeshiraishi.fm.moe.facade.presenter.MediaPlayControllerPresenter
 
 public class PlayListActivity extends AppCompatActivity {
 
   private RecyclerView recyclerView
+
+  MediaPlayControllerViewHolder mediaPlayControllerViewHolder
+  MediaPlayControllerPresenter mediaPlayControllerPresenter
 
   private PlayListAdapter adapter
 
@@ -28,6 +33,10 @@ public class PlayListActivity extends AppCompatActivity {
 
     recyclerView = findViewById(R.id.play_songs_list) as RecyclerView
     recyclerView.layoutManager = new LinearLayoutManager(this)
+
+    mediaPlayControllerViewHolder =
+        new MediaPlayControllerViewHolder(findViewById(R.id.media_controller))
+    mediaPlayControllerPresenter = new MediaPlayControllerPresenter(mediaPlayControllerViewHolder)
   }
 
   @Override
@@ -40,14 +49,24 @@ public class PlayListActivity extends AppCompatActivity {
     }
     adapter = new PlayListAdapter(playSongComponent.playList, playSongComponent.playService)
     recyclerView.adapter = adapter
+    mediaPlayControllerPresenter.bindPlayService(playSongComponent.playService)
   }
 
   @Override
   protected void onStop() {
+    mediaPlayControllerPresenter.unbindPlayService()
     recyclerView.adapter = null
     adapter.release() //!important
     adapter = null
     super.onStop()
+  }
+
+  @Override
+  protected void onDestroy() {
+    mediaPlayControllerPresenter = null
+    mediaPlayControllerViewHolder = null
+    recyclerView = null
+    super.onDestroy()
   }
 
 }
