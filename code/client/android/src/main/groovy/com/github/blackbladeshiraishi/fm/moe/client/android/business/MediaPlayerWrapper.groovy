@@ -9,6 +9,7 @@ import rx.subjects.Subject
 
 import javax.annotation.Nonnull
 import javax.annotation.Nullable
+import java.util.concurrent.TimeUnit
 
 //TODO thread (tick specially)
 class MediaPlayerWrapper implements Player {
@@ -34,6 +35,7 @@ class MediaPlayerWrapper implements Player {
 
   MediaPlayerWrapper(@Nonnull MediaPlayerFactory mediaPlayerFactory) {
     this.mediaPlayerFactory = mediaPlayerFactory
+    init()
     bindMediaPlayer(mediaPlayerFactory.create())
   }
 
@@ -41,6 +43,15 @@ class MediaPlayerWrapper implements Player {
   protected void finalize() throws Throwable {
     unbindMediaPlayer()
     super.finalize()
+  }
+
+  private void init() {
+    eventBus.ofType(Player.PlayEvent).subscribe {
+      Observable
+          .interval(16, TimeUnit.MILLISECONDS)
+          .takeUntil(eventBus.ofType(Player.PauseEvent))
+          .subscribe {eventBus.onNext(new Player.TickEvent(this))}
+    }
   }
 
   private void bindMediaPlayer(@Nonnull MediaPlayer mediaPlayer) {

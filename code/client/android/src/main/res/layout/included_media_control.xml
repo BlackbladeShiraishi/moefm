@@ -1,56 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/media_controller_view_root"
-        android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary">
+        android:clipChildren="false">
 
-    <TextView
-            android:id="@+id/song_title"
-            android:layout_width="0dp"
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical|start"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            style="@style/TextAppearance.AppCompat.Title.Inverse"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:focusableInTouchMode="true"
-            android:focusable="true"
-            tools:text="A Very Very Very Long Test Title"/>
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary">
 
-    <ImageView
-            android:id="@+id/skip_previous"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_weight="0"
-            android:layout_gravity="center_vertical|end"
-            android:scaleType="center"
-            android:src="@drawable/ic_skip_previous_white_24dp"/>
+        <TextView
+                android:id="@+id/song_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                style="@style/TextAppearance.AppCompat.Title.Inverse"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                tools:text="A Very Very Very Long Test Title"/>
 
-    <ImageView
-            android:id="@+id/play_or_pause"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_weight="0"
-            android:layout_gravity="center_vertical|end"
-            android:scaleType="center"
-            android:src="@drawable/ic_play_arrow_white_24dp"/>
+        <ImageView
+                android:id="@+id/skip_previous"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_weight="0"
+                android:layout_gravity="center_vertical|end"
+                android:scaleType="center"
+                android:src="@drawable/ic_skip_previous_white_24dp"/>
 
-    <ImageView
-            android:id="@+id/skip_next"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_weight="0"
-            android:layout_gravity="center_vertical|end"
-            android:scaleType="center"
-            android:src="@drawable/ic_skip_next_white_24dp"/>
+        <ImageView
+                android:id="@+id/play_or_pause"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_weight="0"
+                android:layout_gravity="center_vertical|end"
+                android:scaleType="center"
+                android:src="@drawable/ic_play_arrow_white_24dp"/>
 
-</LinearLayout>
+        <ImageView
+                android:id="@+id/skip_next"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_weight="0"
+                android:layout_gravity="center_vertical|end"
+                android:scaleType="center"
+                android:src="@drawable/ic_skip_next_white_24dp"/>
+
+    </LinearLayout>
+
+    <SeekBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/include_media_control_progress_margin_top"
+            android:progress="0"/>
+
+</FrameLayout>

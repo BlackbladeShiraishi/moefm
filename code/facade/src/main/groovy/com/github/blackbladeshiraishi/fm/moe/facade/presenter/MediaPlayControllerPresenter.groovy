@@ -1,6 +1,7 @@
 package com.github.blackbladeshiraishi.fm.moe.facade.presenter
 
 import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService
+import com.github.blackbladeshiraishi.fm.moe.business.business.Player
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import com.github.blackbladeshiraishi.fm.moe.facade.view.MediaPlayControllerView
 import rx.Subscription
@@ -50,6 +51,8 @@ class MediaPlayControllerPresenter {
   private void reset() {
     view.with {
       showSong(null)
+      duration = 0
+      position = 0
       hideSkipPreviousButton()
       hideSkipNextButton()
       playButtonState = MediaPlayControllerView.PlayButtonState.PLAY
@@ -79,6 +82,10 @@ class MediaPlayControllerPresenter {
         },
         playService.eventBus().ofType(PlayService.PauseEvent).subscribe{
           view.setPlayButtonState(MediaPlayControllerView.PlayButtonState.PLAY)
+        },
+        playService.player.eventBus().ofType(Player.TickEvent).subscribe{Player.Event event->
+          view.duration = event.player.duration
+          view.position = event.player.position
         },
         playService.eventBus().ofType(PlayService.LocationChangeEvent).subscribe{
           PlayService.Event event->

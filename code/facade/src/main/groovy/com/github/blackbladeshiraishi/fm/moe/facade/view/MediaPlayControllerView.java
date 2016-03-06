@@ -13,6 +13,10 @@ public interface MediaPlayControllerView extends View {
 
   void showSong(@Nullable Song song);
 
+  void setDuration(int duration);
+
+  void setPosition(int position);
+
   void hideSkipNextButton();
 
   void showSkipNextButton();

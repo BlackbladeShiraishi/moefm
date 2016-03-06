@@ -2,6 +2,7 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.view
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.SeekBar
 import android.widget.TextView
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
@@ -26,6 +27,7 @@ class MediaPlayControllerViewHolder implements MediaPlayControllerView {
   final ImageView playOrPause
   final ImageView skipNext
   final ImageView skipPrevious
+  final SeekBar progress
 
   @Nullable
   Song song
@@ -36,6 +38,7 @@ class MediaPlayControllerViewHolder implements MediaPlayControllerView {
     playOrPause = rootView.findViewById(R.id.play_or_pause) as ImageView
     skipNext = rootView.findViewById(R.id.skip_next) as ImageView
     skipPrevious = rootView.findViewById(R.id.skip_previous) as ImageView
+    progress = rootView.findViewById(R.id.progress) as SeekBar
     songTitle.setSelected(true)
     skipPrevious.onClickListener = {
       eventBus.onNext(new MediaPlayControllerView.ClickSkipPreviousEvent(this, song))
@@ -55,6 +58,16 @@ class MediaPlayControllerViewHolder implements MediaPlayControllerView {
   void showSong(@Nullable Song song) {
     this.song = song
     songTitle.text = song?.title
+  }
+
+  @Override
+  void setDuration(int duration) {
+    progress.max = duration
+  }
+
+  @Override
+  void setPosition(int position) {
+    progress.progress = position
   }
 
   @Override
