@@ -81,15 +81,15 @@ class MediaPlayControllerViewHolder implements MediaPlayControllerView {
   void setPlayButtonState(@Nonnull MediaPlayControllerView.PlayButtonState state) {
     switch (state) {
       case MediaPlayControllerView.PlayButtonState.PLAY:
-        playOrPause.imageResource = R.drawable.ic_pause_white_24dp
-        playOrPause.onClickListener = {
-          eventBus.onNext(new MediaPlayControllerView.ClickPauseEvent(this, song))
-        }
-        break
-      case MediaPlayControllerView.PlayButtonState.PAUSE:
         playOrPause.imageResource = R.drawable.ic_play_arrow_white_24dp
         playOrPause.onClickListener = {
           eventBus.onNext(new MediaPlayControllerView.ClickPlayEvent(this, song))
+        }
+        break
+      case MediaPlayControllerView.PlayButtonState.PAUSE:
+        playOrPause.imageResource = R.drawable.ic_pause_white_24dp
+        playOrPause.onClickListener = {
+          eventBus.onNext(new MediaPlayControllerView.ClickPauseEvent(this, song))
         }
         break
       default:

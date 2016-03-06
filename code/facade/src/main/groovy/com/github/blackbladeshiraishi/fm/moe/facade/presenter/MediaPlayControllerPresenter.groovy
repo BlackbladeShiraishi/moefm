@@ -41,9 +41,9 @@ class MediaPlayControllerPresenter {
     }
     updateLocation(song, playService.location, playService.playList.size())
     if (playService.state == PlayService.State.Playing) {
-      view.setPlayButtonState(MediaPlayControllerView.PlayButtonState.PLAY)
-    } else {
       view.setPlayButtonState(MediaPlayControllerView.PlayButtonState.PAUSE)
+    } else {
+      view.setPlayButtonState(MediaPlayControllerView.PlayButtonState.PLAY)
     }
   }
 
@@ -99,7 +99,7 @@ class MediaPlayControllerPresenter {
             playService.location = playService.location - 1
           }
         },
-        view.eventBus().ofType(MediaPlayControllerView.ClickPauseEvent).subscribe{
+        view.eventBus().ofType(MediaPlayControllerView.ClickPlayEvent).subscribe{
           playService.play()
         },
         view.eventBus().ofType(MediaPlayControllerView.ClickPauseEvent).subscribe{
