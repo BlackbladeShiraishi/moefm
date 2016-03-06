@@ -86,6 +86,10 @@ class DefaultPlayService implements PlayService {
     player.setPosition(0)
   }*/
     //TODO reason
+    player.eventBus().ofType(Player.ErrorEvent).subscribe{
+      setLocation(getLocation() + 1)
+      play()
+    }
     player.eventBus().ofType(Player.PlayCompletedEvent).subscribe {
       setLocation(getLocation() + 1)
       play()
