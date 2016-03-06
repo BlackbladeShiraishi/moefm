@@ -14,7 +14,7 @@ public interface Player {
   @Nullable
   Song getSong();
 
-  void setSong(Song song);
+  void prepare(Song song);
 
   int getPosition();
 
@@ -24,17 +24,14 @@ public interface Player {
 
   void pause();
 
-  void resume();
+  void play();
+
+  void play(Song song);
 
   /**
    * remove song
    */
-  void unsetSong();
-
-  enum State {
-    PLAYING,
-    PAUSING
-  }
+  void uninitialize();
 
   enum Reason {
     PLAY_COMPlETED,
@@ -44,59 +41,66 @@ public interface Player {
 
   class Event {
 
-    public final Song song;
-    public final int duration;
-    public final int position;
+    public final Player player;
 
-    public Event(Song song, int duration, int position) {
-      this.song = song;
-      this.duration = duration;
-      this.position = position;
+    public Event(Player player) {
+      this.player = player;
     }
   }
 
   class PositionChangedEvent extends Event {
-
-    public PositionChangedEvent(Song song, int duration, int position) {
-      super(song, duration, position);
+    public PositionChangedEvent(Player player) {
+      super(player);
     }
   }
 
-  class StartEvent extends Event {
-
-    public StartEvent(Song song, int duration, int position) {
-      super(song, duration, position);
-    }
-  }
-
-  class ResumeEvent extends Event {
-
-    public ResumeEvent(Song song, int duration, int position) {
-      super(song, duration, position);
+  class PlayEvent extends Event {
+    public PlayEvent(Player player) {
+      super(player);
     }
   }
 
   //TODO TickEvent Pool
   class TickEvent extends Event {
-
-    public TickEvent(Song song, int duration, int position) {
-      super(song, duration, position);
+    public TickEvent(Player player) {
+      super(player);
     }
   }
 
   class PauseEvent extends Event {
-
-    public PauseEvent(Song song, int duration, int position) {
-      super(song, duration, position);
+    public PauseEvent(Player player) {
+      super(player);
     }
   }
 
-  class StopEvent extends Event {
+  class PreparingEvent extends Event {
+    public PreparingEvent(Player player) {
+      super(player);
+    }
+  }
 
+  class PreparedEvent extends Event {
+    public PreparedEvent(Player player) {
+      super(player);
+    }
+  }
+
+  class UninitializedEvent extends Event {
+    public UninitializedEvent(Player player) {
+      super(player);
+    }
+  }
+
+  class PlayCompletedEvent extends Event {
+    public PlayCompletedEvent(Player player) {
+      super(player);
+    }
+  }
+  class ErrorEvent extends Event {
     public final Object reason;
 
-    public StopEvent(Song song, int duration, int position, Object reason) {
-      super(song, duration, position);
+    public ErrorEvent(Player player, Object reason) {
+      super(player);
       this.reason = reason;
     }
   }

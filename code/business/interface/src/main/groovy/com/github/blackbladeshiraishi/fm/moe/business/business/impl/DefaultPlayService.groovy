@@ -73,7 +73,7 @@ class DefaultPlayService implements PlayService {
   }
 
   private void bindPlayer() {
-    player.eventBus().ofType(Player.ResumeEvent).subscribe {event ->
+    player.eventBus().ofType(Player.PlayEvent).subscribe {event ->
       changeState(PlayService.State.Playing)
     }
 
@@ -81,19 +81,17 @@ class DefaultPlayService implements PlayService {
       changeState(PlayService.State.Pausing)
     }
 
-    player.eventBus().ofType(Player.StopEvent).subscribe {Player.StopEvent event ->
-      //TODO reason
-      if (event.reason == Player.Reason.STOP_COMMAND) {
+/*    // if (event.reason == Player.Reason.STOP_COMMAND) {
 //        setLocation(getLocation())
-        player.setPosition(0)
-      } else if (event.reason == Player.Reason.PLAY_COMPlETED) {
-        setLocation(getLocation() + 1)
-        player.setPosition(0)
-        play()
-      }
+    player.setPosition(0)
+  }*/
+    //TODO reason
+    player.eventBus().ofType(Player.PlayCompletedEvent).subscribe {
+      setLocation(getLocation() + 1)
+      play()
     }
 
-    player.eventBus().ofType(Player.StartEvent).subscribe {event ->
+    player.eventBus().ofType(Player.PreparedEvent).subscribe {event ->
       //TODO clear reason
     }
   }
@@ -157,6 +155,7 @@ class DefaultPlayService implements PlayService {
     if (playingWhenChangeLocation) {
       pause()
     }
+    player.setPosition(0)
     this.location = location
     eventBus.onNext(new PlayService.LocationChangeEvent(state, null, oldLocation, location))
     if (playingWhenChangeLocation && !isPlayCompleted()) {
@@ -176,8 +175,7 @@ class DefaultPlayService implements PlayService {
     if (isPlayCompleted()) {
       return
     }
-    player.setSong(playList.get(location))
-    player.resume()
+    player.play(playList.get(location))
   }
 
   @Override

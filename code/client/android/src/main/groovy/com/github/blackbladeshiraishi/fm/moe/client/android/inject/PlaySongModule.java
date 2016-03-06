@@ -6,7 +6,7 @@ import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService;
 import com.github.blackbladeshiraishi.fm.moe.business.business.Player;
 import com.github.blackbladeshiraishi.fm.moe.business.business.impl.DefaultPlayList;
 import com.github.blackbladeshiraishi.fm.moe.business.business.impl.DefaultPlayService;
-import com.github.blackbladeshiraishi.fm.moe.client.android.business.AndroidPlayer;
+import com.github.blackbladeshiraishi.fm.moe.client.android.business.MediaPlayerWrapper;
 import com.github.blackbladeshiraishi.fm.moe.client.android.business.MediaPlayers;
 
 import dagger.Module;
@@ -23,8 +23,8 @@ public class PlaySongModule {
 
   @Provides
   @PlaySongScope
-  Player provideAndroidPlayer() {
-    return new AndroidPlayer(MediaPlayers.getMediaPlayerFactory());
+  Player providePlayer() {
+    return new MediaPlayerWrapper(MediaPlayers.getMediaPlayerFactory());
   }
 
   @Provides

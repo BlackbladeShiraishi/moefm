@@ -41,26 +41,32 @@ class MockPlayer implements Player {
   @Override
   void setPosition(int position) {
     this.position = position
-    eventBus.onNext(new Player.PositionChangedEvent(song, duration, position))
+    eventBus.onNext(new Player.PositionChangedEvent(this))
   }
 
   @Override
-  void setSong(Song song) {
+  void prepare(Song song) {
     this.song = song
   }
 
   @Override
   void pause() {
-    eventBus.onNext(new Player.PauseEvent(song, duration, position))
+    eventBus.onNext(new Player.PauseEvent(this))
   }
 
   @Override
-  void resume() {
-    eventBus.onNext(new Player.ResumeEvent(song, duration, position))
+  void play() {
+    eventBus.onNext(new Player.PlayEvent(this))
   }
 
   @Override
-  void unsetSong() {
+  void play(Song song) {
+    prepare(song)
+    play()
+  }
+
+  @Override
+  void uninitialize() {
     song = null
   }
 
@@ -68,7 +74,7 @@ class MockPlayer implements Player {
     position = duration
     pause()
     counter++
-    eventBus.onNext(new Player.StopEvent(song, duration, position, Player.Reason.PLAY_COMPlETED))
+    eventBus.onNext(new Player.PlayCompletedEvent(this))
   }
 
 }
