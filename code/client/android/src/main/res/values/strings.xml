@@ -3,4 +3,8 @@
     <string name="activity_title_play_list">正在播放</string>
     <string name="state_playing">正在播放</string>
     <string name="state_pausing">暂停</string>
+    <string name="action_skip_previous">上一首</string>
+    <string name="action_play">播放</string>
+    <string name="action_pause">暂停</string>
+    <string name="action_skip_next">下一首</string>
 </resources>
