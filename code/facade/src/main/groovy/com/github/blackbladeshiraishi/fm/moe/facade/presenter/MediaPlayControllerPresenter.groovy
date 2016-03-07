@@ -1,5 +1,6 @@
 package com.github.blackbladeshiraishi.fm.moe.facade.presenter
 
+import com.github.blackbladeshiraishi.fm.moe.business.business.PlayList
 import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService
 import com.github.blackbladeshiraishi.fm.moe.business.business.Player
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
@@ -40,7 +41,8 @@ class MediaPlayControllerPresenter {
     if (playService.location < playService.playList.size()) {
       song = playService.playList.get(playService.location)
     }
-    updateLocation(song, playService.location, playService.playList.size())
+    view.showSong(song)
+    updateLocation(playService.location, playService.playList.size())
     if (playService.state == PlayService.State.Playing) {
       view.setPlayButtonState(MediaPlayControllerView.PlayButtonState.PAUSE)
     } else {
@@ -59,8 +61,7 @@ class MediaPlayControllerPresenter {
     }
   }
 
-  private void updateLocation(@Nullable Song song, int location, int total) {
-    view.showSong(song)
+  private void updateLocation(int location, int total) {
     if (location > 0) {
       view.showSkipPreviousButton()
     } else {
@@ -83,17 +84,23 @@ class MediaPlayControllerPresenter {
         playService.eventBus().ofType(PlayService.PauseEvent).subscribe{
           view.setPlayButtonState(MediaPlayControllerView.PlayButtonState.PLAY)
         },
-        playService.player.eventBus().ofType(Player.TickEvent).subscribe{Player.Event event->
-          view.duration = event.player.duration
-          view.position = event.player.position
-        },
         playService.eventBus().ofType(PlayService.LocationChangeEvent).subscribe{
           PlayService.Event event->
           Song locationSong = null
           if (event.location < playService.playList.size()) {
             locationSong = playService.playList.get(event.location)
           }
-          updateLocation(locationSong, event.location, playService.playList.size())
+          view.showSong(locationSong)
+          updateLocation(event.location, playService.playList.size())
+        },
+        // bind playService.playList events to view
+        playService.playList.eventBus().ofType(PlayList.Event).subscribe{
+          updateLocation(playService.location, playService.playList.size())
+        },
+        // bind playService.player events to view
+        playService.player.eventBus().ofType(Player.TickEvent).subscribe{Player.Event event->
+          view.duration = event.player.duration
+          view.position = event.player.position
         },
         // bind view events to playService
         view.eventBus().ofType(MediaPlayControllerView.ClickSkipNextEvent).subscribe{

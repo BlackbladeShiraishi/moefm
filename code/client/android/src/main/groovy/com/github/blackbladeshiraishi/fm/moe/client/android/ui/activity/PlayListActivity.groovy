@@ -46,6 +46,8 @@ public class PlayListActivity extends AppCompatActivity {
     def playSongComponent = MoeFmApplication.get(this).playSongComponent
     if (playSongComponent == null) {
       Toast.makeText(this, "not playing", Toast.LENGTH_LONG).show()//TODO improve this
+      finish()
+      return
     }
     adapter = new PlayListAdapter(playSongComponent.playList, playSongComponent.playService)
     recyclerView.adapter = adapter
@@ -54,9 +56,9 @@ public class PlayListActivity extends AppCompatActivity {
 
   @Override
   protected void onStop() {
-    mediaPlayControllerPresenter.unbindPlayService()
+    mediaPlayControllerPresenter?.unbindPlayService()
     recyclerView.adapter = null
-    adapter.release() //!important
+    adapter?.release() //!important
     adapter = null
     super.onStop()
   }
