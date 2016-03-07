@@ -66,5 +66,26 @@ public interface MediaPlayControllerView extends View {
       super(view, song);
     }
   }
+  class PositionViewStartTrackingTouchEvent extends Event {
+
+    public PositionViewStartTrackingTouchEvent(MediaPlayControllerView view, Song song) {
+      super(view, song);
+    }
+  }
+  class PositionViewStopTrackingTouchEvent extends Event {
+
+    public PositionViewStopTrackingTouchEvent(MediaPlayControllerView view, Song song) {
+      super(view, song);
+    }
+  }
+  class UserChangePositionEvent extends Event {
+
+    public final int position;
+
+    public UserChangePositionEvent(MediaPlayControllerView view, Song song, int position) {
+      super(view, song);
+      this.position = position;
+    }
+  }
 
 }

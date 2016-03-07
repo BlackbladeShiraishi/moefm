@@ -46,6 +46,31 @@ class MediaPlayControllerViewHolder implements MediaPlayControllerView {
     skipNext.onClickListener = {
       eventBus.onNext(new MediaPlayControllerView.ClickSkipNextEvent(this, song))
     }
+    progress.onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+
+      @Override
+      void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        if (fromUser) {
+          eventBus.onNext(new MediaPlayControllerView.UserChangePositionEvent(
+              MediaPlayControllerViewHolder.this, song, progress
+          ))
+        }
+      }
+
+      @Override
+      void onStartTrackingTouch(SeekBar seekBar) {
+        eventBus.onNext(new MediaPlayControllerView.PositionViewStartTrackingTouchEvent(
+            MediaPlayControllerViewHolder.this, song
+        ))
+      }
+
+      @Override
+      void onStopTrackingTouch(SeekBar seekBar) {
+        eventBus.onNext(new MediaPlayControllerView.PositionViewStopTrackingTouchEvent(
+            MediaPlayControllerViewHolder.this, song
+        ))
+      }
+    }
   }
 
 

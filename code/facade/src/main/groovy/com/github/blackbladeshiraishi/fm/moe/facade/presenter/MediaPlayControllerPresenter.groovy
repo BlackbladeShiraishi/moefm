@@ -111,6 +111,14 @@ class MediaPlayControllerPresenter {
         },
         view.eventBus().ofType(MediaPlayControllerView.ClickPauseEvent).subscribe{
           playService.pause()
+        },
+        view.eventBus().ofType(MediaPlayControllerView.PositionViewStartTrackingTouchEvent)
+            .subscribe {playService.pause()},
+        view.eventBus().ofType(MediaPlayControllerView.PositionViewStopTrackingTouchEvent)
+            .subscribe {playService.play()},
+        view.eventBus().ofType(MediaPlayControllerView.UserChangePositionEvent).subscribe {
+          MediaPlayControllerView.UserChangePositionEvent event ->
+            playService.player.position = event.position
         }
     )
   }
