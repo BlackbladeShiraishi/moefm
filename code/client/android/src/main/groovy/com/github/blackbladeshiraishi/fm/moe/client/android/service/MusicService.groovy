@@ -10,6 +10,7 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.MediaPlayCon
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.NotificationSender
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import com.github.blackbladeshiraishi.fm.moe.facade.presenter.MediaPlayControllerPresenter
+import rx.android.schedulers.AndroidSchedulers
 
 class MusicService extends Service {
 
@@ -62,7 +63,7 @@ class MusicService extends Service {
         startForeground(id, notification)
       }
     })
-    presenter = new MediaPlayControllerPresenter(controllerView)
+    presenter = new MediaPlayControllerPresenter(controllerView, AndroidSchedulers.mainThread())
     presenter.bindPlayService(MoeFmApplication.get(this).playSongComponent.playService)
   }
 

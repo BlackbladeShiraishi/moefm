@@ -12,6 +12,7 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter.PlayListAdapter
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.MediaPlayControllerViewHolder
 import com.github.blackbladeshiraishi.fm.moe.facade.presenter.MediaPlayControllerPresenter
+import rx.android.schedulers.AndroidSchedulers
 
 public class PlayListActivity extends AppCompatActivity {
 
@@ -36,7 +37,8 @@ public class PlayListActivity extends AppCompatActivity {
 
     mediaPlayControllerViewHolder =
         new MediaPlayControllerViewHolder(findViewById(R.id.media_controller))
-    mediaPlayControllerPresenter = new MediaPlayControllerPresenter(mediaPlayControllerViewHolder)
+    mediaPlayControllerPresenter = new MediaPlayControllerPresenter(
+        mediaPlayControllerViewHolder, AndroidSchedulers.mainThread())
   }
 
   @Override

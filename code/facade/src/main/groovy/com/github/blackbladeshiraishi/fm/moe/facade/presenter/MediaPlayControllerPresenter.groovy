@@ -5,6 +5,7 @@ import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService
 import com.github.blackbladeshiraishi.fm.moe.business.business.Player
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import com.github.blackbladeshiraishi.fm.moe.facade.view.MediaPlayControllerView
+import rx.Scheduler
 import rx.Subscription
 import rx.subscriptions.Subscriptions
 
@@ -13,11 +14,16 @@ import javax.annotation.Nullable
 
 class MediaPlayControllerPresenter {
   @Nonnull final MediaPlayControllerView view
+  @Nonnull final Scheduler uiScheduler
+  @Nonnull final Scheduler.Worker uiWorker
   @Nullable private Subscription subscription
 
-  MediaPlayControllerPresenter(@Nonnull MediaPlayControllerView view) {
+  MediaPlayControllerPresenter(
+      @Nonnull final MediaPlayControllerView view, @Nonnull final Scheduler uiScheduler) {
     this.view = view
-    reset()
+    this.uiScheduler = uiScheduler
+    uiWorker = uiScheduler.createWorker()
+    uiWorker.schedule{reset()}
   }
 
   @Override
@@ -27,15 +33,18 @@ class MediaPlayControllerPresenter {
   }
 
   void bindPlayService(@Nonnull PlayService playService) {
-    set(playService)
+    uiWorker.schedule{set(playService)}
     subscribe(playService)
   }
 
   void unbindPlayService() {
     unsubscribe()
-    reset()
+    uiWorker.schedule{reset()}
   }
 
+  /**
+   * should be called on <strong>UI Thread</strong>
+   */
   private void set(@Nonnull PlayService playService) {
     Song song = null
     if (playService.location < playService.playList.size()) {
@@ -50,6 +59,9 @@ class MediaPlayControllerPresenter {
     }
   }
 
+  /**
+   * should be called on <strong>UI Thread</strong>
+   */
   private void reset() {
     view.with {
       showSong(null)
@@ -61,6 +73,9 @@ class MediaPlayControllerPresenter {
     }
   }
 
+  /**
+   * should be called on <strong>UI Thread</strong>
+   */
   private void updateLocation(int location, int total) {
     if (location > 0) {
       view.showSkipPreviousButton()
@@ -78,14 +93,14 @@ class MediaPlayControllerPresenter {
     unsubscribe()
     subscription = Subscriptions.from(
         // bind playService events to view
-        playService.eventBus().ofType(PlayService.PlayEvent).subscribe{
+        playService.eventBus().ofType(PlayService.PlayEvent).observeOn(uiScheduler).subscribe{
           view.setPlayButtonState(MediaPlayControllerView.PlayButtonState.PAUSE)
         },
-        playService.eventBus().ofType(PlayService.PauseEvent).subscribe{
+        playService.eventBus().ofType(PlayService.PauseEvent).observeOn(uiScheduler).subscribe{
           view.setPlayButtonState(MediaPlayControllerView.PlayButtonState.PLAY)
         },
-        playService.eventBus().ofType(PlayService.LocationChangeEvent).subscribe{
-          PlayService.Event event->
+        playService.eventBus().ofType(PlayService.LocationChangeEvent).observeOn(uiScheduler)
+            .subscribe{ PlayService.Event event->
           Song locationSong = null
           if (event.location < playService.playList.size()) {
             locationSong = playService.playList.get(event.location)
@@ -94,11 +109,12 @@ class MediaPlayControllerPresenter {
           updateLocation(event.location, playService.playList.size())
         },
         // bind playService.playList events to view
-        playService.playList.eventBus().ofType(PlayList.Event).subscribe{
+        playService.playList.eventBus().ofType(PlayList.Event).observeOn(uiScheduler).subscribe{
           updateLocation(playService.location, playService.playList.size())
         },
         // bind playService.player events to view
-        playService.player.eventBus().ofType(Player.TickEvent).subscribe{Player.Event event->
+        playService.player.eventBus().ofType(Player.TickEvent).observeOn(uiScheduler).subscribe{
+          Player.Event event->
           view.duration = event.player.duration
           view.position = event.player.position
         },

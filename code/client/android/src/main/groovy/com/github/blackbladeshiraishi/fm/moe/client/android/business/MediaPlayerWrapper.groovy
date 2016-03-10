@@ -48,7 +48,7 @@ class MediaPlayerWrapper implements Player {
   private void init() {
     eventBus.ofType(Player.PlayEvent).subscribe {
       Observable
-          .interval(16, TimeUnit.MILLISECONDS)
+          .interval(16, TimeUnit.MILLISECONDS)//TODO #1 isolate TickEvent bus and see #2
           .takeUntil(eventBus.ofType(Player.PauseEvent))
           .subscribe {eventBus.onNext(new Player.TickEvent(this))}
     }
@@ -84,7 +84,8 @@ class MediaPlayerWrapper implements Player {
 
   @Override
   Observable<Player.Event> eventBus() {
-    return eventBus.asObservable()
+    //TODO #2 take advantage of backpressure and see #1
+    return eventBus.asObservable().onBackpressureDrop()
   }
 
   @Override
