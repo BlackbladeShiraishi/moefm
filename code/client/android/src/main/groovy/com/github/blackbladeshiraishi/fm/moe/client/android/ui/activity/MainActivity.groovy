@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState)
+    title = getString R.string.activity_title_hot_radios
     setContentView(R.layout.activity_main)
     (findViewById(R.id.hot_radios_list) as RecyclerView).with {
       adapter = hotRadiosAdapter
