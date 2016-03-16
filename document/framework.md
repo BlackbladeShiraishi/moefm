@@ -2,6 +2,20 @@
 
 ## 语言
 Java、Groovy
+```text
+src
+├─main
+│  ├─groovy
+│  └─java
+└─test
+    ├─groovy
+    └─java
+```
+在 src/main/java 目录放纯 Java 代码，这里的代码不能调用 src/main/groovy 里的代码。
+
+在 src/main/groovy 目录放 Groovy 和 Java 代码，这里的代码（包括 Java 代码）可以调用java、groovy中的代码。
+
+test 等其他 source set 与此类似。
 
 ## 平台
 目前支持Android
@@ -52,3 +66,10 @@ impl-moefm是business中定义的一些接口的**其中一种**实现。项目�
 * View接口的实现
 * Player接口实现
 * 平台特定代码
+
+## GUI
+系统 GUI 使用 [MVP](https://zh.wikipedia.org/wiki/Model_View_Presenter) 模式实现。
+
+View **接口**定义、Presenters 在 facade 模块，View 的实现在各自平台的 client 模块。
+
+Presenters 保证在 UI 线程调用 View 的方法， View 接口的实现不必是线程安全的。
