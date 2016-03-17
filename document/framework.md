@@ -45,6 +45,8 @@ test 等其他 source set 与此类似。
 ```
 上层模块依赖于下层模块。
 
+上层模块的外部依赖比下层多，例如 client:android 模块依赖于 Android 平台的 API，而其他模块不依赖于 Android。
+
 ### domain
 领域模型
 * 领域实体类
