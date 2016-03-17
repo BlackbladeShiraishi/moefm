@@ -1,5 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+apply from: 'gradle/dependency-version.gradle'
+
 def javaSubprojects = []
 
 def groovySubprojects = []
@@ -20,7 +22,7 @@ groovySubprojects.each {projectPath ->
     apply plugin: 'groovy'
 
     dependencies {
-      compile 'org.codehaus.groovy:groovy:2.4.6'
+      compile "org.codehaus.groovy:groovy:$groovyVersion"
     }
 
   }
@@ -37,7 +39,7 @@ groovySubprojects.each {projectPath ->
 
     dependencies {
       compile 'com.google.code.findbugs:jsr305:3.0.1'
-      testCompile 'junit:junit:4.12'
+      testCompile "junit:junit:$junitVersion"
     }
 
     checkstyle {
