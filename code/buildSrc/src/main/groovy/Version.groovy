@@ -1,7 +1,5 @@
 import org.gradle.api.GradleException
 
-import java.text.SimpleDateFormat
-
 class Version {
 
   String originalVersion
@@ -21,7 +19,7 @@ class Version {
       status = 'integration'
       originalVersionCodeString = originalVersion.
           substring(0, originalVersion.length() - '-SNAPSHOT'.length())
-      versionName = originalVersionCodeString + '-' + getTimestamp()
+      versionName = versionValue
     } else {
       status = 'release'
       versionName = versionValue
@@ -30,14 +28,8 @@ class Version {
     versionCode = originalVersionCodeString.replace('.', '').toInteger();
   }
 
-  String getTimestamp() {
-    // Convert local file timestamp to UTC
-    def format = new SimpleDateFormat('yyyyMMddHHmmss')
-    format.setCalendar(Calendar.getInstance(TimeZone.getTimeZone('UTC')));
-    return format.format(buildTime)
-  }
-
   String toString() {
     versionName
   }
+
 }
