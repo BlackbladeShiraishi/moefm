@@ -85,7 +85,7 @@ class MediaPlayerWrapper implements Player {
   @Override
   Observable<Player.Event> eventBus() {
     //TODO #2 take advantage of backpressure and see #1
-    return eventBus.asObservable().onBackpressureDrop()
+    return eventBus.onBackpressureDrop()
   }
 
   @Override

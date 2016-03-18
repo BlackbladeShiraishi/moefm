@@ -146,7 +146,7 @@ class DefaultPlayService implements PlayService {
 
   @Override
   Observable<PlayService.Event> eventBus() {
-    eventBus.asObservable()
+    return eventBus.onBackpressureDrop()
   }
 
   @Override

@@ -14,7 +14,7 @@ class DefaultPlayList implements PlayList {
 
   @Override
   Observable<PlayList.Event> eventBus() {
-    return eventBus.asObservable()
+    return eventBus.onBackpressureDrop()
   }
 
   @Override

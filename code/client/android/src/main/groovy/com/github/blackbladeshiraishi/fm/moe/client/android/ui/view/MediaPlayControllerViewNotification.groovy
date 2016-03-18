@@ -51,7 +51,7 @@ class MediaPlayControllerViewNotification implements MediaPlayControllerView {
 
   @Override
   Observable<MediaPlayControllerView.Event> eventBus() {
-    return eventBus.asObservable()
+    return eventBus.onBackpressureDrop()
   }
 
   @Override

@@ -20,7 +20,7 @@ class MockPlayer implements Player {
 
   @Override
   Observable<Player.Event> eventBus() {
-    return eventBus.asObservable()
+    return eventBus.onBackpressureDrop()
   }
 
   @Override
