@@ -39,7 +39,7 @@ class MediaPlayControllerPresenter {
 
   void unbindPlayService() {
     unsubscribe()
-    uiWorker.schedule{reset()}
+    uiWorker.unsubscribe()
   }
 
   /**
