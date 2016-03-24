@@ -8,20 +8,16 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import com.github.blackbladeshiraishi.fm.moe.client.android.service.MusicService
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.PlayListActivity
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
+import com.github.blackbladeshiraishi.fm.moe.facade.view.BaseView
 import com.github.blackbladeshiraishi.fm.moe.facade.view.MediaPlayControllerView
-import rx.Observable
-import rx.subjects.PublishSubject
-import rx.subjects.Subject
 
 import javax.annotation.Nonnull
 import javax.annotation.Nullable
 
-class MediaPlayControllerViewNotification implements MediaPlayControllerView {
+class MediaPlayControllerViewNotification extends BaseView<MediaPlayControllerView>
+    implements MediaPlayControllerView {
 
   private static final int NOTIFICATION_ID = R.id.playing_songs
-
-  private final Subject<MediaPlayControllerView.Event, MediaPlayControllerView.Event> eventBus =
-      PublishSubject.create()
 
   private final Context context
   private final NotificationSender notificationSender
@@ -47,11 +43,6 @@ class MediaPlayControllerViewNotification implements MediaPlayControllerView {
           PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
     updateButtons()
-  }
-
-  @Override
-  Observable<MediaPlayControllerView.Event> eventBus() {
-    return eventBus.onBackpressureDrop()
   }
 
   @Override

@@ -6,10 +6,8 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
+import com.github.blackbladeshiraishi.fm.moe.facade.view.BaseView
 import com.github.blackbladeshiraishi.fm.moe.facade.view.MediaPlayControllerView
-import rx.Observable
-import rx.subjects.PublishSubject
-import rx.subjects.Subject
 
 import javax.annotation.Nonnull
 import javax.annotation.Nullable
@@ -17,10 +15,8 @@ import javax.annotation.Nullable
 /**
  * ViewHolder of {@link R.layout#included_media_control layout/included_media_control}
  */
-class MediaPlayControllerViewHolder implements MediaPlayControllerView {
-
-  private final Subject<MediaPlayControllerView.Event, MediaPlayControllerView.Event> eventBus =
-      PublishSubject.create()
+class MediaPlayControllerViewHolder extends BaseView<MediaPlayControllerView>
+    implements MediaPlayControllerView {
 
   final View rootView
   final TextView songTitle
@@ -71,12 +67,6 @@ class MediaPlayControllerViewHolder implements MediaPlayControllerView {
         ))
       }
     }
-  }
-
-
-  @Override
-  Observable<MediaPlayControllerView.Event> eventBus() {
-    return eventBus.onBackpressureDrop()
   }
 
   @Override

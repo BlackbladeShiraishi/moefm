@@ -5,11 +5,7 @@ import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import rx.Observable;
-
 public interface MediaPlayControllerView extends View {
-
-  @Nonnull Observable<Event> eventBus();
 
   void showSong(@Nullable Song song);
 
@@ -32,12 +28,11 @@ public interface MediaPlayControllerView extends View {
     PAUSE
   }
 
-  class Event {
-    public final MediaPlayControllerView view;
+  class Event extends View.Event<MediaPlayControllerView> {
     public final Song song;
 
     public Event(MediaPlayControllerView view, Song song) {
-      this.view = view;
+      super(view);
       this.song = song;
     }
   }
