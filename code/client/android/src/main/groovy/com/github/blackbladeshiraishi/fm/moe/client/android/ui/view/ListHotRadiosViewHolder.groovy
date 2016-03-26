@@ -1,6 +1,5 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.view
 
-import android.support.v4.widget.ContentLoadingProgressBar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -16,13 +15,13 @@ import javax.annotation.Nonnull
 class ListHotRadiosViewHolder extends BaseView<ListHotRadiosView> implements ListHotRadiosView {
 
   final View rootView
-  final ContentLoadingProgressBar contentProgress
+  final View contentProgress
   final RecyclerView hotRadioList
   final HotRadiosAdapter hotRadiosAdapter
 
   ListHotRadiosViewHolder(@Nonnull View rootView) {
     this.rootView = rootView
-    contentProgress = rootView.findViewById(R.id.content_progress) as ContentLoadingProgressBar
+    contentProgress = rootView.findViewById(R.id.content_progress)
     hotRadioList = rootView.findViewById(R.id.hot_radios_list) as RecyclerView
     hotRadiosAdapter = new HotRadiosAdapter()
     init()
@@ -41,12 +40,12 @@ class ListHotRadiosViewHolder extends BaseView<ListHotRadiosView> implements Lis
 
   @Override
   void showProgressView() {
-    contentProgress.show()
+    contentProgress.visibility = View.VISIBLE
   }
 
   @Override
   void closeProgressView() {
-    contentProgress.hide()
+    contentProgress.visibility = View.GONE
   }
 
   @Override

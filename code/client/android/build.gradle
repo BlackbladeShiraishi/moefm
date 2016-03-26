@@ -77,6 +77,7 @@ dependencies {
   compile "com.android.support:appcompat-v7:$androidSupportVersion"
   compile "com.android.support:design:$androidSupportVersion"
   compile "com.android.support:recyclerview-v7:$androidSupportVersion"
+  compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
 
   compile 'io.reactivex:rxandroid:1.1.0'
   // Because RxAndroid releases are few and far between, it is recommended you also
