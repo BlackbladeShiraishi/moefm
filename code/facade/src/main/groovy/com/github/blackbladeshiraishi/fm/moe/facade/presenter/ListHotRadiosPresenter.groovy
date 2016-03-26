@@ -26,24 +26,27 @@ class ListHotRadiosPresenter {
   @Nonnull
   final Scheduler uiScheduler
   @Nonnull
-  final ListHotRadiosView hotRadiosView
-  @Nonnull
   final RadioService radioService
+  @Nullable
+  private ListHotRadiosView hotRadiosView
+
+  @Nonnull
+  private State state = State.IDLE
 
   @UiThread
-  ObservableList<Radio> hotRadios
+  @Nullable
+  private ObservableList<Radio> hotRadios
+  @Nullable
+  private Throwable loadError
 
   @Nullable
   private Subscription viewSubscription
 
   ListHotRadiosPresenter(
-      @Nonnull ListHotRadiosView hotRadiosView,
       @Nonnull RadioService radioService,
       @Nonnull final Scheduler uiScheduler) {
     this.uiScheduler = uiScheduler
-    this.hotRadiosView = hotRadiosView
     this.radioService = radioService
-    init()
   }
 
   @Override
@@ -52,16 +55,14 @@ class ListHotRadiosPresenter {
     super.finalize()
   }
 
-  private void init() {
-    bindView()
-  }
-
   private void cleanup() {
     unbindView()
   }
 
-  private void bindView() {
+  void bindView(ListHotRadiosView view) {
     unbindView()
+    hotRadiosView = view
+    updateView()
     viewSubscription = Subscriptions.from(
         eventBus().ofType(StartLoadEvent).observeOn(uiScheduler).subscribe {
           hotRadiosView.showProgressView()
@@ -77,21 +78,33 @@ class ListHotRadiosPresenter {
     )
   }
 
-  private void unbindView() {
-    hotRadiosView.unbindHotRadios()
-    if (viewSubscription == null) {
-      return
+  private void updateView() {
+    if (State.IDLE == State.LOADING) {
+      hotRadiosView.showProgressView()
+    } else {
+      hotRadiosView.closeProgressView()
     }
-    if (!viewSubscription.unsubscribed) {
-      viewSubscription.unsubscribe()
+    if (hotRadios != null) {
+      hotRadiosView.bindHotRadios(hotRadios)
+    } else {
+      hotRadiosView.unbindHotRadios()
     }
-    viewSubscription = null
+  }
+
+  void unbindView() {
+    hotRadiosView?.unbindHotRadios()
+    if (viewSubscription != null) {
+      if (!viewSubscription.unsubscribed) {
+        viewSubscription.unsubscribe()
+      }
+      viewSubscription = null
+    }
+    hotRadiosView = null
   }
 
   public Observable<Event> eventBus() {
     return eventBus.onBackpressureDrop()
   }
-
 
   private void createHotRadioList() {
     final ObservableList<Radio> newList = ObservableList.create(new ArrayList<Radio>())
@@ -100,15 +113,24 @@ class ListHotRadiosPresenter {
     eventBus.onNext(new HotRadioListChangeEvent(this, oldList, newList))
   }
 
-  private void refresh() {
-
+  void start() {
+    if (state == State.IDLE) {
+      load()
+    }
   }
 
-  void start() {
-    load()
+  private void refresh() {
+    if (state != State.LOADING) {
+      load()
+    }
   }
 
   private void load() {
+    if (state == State.LOADING) {
+      return
+    }
+    state = State.LOADING
+    loadError = null
     eventBus.onNext(new StartLoadEvent(this))
     createHotRadioList()
     radioService.hotRadios().subscribeOn(Schedulers.io()).observeOn(uiScheduler).subscribe(
@@ -117,12 +139,15 @@ class ListHotRadiosPresenter {
           @Override
           void onCompleted() {
             eventBus.onNext(new LoadFinishEvent(ListHotRadiosPresenter.this))
+            state = State.LOADED
           }
 
           @Override
           void onError(Throwable e) {
-            eventBus.onNext(new LoadFinishEvent(ListHotRadiosPresenter.this))
+            loadError = e
             eventBus.onNext(new LoadErrorEvent(ListHotRadiosPresenter.this, e))
+            eventBus.onNext(new LoadFinishEvent(ListHotRadiosPresenter.this))
+            state = State.LOADED
           }
 
           @Override

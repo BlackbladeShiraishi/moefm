@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     contentView = R.layout.list_hot_radios
     listHotRadiosViewHolder = new ListHotRadiosViewHolder(findViewById(android.R.id.content))
     listHotRadiosPresenter = new ListHotRadiosPresenter(
-        listHotRadiosViewHolder,
         MoeFmApplication.get(this).appComponent.radioService,
         AndroidSchedulers.mainThread()
     )
@@ -41,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
   protected void onStart() {
     super.onStart()
     listHotRadiosPresenter.start()
+    listHotRadiosPresenter.bindView(listHotRadiosViewHolder)
   }
 
+  @Override
+  protected void onStop() {
+    listHotRadiosPresenter.unbindView()
+    super.onStop()
+  }
 }
