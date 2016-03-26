@@ -3,6 +3,8 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
@@ -48,4 +50,23 @@ public class MainActivity extends AppCompatActivity {
     listHotRadiosPresenter.unbindView()
     super.onStop()
   }
+
+  @Override
+  boolean onCreateOptionsMenu(Menu menu) {
+    super.onCreateOptionsMenu(menu)
+    menuInflater.inflate(R.menu.refresh, menu)
+    return true
+  }
+
+  @Override
+  boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.itemId) {
+      case R.id.action_refresh:
+        listHotRadiosPresenter?.refresh()
+        return true
+      default:
+        return super.onOptionsItemSelected(item)
+    }
+  }
+
 }

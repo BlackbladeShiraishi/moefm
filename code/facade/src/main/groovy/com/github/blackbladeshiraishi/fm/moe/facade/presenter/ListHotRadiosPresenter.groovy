@@ -119,7 +119,7 @@ class ListHotRadiosPresenter {
     }
   }
 
-  private void refresh() {
+  void refresh() {
     if (state != State.LOADING) {
       load()
     }
