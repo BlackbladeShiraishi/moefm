@@ -6,7 +6,6 @@
 
     <string name="state_playing">正在播放</string>
     <string name="state_pausing">暂停</string>
-    <string name="state_loading_hot_radios">加载热门电台中</string>
 
     <string name="action_skip_previous">上一首</string>
     <string name="action_play">播放</string>
