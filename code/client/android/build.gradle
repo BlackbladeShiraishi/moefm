@@ -4,7 +4,7 @@ buildscript {
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:2.0.0-beta7'
-    classpath 'org.codehaus.groovy:gradle-groovy-android-plugin:0.3.9'
+    classpath 'org.codehaus.groovy:gradle-groovy-android-plugin:0.3.10'
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.3.0'
 
