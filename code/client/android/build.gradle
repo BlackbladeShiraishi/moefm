@@ -16,7 +16,8 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'groovyx.grooid.groovy-android'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.getkeepsafe.dexcount'
+// uncomment this to show dexcount. not use always for faster build
+//apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
   compileSdkVersion 23
