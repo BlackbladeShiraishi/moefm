@@ -1,0 +1,6 @@
+package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
+
+public class Radio {
+  public String title;
+  public int thumb;
+}
