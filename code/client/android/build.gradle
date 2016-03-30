@@ -48,8 +48,8 @@ android {
   }
 }
 
-// set string android res value in local.properties file
-new ConfigSlurper().parse(file('local.properties').getText('UTF-8'))
+// set string android res value in settings.properties file
+new ConfigSlurper().parse(file('settings.properties').getText('UTF-8'))
     .android.resValue.string.each {key, value ->
       project.android.applicationVariants.all {variant ->
         variant.resValue "string", key, value

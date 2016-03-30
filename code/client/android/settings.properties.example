@@ -1,0 +1,5 @@
+# avoid copy comments to settings.properties, see http://stackoverflow.com/a/15925334/1720042
+
+# Set your open.moefou.org API/Consumer Key here
+# Here are a temp API Key for test only
+android.resValue.string.moefm_api_key = 'b51566cd7489d82cd2013be406d2a6ec05575992d'
