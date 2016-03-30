@@ -18,9 +18,12 @@ public class CardClusterViewModelListAdapter extends RecyclerView.Adapter<CardCl
   @Nonnull
   public final List<CardClusterViewHolder.CardClusterViewModel> dataSet;
 
+  public final int maxColumn;
+
   public CardClusterViewModelListAdapter(
-      @Nonnull List<CardClusterViewHolder.CardClusterViewModel> dataSet) {
+      @Nonnull List<CardClusterViewHolder.CardClusterViewModel> dataSet, int maxColumn) {
     this.dataSet = dataSet;
+    this.maxColumn = maxColumn;
   }
 
   @Override
@@ -32,7 +35,7 @@ public class CardClusterViewModelListAdapter extends RecyclerView.Adapter<CardCl
 
   @Override
   public void onBindViewHolder(CardClusterViewHolder holder, int position) {
-    holder.bindData(dataSet.get(position));
+    holder.bindData(dataSet.get(position), maxColumn);
   }
 
   @Override

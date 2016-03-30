@@ -3,6 +3,7 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.entity.MoeFmMainPage;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
 
 import java.util.ArrayList;
@@ -11,11 +12,11 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 
-public class MainPageAdapter {
+public class MoeFmMainPageAdapter {
 
   public static void updateCardClusterViewModelList(
       @Nonnull List<CardClusterViewHolder.CardClusterViewModel> cardClusterViewModelList,
-      @Nonnull MainPage mainPage) {
+      @Nonnull MoeFmMainPage mainPage) {
     cardClusterViewModelList.clear();
     cardClusterViewModelList.add(hotRadios(mainPage));
     cardClusterViewModelList.add(newAlbums(mainPage));
@@ -24,7 +25,7 @@ public class MainPageAdapter {
   }
 
   public static List<CardClusterViewHolder.CardClusterViewModel> newCardClusterViewModelList(
-      @Nonnull MainPage mainPage) {
+      @Nonnull MoeFmMainPage mainPage) {
     List<CardClusterViewHolder.CardClusterViewModel> result = new ArrayList<>(4);
     result.add(hotRadios(mainPage));
     result.add(newAlbums(mainPage));
@@ -33,24 +34,24 @@ public class MainPageAdapter {
     return result;
   }
 
-  private static CardClusterViewHolder.CardClusterViewModel hotRadios(MainPage mainPage) {
+  private static CardClusterViewHolder.CardClusterViewModel hotRadios(MoeFmMainPage mainPage) {
     final String title = "Hot Radios";
-    return new RadioListAdapter(dummyListener(title), title, mainPage.hotRadios);
+    return new RadioListAdapter(dummyListener(title), title, mainPage.getHotRadios());
   }
 
-  private static CardClusterViewHolder.CardClusterViewModel newAlbums(MainPage mainPage) {
+  private static CardClusterViewHolder.CardClusterViewModel newAlbums(MoeFmMainPage mainPage) {
     final String title = "New Albums";
-    return new AlbumListAdapter(dummyListener(title), title, mainPage.newAlbums);
+    return new AlbumListAdapter(dummyListener(title), title, mainPage.getNewAlbums());
   }
 
-  private static CardClusterViewHolder.CardClusterViewModel hotAlbums(MainPage mainPage) {
+  private static CardClusterViewHolder.CardClusterViewModel hotAlbums(MoeFmMainPage mainPage) {
     final String title = "Hot Albums";
-    return new AlbumListAdapter(dummyListener(title), title, mainPage.hotAlbums);
+    return new AlbumListAdapter(dummyListener(title), title, mainPage.getHotAlbums());
   }
 
-  private static CardClusterViewHolder.CardClusterViewModel albums(MainPage mainPage) {
+  private static CardClusterViewHolder.CardClusterViewModel albums(MoeFmMainPage mainPage) {
     final String title = "Albums";
-    return new AlbumListAdapter(dummyListener(title), title, mainPage.albums);
+    return new AlbumListAdapter(dummyListener(title), title, mainPage.getAlbums());
   }
 
   private static View.OnClickListener dummyListener(final String title) {

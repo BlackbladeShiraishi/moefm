@@ -3,6 +3,7 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 import android.view.View;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 
 import java.util.ArrayList;
 import java.util.List;

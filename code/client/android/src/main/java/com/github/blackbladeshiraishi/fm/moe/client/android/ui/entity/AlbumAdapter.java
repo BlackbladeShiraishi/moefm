@@ -1,7 +1,9 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 
+import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 
 public class AlbumAdapter implements CardViewHoler.CardViewModel {
 
@@ -13,11 +15,11 @@ public class AlbumAdapter implements CardViewHoler.CardViewModel {
 
   @Override
   public String getTitle() {
-    return source.title;
+    return source.getTitle();
   }
 
   @Override
   public int getThumb() {
-    return source.thumb;
+    return R.drawable.tbd;
   }
 }

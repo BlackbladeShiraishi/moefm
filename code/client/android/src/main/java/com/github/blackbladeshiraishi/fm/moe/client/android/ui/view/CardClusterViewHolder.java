@@ -29,7 +29,7 @@ public class CardClusterViewHolder extends RecyclerView.ViewHolder {
     cardContainer = (ViewGroup) itemView.findViewById(R.id.card_container);
   }
 
-  public void bindData(CardClusterViewModel vm) {
+  public void bindData(CardClusterViewModel vm, int maxColumn) {
     // set more button
     View.OnClickListener titleClickListener = vm.getOnClickTitleContainerListener();
     if (titleClickListener != null) {
@@ -52,11 +52,16 @@ public class CardClusterViewHolder extends RecyclerView.ViewHolder {
     if (cardViewModels != null) {
       cardContainer.setVisibility(View.VISIBLE);
       LayoutInflater inflater = LayoutInflater.from(cardContainer.getContext());
+      int counter = 0; // have added counter cards
       for (CardViewHoler.CardViewModel item: cardViewModels) {
+        if (counter >= maxColumn) {
+          break;
+        }
         CardViewHoler cardViewHoler =
             new CardViewHoler(inflater.inflate(R.layout.view_card, cardContainer, false));
         cardViewHoler.bindData(item);
         cardContainer.addView(cardViewHoler.rootView);
+        counter++;
       }
     } else {
       cardContainer.setVisibility(View.GONE);
