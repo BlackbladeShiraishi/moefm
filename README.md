@@ -16,7 +16,7 @@
 
 ## build
 1. 安装配置JDK、Android SDK等。
-2. 在code/client/android目录，复制local.properties.example为local.properties，并在local.properties中配置api key等信息。
+2. 在 code/client/android 目录，复制 local.properties.example 为 local.properties，并在 local.properties 中配置 api key 等信息。example 文件中包含一个用于测试的 API Key。
 3. 正常地编译运行Android项目。
 
 ## 文档
