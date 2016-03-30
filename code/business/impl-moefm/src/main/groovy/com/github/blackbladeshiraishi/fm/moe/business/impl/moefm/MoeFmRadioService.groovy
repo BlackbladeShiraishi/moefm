@@ -1,6 +1,6 @@
 package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm
 
-import com.github.blackbladeshiraishi.fm.moe.business.business.RadioService
+import com.github.blackbladeshiraishi.fm.moe.business.api.RadioService
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import groovy.json.JsonSlurper

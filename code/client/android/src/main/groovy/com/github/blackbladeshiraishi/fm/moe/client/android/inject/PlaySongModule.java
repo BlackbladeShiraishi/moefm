@@ -1,11 +1,11 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.inject;
 
 
-import com.github.blackbladeshiraishi.fm.moe.business.business.PlayList;
-import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService;
-import com.github.blackbladeshiraishi.fm.moe.business.business.Player;
-import com.github.blackbladeshiraishi.fm.moe.business.business.impl.DefaultPlayList;
-import com.github.blackbladeshiraishi.fm.moe.business.business.impl.DefaultPlayService;
+import com.github.blackbladeshiraishi.fm.moe.business.api.PlayList;
+import com.github.blackbladeshiraishi.fm.moe.business.api.PlayService;
+import com.github.blackbladeshiraishi.fm.moe.business.api.Player;
+import com.github.blackbladeshiraishi.fm.moe.business.api.impl.DefaultPlayList;
+import com.github.blackbladeshiraishi.fm.moe.business.api.impl.DefaultPlayService;
 import com.github.blackbladeshiraishi.fm.moe.client.android.business.MediaPlayerWrapper;
 import com.github.blackbladeshiraishi.fm.moe.client.android.business.MediaPlayers;
 

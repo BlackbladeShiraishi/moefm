@@ -1,6 +1,6 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.inject;
 
-import com.github.blackbladeshiraishi.fm.moe.business.business.RadioService;
+import com.github.blackbladeshiraishi.fm.moe.business.api.RadioService;
 
 import javax.inject.Singleton;
 

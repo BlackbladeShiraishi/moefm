@@ -1,8 +1,8 @@
 package com.github.blackbladeshiraishi.fm.moe.facade.presenter
 
-import com.github.blackbladeshiraishi.fm.moe.business.business.PlayList
-import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService
-import com.github.blackbladeshiraishi.fm.moe.business.business.Player
+import com.github.blackbladeshiraishi.fm.moe.business.api.PlayList
+import com.github.blackbladeshiraishi.fm.moe.business.api.PlayService
+import com.github.blackbladeshiraishi.fm.moe.business.api.Player
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import com.github.blackbladeshiraishi.fm.moe.facade.view.MediaPlayControllerView
 import rx.Scheduler

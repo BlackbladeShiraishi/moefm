@@ -1,4 +1,4 @@
-package com.github.blackbladeshiraishi.fm.moe.business.business.impl
+package com.github.blackbladeshiraishi.fm.moe.business.api.impl
 
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import groovy.transform.CompileDynamic

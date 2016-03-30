@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.github.blackbladeshiraishi.fm.moe.business.business.PlayList
-import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService
+import com.github.blackbladeshiraishi.fm.moe.business.api.PlayList
+import com.github.blackbladeshiraishi.fm.moe.business.api.PlayService
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import rx.Subscription
 import rx.subscriptions.Subscriptions

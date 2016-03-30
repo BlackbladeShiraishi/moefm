@@ -1,4 +1,4 @@
-package com.github.blackbladeshiraishi.fm.moe.business.business;
+package com.github.blackbladeshiraishi.fm.moe.business.api;
 
 
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;

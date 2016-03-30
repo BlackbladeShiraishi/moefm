@@ -1,6 +1,6 @@
-package com.github.blackbladeshiraishi.fm.moe.business.business.impl
+package com.github.blackbladeshiraishi.fm.moe.business.api.impl
 
-import com.github.blackbladeshiraishi.fm.moe.business.business.PlayList
+import com.github.blackbladeshiraishi.fm.moe.business.api.PlayList
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import rx.Observable
 import rx.subjects.PublishSubject

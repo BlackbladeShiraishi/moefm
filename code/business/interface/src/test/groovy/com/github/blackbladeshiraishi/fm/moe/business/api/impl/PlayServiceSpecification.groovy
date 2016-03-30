@@ -1,7 +1,7 @@
-package com.github.blackbladeshiraishi.fm.moe.business.business.impl
+package com.github.blackbladeshiraishi.fm.moe.business.api.impl
 
-import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService
-import com.github.blackbladeshiraishi.fm.moe.business.business.Player
+import com.github.blackbladeshiraishi.fm.moe.business.api.PlayService
+import com.github.blackbladeshiraishi.fm.moe.business.api.Player
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import groovy.transform.CompileDynamic
 import spock.lang.Specification

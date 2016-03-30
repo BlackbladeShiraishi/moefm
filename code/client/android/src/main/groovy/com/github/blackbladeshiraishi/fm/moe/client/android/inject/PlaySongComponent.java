@@ -1,7 +1,7 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.inject;
 
-import com.github.blackbladeshiraishi.fm.moe.business.business.PlayList;
-import com.github.blackbladeshiraishi.fm.moe.business.business.PlayService;
+import com.github.blackbladeshiraishi.fm.moe.business.api.PlayList;
+import com.github.blackbladeshiraishi.fm.moe.business.api.PlayService;
 
 import dagger.Subcomponent;
 
