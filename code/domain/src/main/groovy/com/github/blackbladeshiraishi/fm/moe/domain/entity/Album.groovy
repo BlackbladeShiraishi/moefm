@@ -6,4 +6,7 @@ class Album implements Serializable {
 
   String title
 
+  /** key -> url map */
+  Map<String, String> cover
+
 }

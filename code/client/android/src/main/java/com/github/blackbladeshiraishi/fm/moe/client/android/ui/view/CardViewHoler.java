@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
+import com.squareup.picasso.Picasso;
 
 
 public class CardViewHoler {
@@ -22,12 +23,12 @@ public class CardViewHoler {
 
   public void bindData(CardViewModel vm) {
     titleView.setText(vm.getTitle());
-    thumbView.setImageResource(vm.getThumb());
+    Picasso.with(thumbView.getContext()).load(vm.getThumbPath()).into(thumbView);
   }
 
   public interface CardViewModel {
     String getTitle();
-    int getThumb();
+    String getThumbPath();
   }
 
 }
