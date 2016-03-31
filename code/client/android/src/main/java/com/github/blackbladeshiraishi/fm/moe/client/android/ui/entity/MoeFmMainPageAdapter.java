@@ -35,22 +35,22 @@ public class MoeFmMainPageAdapter {
   }
 
   private static CardClusterViewHolder.CardClusterViewModel hotRadios(MoeFmMainPage mainPage) {
-    final String title = "Hot Radios";
+    final String title = "流行电台";
     return new RadioListAdapter(dummyListener(title), title, mainPage.getHotRadios());
   }
 
   private static CardClusterViewHolder.CardClusterViewModel newAlbums(MoeFmMainPage mainPage) {
-    final String title = "New Albums";
+    final String title = "新曲速递";
     return new AlbumListAdapter(dummyListener(title), title, mainPage.getNewAlbums());
   }
 
   private static CardClusterViewHolder.CardClusterViewModel hotAlbums(MoeFmMainPage mainPage) {
-    final String title = "Hot Albums";
+    final String title = "音乐热榜";
     return new AlbumListAdapter(dummyListener(title), title, mainPage.getHotAlbums());
   }
 
   private static CardClusterViewHolder.CardClusterViewModel albums(MoeFmMainPage mainPage) {
-    final String title = "Albums";
+    final String title = "最新音乐";
     return new AlbumListAdapter(dummyListener(title), title, mainPage.getAlbums());
   }
 
