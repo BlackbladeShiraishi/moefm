@@ -136,7 +136,8 @@ class DefaultPlayService implements PlayService {
 
   @Override
   Object getReason() {
-    return reason
+    //TODO implement DefaultPlayService.reason
+    return null
   }
 
   @Override
