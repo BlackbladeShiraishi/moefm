@@ -1,4 +1,6 @@
 # 电台应用
+[![Build Status](https://travis-ci.org/BlackbladeShiraishi/moefm.svg?branch=master)](https://travis-ci.org/BlackbladeShiraishi/moefm)
+
 一个 [moe.fm](http://moe.fm/) Android 客户端。
 
 注：此项目仅用于演示、测试和学习。
