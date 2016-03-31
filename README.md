@@ -21,6 +21,9 @@
 2. 在 code/client/android 目录的 settings.properties 文件中配置 api key 等信息。默认配置仅用于测试。settings.properties.example 中包含各项配置的说明。
 3. 正常地编译运行Android项目。
 
+nightly 预览版下载：
+https://dl.bintray.com/blackbladeshiraishi/generic/fm/moe/android/nightly/apk/
+
 ## 文档
 项目结构等资料见document目录。
 
