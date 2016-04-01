@@ -1,5 +1,6 @@
 // set version of dependencies who is used by multiple modules
 ext.groovyVersion = '2.4.6'
 ext.rxjavaVersion = '1.1.1'
+ext.daggerVersion = '2.1'
 
 ext.junitVersion = '4.12'

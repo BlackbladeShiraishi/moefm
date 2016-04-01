@@ -1,4 +1,6 @@
 dependencies {
   compile project(':business:core')
+  compile "com.google.dagger:dagger:$daggerVersion"
+  compileOnly "com.google.dagger:dagger-compiler:$daggerVersion"
   testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 }

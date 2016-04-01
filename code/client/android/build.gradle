@@ -67,7 +67,6 @@ androidGroovy {
 
 dependencies {
   def androidSupportVersion = '23.2.1'
-  def daggerVersion = '2.1'
 
   compile "org.codehaus.groovy:groovy:${groovyVersion}:grooid"
   compile(project(':facade')) {
