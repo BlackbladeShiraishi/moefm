@@ -42,7 +42,11 @@ class JsonParser {
   private static List<Radio> getHotRadios(@Nonnull Object jsonObject) {
     final List<Radio> result = []
     jsonObject.response.hot_radios.each {radio ->
-      result << new Radio(id: radio.wiki_id, title: radio.wiki_title, cover: radio.wiki_cover)
+      result << new Radio(
+          id: radio.wiki_id,
+          title: radio.wiki_title,
+          cover: new HashMap<>(radio.wiki_cover as Map)
+      )
     }
     return result
   }
@@ -50,7 +54,11 @@ class JsonParser {
   private static List<Album> getNewAlbums(@Nonnull Object jsonObject) {
     final List<Album> result = []
     jsonObject.response.new_musics.each {album ->
-      result << new Album(id: album.wiki_id, title: album.wiki_title, cover: album.wiki_cover)
+      result << new Album(
+          id: album.wiki_id,
+          title: album.wiki_title,
+          cover: new HashMap<>(album.wiki_cover as Map)
+      )
     }
     return result
   }
@@ -58,7 +66,11 @@ class JsonParser {
   private static List<Album> getHotAlbums(@Nonnull Object jsonObject) {
     final List<Album> result = []
     jsonObject.response.hot_musics.each {album ->
-      result << new Album(id: album.wiki_id, title: album.wiki_title, cover: album.wiki_cover)
+      result << new Album(
+          id: album.wiki_id,
+          title: album.wiki_title,
+          cover: new HashMap<>(album.wiki_cover as Map)
+      )
     }
     return result
   }
@@ -66,7 +78,11 @@ class JsonParser {
   private static List<Album> getAlbums(@Nonnull Object jsonObject) {
     final List<Album> result = []
     jsonObject.response.musics.each {album ->
-      result << new Album(id: album.wiki_id, title: album.wiki_title, cover: album.wiki_cover)
+      result << new Album(
+          id: album.wiki_id,
+          title: album.wiki_title,
+          cover: new HashMap<>(album.wiki_cover as Map)
+      )
     }
     return result
   }
