@@ -8,7 +8,7 @@ include 'services:webservice'
 rootProject.name = 'moefm'
 
 include ':domain'
-include ':business:interface'
+include ':business:core'
 include ':business:impl-moefm'
 include ':facade'
 include ':client:android'

@@ -7,7 +7,7 @@ def javaSubprojects = []
 
 def groovySubprojects = []
 groovySubprojects << ':domain'
-groovySubprojects << ':business:interface'
+groovySubprojects << ':business:core'
 groovySubprojects << ':business:impl-moefm'
 groovySubprojects << ':facade'
 

@@ -1,4 +1,4 @@
 dependencies {
-  compile project(':business:impl-moefm')
+  compile project(':business:core')
   compile 'gq.baijie:rxlist:-SNAPSHOT'
 }

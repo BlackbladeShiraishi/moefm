@@ -1,7 +1,7 @@
 dependencies {
   def retrofitVersion = '2.0.0'
 
-  compile project(':business:interface')
+  compile project(':business:core')
   compile "org.codehaus.groovy:groovy-json:$groovyVersion"
   compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
   compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
