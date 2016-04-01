@@ -1,10 +1,14 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 
+import android.view.View;
+
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 
 import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class RadioAdapter implements CardViewHoler.CardViewModel {
 
@@ -17,11 +21,19 @@ public class RadioAdapter implements CardViewHoler.CardViewModel {
   }
 
   @Override
+  @Nullable
+  public View.OnClickListener getOnClickCardViewListener() {
+    return null;
+  }
+
+  @Override
+  @Nullable
   public String getTitle() {
     return source.getTitle();
   }
 
   @Override
+  @Nullable
   public String getThumbPath() {
     return selectCover(source.getCover());
   }

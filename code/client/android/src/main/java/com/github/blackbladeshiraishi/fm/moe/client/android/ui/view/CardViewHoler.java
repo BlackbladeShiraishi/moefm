@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.squareup.picasso.Picasso;
 
+import javax.annotation.Nullable;
 
 public class CardViewHoler {
 
@@ -24,11 +25,16 @@ public class CardViewHoler {
   public void bindData(CardViewModel vm) {
     titleView.setText(vm.getTitle());
     Picasso.with(thumbView.getContext()).load(vm.getThumbPath()).into(thumbView);
+    rootView.setOnClickListener(vm.getOnClickCardViewListener());
   }
 
   public interface CardViewModel {
+    @Nullable
     String getTitle();
+    @Nullable
     String getThumbPath();
+    @Nullable
+    View.OnClickListener getOnClickCardViewListener();
   }
 
 }
