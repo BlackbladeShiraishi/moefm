@@ -1,4 +1,4 @@
-package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.entity
+package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api.entity
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MainPage
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album

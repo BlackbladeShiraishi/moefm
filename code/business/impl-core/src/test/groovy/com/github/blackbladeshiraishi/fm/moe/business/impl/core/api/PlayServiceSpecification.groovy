@@ -1,4 +1,4 @@
-package com.github.blackbladeshiraishi.fm.moe.business.api.impl
+package com.github.blackbladeshiraishi.fm.moe.business.impl.core.api
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.PlayService
 import com.github.blackbladeshiraishi.fm.moe.business.api.Player

@@ -1,4 +1,4 @@
-package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm
+package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api
 
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory

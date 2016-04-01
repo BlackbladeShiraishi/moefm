@@ -3,7 +3,7 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.entity.MoeFmMainPage;
+import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api.entity.MoeFmMainPage;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
 
 import java.util.ArrayList;

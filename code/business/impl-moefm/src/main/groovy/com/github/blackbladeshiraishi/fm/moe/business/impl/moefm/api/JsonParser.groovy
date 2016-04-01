@@ -1,6 +1,6 @@
-package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm
+package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api
 
-import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.entity.MoeFmMainPage
+import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api.entity.MoeFmMainPage
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
