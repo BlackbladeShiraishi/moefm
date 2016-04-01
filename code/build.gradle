@@ -4,10 +4,11 @@ apply from: 'gradle/dependency-version.gradle'
 apply from: 'gradle/android-disable-predex.gradle'
 
 def javaSubprojects = []
+javaSubprojects << ':business:core'
 
 def groovySubprojects = []
 groovySubprojects << ':domain'
-groovySubprojects << ':business:core'
+groovySubprojects << ':business:impl-core'
 groovySubprojects << ':business:impl-moefm'
 groovySubprojects << ':facade'
 
