@@ -2,10 +2,7 @@ package com.github.blackbladeshiraishi.fm.moe.client.android
 
 import android.app.Application
 import android.content.Context
-import com.github.blackbladeshiraishi.fm.moe.client.android.inject.AppComponent
-import com.github.blackbladeshiraishi.fm.moe.client.android.inject.DaggerAppComponent
-import com.github.blackbladeshiraishi.fm.moe.client.android.inject.MoeFmModule
-import com.github.blackbladeshiraishi.fm.moe.client.android.inject.PlaySongComponent
+import com.github.blackbladeshiraishi.fm.moe.client.android.inject.*
 
 import javax.annotation.Nonnull
 import javax.annotation.Nullable
@@ -29,8 +26,10 @@ class MoeFmApplication extends Application {
 
   private void init() {
     appComponent = DaggerAppComponent.builder()
+        .appModule(new AppModule(this))
         .moeFmModule(new MoeFmModule(getString(R.string.moefm_api_key)))
         .build()
+    appComponent.basicUiProcessor.register()
   }
 
   AppComponent getAppComponent() {

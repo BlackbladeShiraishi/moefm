@@ -3,8 +3,10 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 import android.view.View;
 
+import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
+import com.github.blackbladeshiraishi.fm.moe.facade.view.event.ShowRadioEvent;
 
 import java.util.Map;
 
@@ -23,7 +25,14 @@ public class RadioAdapter implements CardViewHoler.CardViewModel {
   @Override
   @Nullable
   public View.OnClickListener getOnClickCardViewListener() {
-    return null;
+    return new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        MoeFmApplication.get(v.getContext()).getAppComponent().getEventBus().fireEvent(
+            new ShowRadioEvent(v, source)
+        );
+      }
+    };
   }
 
   @Override

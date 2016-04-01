@@ -1,4 +1,6 @@
 dependencies {
   compile project(':business:core')
   compile 'gq.baijie:rxlist:-SNAPSHOT'
+  compile "com.google.dagger:dagger:$daggerVersion"
+  compileOnly "com.google.dagger:dagger-compiler:$daggerVersion"
 }
