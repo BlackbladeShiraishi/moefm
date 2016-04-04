@@ -3,6 +3,7 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 import android.view.View;
 
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.RadioActivity;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 
@@ -23,7 +24,12 @@ public class RadioAdapter implements CardViewHoler.CardViewModel {
   @Override
   @Nullable
   public View.OnClickListener getOnClickCardViewListener() {
-    return null;
+    return new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        RadioActivity.startThis(v.getContext(), source);
+      }
+    };
   }
 
   @Override
