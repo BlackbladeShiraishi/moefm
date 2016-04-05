@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MainPage;
@@ -26,6 +27,7 @@ public class Main2Activity extends AppCompatActivity {
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main2);
+    setSupportActionBar((Toolbar) findViewById(R.id.action_bar));
     final RecyclerView contentList = (RecyclerView) findViewById(R.id.content_list);
     MoeFmApplication.get(this).getAppComponent().getRadioService().mainPage()
         .subscribeOn(Schedulers.io())
