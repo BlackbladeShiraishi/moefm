@@ -3,10 +3,10 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.0.0-rc3'
-    classpath 'org.codehaus.groovy:gradle-groovy-android-plugin:0.3.10'
+    classpath 'com.android.tools.build:gradle:2.2.1'
+    classpath 'org.codehaus.groovy:groovy-android-gradle-plugin:1.1.0'
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.3.0'
+    classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
@@ -14,7 +14,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'groovyx.grooid.groovy-android'
+apply plugin: 'groovyx.android'
 apply plugin: 'com.neenbedankt.android-apt'
 // uncomment this to show dexcount. not use always for faster build
 //apply plugin: 'com.getkeepsafe.dexcount'
