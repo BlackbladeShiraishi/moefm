@@ -1,5 +1,5 @@
 dependencies {
-  def retrofitVersion = '2.0.0'
+  def retrofitVersion = '2.1.0'
 
   compile project(':business:core')
   compile "org.codehaus.groovy:groovy-json:$groovyVersion"
