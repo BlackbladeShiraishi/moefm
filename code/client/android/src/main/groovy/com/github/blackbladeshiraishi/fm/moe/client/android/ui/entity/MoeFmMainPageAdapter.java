@@ -1,9 +1,12 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api.entity.MoeFmMainPage;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.HotRadioListActivity;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
 
 import java.util.ArrayList;
@@ -36,7 +39,14 @@ public class MoeFmMainPageAdapter {
 
   private static CardClusterViewHolder.CardClusterViewModel hotRadios(MoeFmMainPage mainPage) {
     final String title = "流行电台";
-    return new RadioListAdapter(dummyListener(title), title, mainPage.getHotRadios());
+    View.OnClickListener onClickTitleContainerListener = new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        final Context context = v.getContext();
+        context.startActivity(new Intent(context, HotRadioListActivity.class));
+      }
+    };
+    return new RadioListAdapter(onClickTitleContainerListener, title, mainPage.getHotRadios());
   }
 
   private static CardClusterViewHolder.CardClusterViewModel newAlbums(MoeFmMainPage mainPage) {

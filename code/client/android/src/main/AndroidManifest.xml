@@ -12,14 +12,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.activity.HotRadioListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
         <activity
                 android:name=".ui.activity.MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
@@ -28,6 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.activity.HotRadioListActivity"/>
 
         <activity android:name=".ui.activity.RadioActivity"/>
 
