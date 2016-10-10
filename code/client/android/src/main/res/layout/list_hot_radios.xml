@@ -12,7 +12,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:clipToPadding="false"
-            tools:context=".ui.activity.MainActivity"
+            tools:context=".ui.activity.HotRadioListActivity"
             tools:listitem="@layout/list_item_radio"
     />
 

@@ -12,7 +12,7 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.ListHotRadio
 import com.github.blackbladeshiraishi.fm.moe.facade.presenter.ListHotRadiosPresenter
 import rx.android.schedulers.AndroidSchedulers
 
-public class MainActivity extends AppCompatActivity {
+public class HotRadioListActivity extends AppCompatActivity {
 
   private ListHotRadiosViewHolder listHotRadiosViewHolder
   private ListHotRadiosPresenter listHotRadiosPresenter

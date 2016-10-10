@@ -21,12 +21,12 @@ import rx.SingleSubscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class Main2Activity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main2);
+    setContentView(R.layout.activity_main);
     setSupportActionBar((Toolbar) findViewById(R.id.action_bar));
     final RecyclerView contentList = (RecyclerView) findViewById(R.id.content_list);
     MoeFmApplication.get(this).getAppComponent().getRadioService().mainPage()
@@ -55,7 +55,7 @@ public class Main2Activity extends AppCompatActivity {
           public void onError(Throwable error) {
             String message = String.format(
                 Locale.US, "[%s]%s", error.getClass().getSimpleName(), error.getMessage());
-            Toast.makeText(Main2Activity.this, message, Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
           }
 
         });
