@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainLayoutView;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
 
 import java.util.Map;
 
@@ -20,20 +21,14 @@ import flow.TraversalCallback;
 
 public class Main0Activity extends AppCompatActivity {
 
+  private MainLayoutView layoutView;
+
   // ##### flow #####
   @Override
   protected void attachBaseContext(Context newBase) {
     newBase = Flow.configure(newBase, this)
-        .dispatcher(KeyDispatcher.configure(this, new KeyChanger() {
-          @Override
-          public void changeKey(@Nullable State outgoingState, @NonNull State incomingState,
-                                @NonNull Direction direction,
-                                @NonNull Map<Object, Context> incomingContexts,
-                                @NonNull TraversalCallback callback) {
-            //TODO;
-            callback.onTraversalCompleted();
-          }
-        }).build())
+        .dispatcher(KeyDispatcher.configure(this, new MainKeyChanger()).build())
+        .defaultKey(MainPageView.NAME)
         .install();
     super.attachBaseContext(newBase);
   }
@@ -50,7 +45,24 @@ public class Main0Activity extends AppCompatActivity {
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(new MainLayoutView(this));
+    layoutView = new MainLayoutView(this);
+    setContentView(layoutView);
+  }
+
+  private class MainKeyChanger implements KeyChanger {
+    @Override
+    public void changeKey(@Nullable State outgoingState, @NonNull State incomingState,
+                          @NonNull Direction direction,
+                          @NonNull Map<Object, Context> incomingContexts,
+                          @NonNull TraversalCallback callback) {
+      final Object incomingKey = incomingState.getKey();
+      if (incomingKey.equals(MainPageView.NAME)) {
+        MainPageView contentView = new MainPageView(incomingContexts.get(incomingKey));
+        layoutView.setContentView(contentView);
+        contentView.refresh();
+      } //TODO else
+      callback.onTraversalCompleted();
+    }
   }
 
 }

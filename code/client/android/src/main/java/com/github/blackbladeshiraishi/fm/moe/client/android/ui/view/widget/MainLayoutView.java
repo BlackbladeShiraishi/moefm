@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -53,6 +54,11 @@ public class MainLayoutView extends DrawerLayout
     Toast.makeText(getContext(), "selected: " + selectedName, Toast.LENGTH_SHORT).show();
     closeDrawer(GravityCompat.START);
     return true;
+  }
+
+  public void setContentView(View contentView) {
+    mainContainer.removeAllViews();
+    mainContainer.addView(contentView);
   }
 
 
