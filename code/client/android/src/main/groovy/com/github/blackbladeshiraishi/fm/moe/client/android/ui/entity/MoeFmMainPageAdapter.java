@@ -2,17 +2,21 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api.entity.MoeFmMainPage;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.HotRadioListActivity;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AndroidListHotRadiosView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+
+import flow.Flow;
 
 
 public class MoeFmMainPageAdapter {
@@ -43,7 +47,13 @@ public class MoeFmMainPageAdapter {
       @Override
       public void onClick(View v) {
         final Context context = v.getContext();
-        context.startActivity(new Intent(context, HotRadioListActivity.class));
+        try {
+          Flow.get(context).set(AndroidListHotRadiosView.NAME);
+        } catch (IllegalStateException e) {
+          //TODO
+          Log.w("TODO", "should use flow", e);
+          context.startActivity(new Intent(context, HotRadioListActivity.class));
+        }
       }
     };
     return new RadioListAdapter(onClickTitleContainerListener, title, mainPage.getHotRadios());

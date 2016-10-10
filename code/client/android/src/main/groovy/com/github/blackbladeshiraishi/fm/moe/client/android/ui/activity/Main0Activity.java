@@ -6,8 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AndroidListHotRadiosView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainLayoutView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
+import com.github.blackbladeshiraishi.fm.moe.facade.presenter.ListHotRadiosPresenter;
 
 import java.util.Map;
 
@@ -17,6 +20,7 @@ import flow.KeyChanger;
 import flow.KeyDispatcher;
 import flow.State;
 import flow.TraversalCallback;
+import rx.android.schedulers.AndroidSchedulers;
 
 
 public class Main0Activity extends AppCompatActivity {
@@ -56,10 +60,21 @@ public class Main0Activity extends AppCompatActivity {
                           @NonNull Map<Object, Context> incomingContexts,
                           @NonNull TraversalCallback callback) {
       final Object incomingKey = incomingState.getKey();
+      final Context incomingContext = incomingContexts.get(incomingKey);
       if (incomingKey.equals(MainPageView.NAME)) {
-        MainPageView contentView = new MainPageView(incomingContexts.get(incomingKey));
+        MainPageView contentView = new MainPageView(incomingContext);
         layoutView.setContentView(contentView);
         contentView.refresh();
+      } else if (incomingKey.equals(AndroidListHotRadiosView.NAME)) {
+        AndroidListHotRadiosView contentView = new AndroidListHotRadiosView(incomingContext);
+        layoutView.setContentView(contentView);
+        ListHotRadiosPresenter presenter = new ListHotRadiosPresenter(
+            MoeFmApplication.get(incomingContext).getAppComponent().getRadioService(),
+            AndroidSchedulers.mainThread()
+        );
+        presenter.start();
+        presenter.bindView(contentView);
+        contentView.setTag(presenter);
       } //TODO else
       callback.onTraversalCompleted();
     }
