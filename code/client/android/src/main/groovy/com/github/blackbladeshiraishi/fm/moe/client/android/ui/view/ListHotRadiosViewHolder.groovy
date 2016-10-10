@@ -8,11 +8,14 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter.HotRadios
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import com.github.blackbladeshiraishi.fm.moe.facade.view.BaseView
 import com.github.blackbladeshiraishi.fm.moe.facade.view.ListHotRadiosView
+import com.github.blackbladeshiraishi.fm.moe.facade.view.View as MvpView
 import gq.baijie.rxlist.ObservableList
 
 import javax.annotation.Nonnull
 
-class ListHotRadiosViewHolder extends BaseView<ListHotRadiosView> implements ListHotRadiosView {
+class ListHotRadiosViewHolder
+        extends BaseView<ListHotRadiosView, MvpView.Event<ListHotRadiosView>>
+        implements ListHotRadiosView {
 
   final View rootView
   final View contentProgress

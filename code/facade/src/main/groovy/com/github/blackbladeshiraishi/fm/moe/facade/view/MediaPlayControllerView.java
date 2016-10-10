@@ -5,7 +5,8 @@ import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public interface MediaPlayControllerView extends View {
+public interface MediaPlayControllerView
+    extends View<MediaPlayControllerView, View.Event<MediaPlayControllerView>> {
 
   void showSong(@Nullable Song song);
 

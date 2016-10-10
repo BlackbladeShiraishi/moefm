@@ -4,7 +4,7 @@ import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 
 import gq.baijie.rxlist.ObservableList;
 
-public interface ListHotRadiosView extends View {
+public interface ListHotRadiosView extends View<ListHotRadiosView, View.Event<ListHotRadiosView>> {
 
   void showProgressView();
 

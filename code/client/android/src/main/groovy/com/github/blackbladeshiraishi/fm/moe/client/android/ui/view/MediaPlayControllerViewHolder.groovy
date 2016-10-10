@@ -8,15 +8,16 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import com.github.blackbladeshiraishi.fm.moe.facade.view.BaseView
 import com.github.blackbladeshiraishi.fm.moe.facade.view.MediaPlayControllerView
+import com.github.blackbladeshiraishi.fm.moe.facade.view.View as MvpView
 
 import javax.annotation.Nonnull
 import javax.annotation.Nullable
-
 /**
  * ViewHolder of {@link R.layout#included_media_control layout/included_media_control}
  */
-class MediaPlayControllerViewHolder extends BaseView<MediaPlayControllerView>
-    implements MediaPlayControllerView {
+class MediaPlayControllerViewHolder
+        extends BaseView<MediaPlayControllerView, MvpView.Event<MediaPlayControllerView>>
+        implements MediaPlayControllerView {
 
   final View rootView
   final TextView songTitle

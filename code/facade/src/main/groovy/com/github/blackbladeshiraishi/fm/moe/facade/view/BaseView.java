@@ -6,14 +6,14 @@ import rx.Observable;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
-public abstract class BaseView<T extends View> implements View {
+public abstract class BaseView<V extends View, E extends View.Event<V>> implements View<V, E> {
 
   @Nonnull
-  protected final Subject<Event<T>, Event<T>> eventBus = PublishSubject.create();
+  protected final Subject<E, E> eventBus = PublishSubject.create();
 
   @Nonnull
   @Override
-  public Observable<? extends Event> eventBus() {
+  public Observable<E> eventBus() {
     return eventBus.onBackpressureDrop();
   }
 

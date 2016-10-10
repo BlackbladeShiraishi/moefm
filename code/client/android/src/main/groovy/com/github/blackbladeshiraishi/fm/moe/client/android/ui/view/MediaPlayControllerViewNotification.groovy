@@ -10,12 +10,14 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.PlayList
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import com.github.blackbladeshiraishi.fm.moe.facade.view.BaseView
 import com.github.blackbladeshiraishi.fm.moe.facade.view.MediaPlayControllerView
+import com.github.blackbladeshiraishi.fm.moe.facade.view.View
 
 import javax.annotation.Nonnull
 import javax.annotation.Nullable
 
-class MediaPlayControllerViewNotification extends BaseView<MediaPlayControllerView>
-    implements MediaPlayControllerView {
+class MediaPlayControllerViewNotification
+        extends BaseView<MediaPlayControllerView, View.Event<MediaPlayControllerView>>
+        implements MediaPlayControllerView {
 
   private static final int NOTIFICATION_ID = R.id.playing_songs
 
