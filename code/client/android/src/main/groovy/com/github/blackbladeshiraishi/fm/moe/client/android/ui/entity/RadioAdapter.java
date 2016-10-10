@@ -1,15 +1,19 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 
+import android.util.Log;
 import android.view.View;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.RadioActivity;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 
 import java.util.Map;
 
 import javax.annotation.Nullable;
+
+import flow.Flow;
 
 public class RadioAdapter implements CardViewHoler.CardViewModel {
 
@@ -27,7 +31,13 @@ public class RadioAdapter implements CardViewHoler.CardViewModel {
     return new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        RadioActivity.startThis(v.getContext(), source);
+        try {
+          Flow.get(v.getContext()).set(new RadioKey(source));
+        } catch (IllegalStateException e) {
+          //TODO
+          Log.w("TODO", "should use flow", e);
+          RadioActivity.startThis(v.getContext(), source);
+        }
       }
     };
   }

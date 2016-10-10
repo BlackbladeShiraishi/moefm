@@ -4,6 +4,8 @@ import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MainPage;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
 
+import javax.annotation.Nonnull;
+
 import rx.Observable;
 
 public interface RadioService {
@@ -15,6 +17,6 @@ public interface RadioService {
   /**
    * songs of radio
    */
-  Observable<Song> radioSongs(Radio radio);
+  Observable<Song> radioSongs(@Nonnull Radio radio);
 
 }

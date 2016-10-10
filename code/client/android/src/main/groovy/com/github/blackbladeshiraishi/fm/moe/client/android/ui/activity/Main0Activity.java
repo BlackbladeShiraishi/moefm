@@ -7,9 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AndroidListHotRadiosView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainLayoutView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.RadioView;
 import com.github.blackbladeshiraishi.fm.moe.facade.presenter.ListHotRadiosPresenter;
 
 import java.util.Map;
@@ -75,6 +77,11 @@ public class Main0Activity extends AppCompatActivity {
         presenter.start();
         presenter.bindView(contentView);
         contentView.setTag(presenter);
+      } else if (incomingKey.getClass().equals(RadioKey.class)) {
+        RadioView contentView = new RadioView(incomingContext);
+        layoutView.setContentView(contentView);
+        contentView.setRadio(((RadioKey) incomingKey).getRadio());
+        contentView.refresh();
       } //TODO else
       callback.onTraversalCompleted();
     }
