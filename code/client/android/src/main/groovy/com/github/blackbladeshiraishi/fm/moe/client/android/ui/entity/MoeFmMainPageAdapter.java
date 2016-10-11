@@ -4,8 +4,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api.entity.MoeFmMainPage;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AndroidListHotRadiosView;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,17 +52,17 @@ public class MoeFmMainPageAdapter {
 
   private static CardClusterViewHolder.CardClusterViewModel newAlbums(MoeFmMainPage mainPage) {
     final String title = "新曲速递";
-    return new AlbumListAdapter(dummyListener(title), title, mainPage.getNewAlbums());
+    return new AlbumListAdapter(newShowAlbumListOnClickListener(mainPage.getNewAlbums()), title, mainPage.getNewAlbums());
   }
 
   private static CardClusterViewHolder.CardClusterViewModel hotAlbums(MoeFmMainPage mainPage) {
     final String title = "音乐热榜";
-    return new AlbumListAdapter(dummyListener(title), title, mainPage.getHotAlbums());
+    return new AlbumListAdapter(newShowAlbumListOnClickListener(mainPage.getHotAlbums()), title, mainPage.getHotAlbums());
   }
 
   private static CardClusterViewHolder.CardClusterViewModel albums(MoeFmMainPage mainPage) {
     final String title = "最新音乐";
-    return new AlbumListAdapter(dummyListener(title), title, mainPage.getAlbums());
+    return new AlbumListAdapter(newShowAlbumListOnClickListener(mainPage.getAlbums()), title, mainPage.getAlbums());
   }
 
   private static View.OnClickListener dummyListener(final String title) {
@@ -68,6 +70,15 @@ public class MoeFmMainPageAdapter {
       @Override
       public void onClick(View v) {
         Toast.makeText(v.getContext(), "Clicked " + title, Toast.LENGTH_LONG).show();
+      }
+    };
+  }
+  private static View.OnClickListener newShowAlbumListOnClickListener(
+      @Nonnull final List<Album> albumList) {
+    return new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Flow.get(v.getContext()).set(new AlbumListKey(albumList));
       }
     };
   }

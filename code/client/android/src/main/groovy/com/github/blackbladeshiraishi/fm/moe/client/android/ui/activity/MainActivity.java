@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AlbumListView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AndroidListHotRadiosView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainLayoutView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
@@ -69,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
         MainPageView contentView = new MainPageView(incomingContext);
         layoutView.setContentView(contentView);
         contentView.refresh();
+      } else if (incomingKey.getClass().equals(AlbumListKey.class)) {
+        AlbumListView contentView = new AlbumListView(incomingContext);
+        layoutView.setContentView(contentView);
+        contentView.setAlbums(((AlbumListKey) incomingKey).getAlbumList());
       } else if (incomingKey.equals(AndroidListHotRadiosView.NAME)) {
         AndroidListHotRadiosView contentView = new AndroidListHotRadiosView(incomingContext);
         layoutView.setContentView(contentView);
