@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--TODO: use this-->
 <!-- to ensure that layout_width and layout_height are set in 'include' tag, let them be 0-->
 <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"

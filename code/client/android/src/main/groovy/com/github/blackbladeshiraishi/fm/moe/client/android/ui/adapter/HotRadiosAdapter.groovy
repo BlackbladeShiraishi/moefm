@@ -1,12 +1,10 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.github.blackbladeshiraishi.fm.moe.client.android.R
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
@@ -91,13 +89,7 @@ class HotRadiosAdapter extends RecyclerView.Adapter<RadiosViewHolder> {
       title.setOnClickListener { View v ->
         if (adapterPosition != RecyclerView.NO_POSITION) {
           def radio = radios.list()[adapterPosition]
-          try {
-            Flow.get(v.getContext()).set(new RadioKey(radio));
-          } catch (IllegalStateException e) {
-            //TODO
-            Log.w("TODO", "should use flow", e);
-            Toast.makeText(v.getContext(), radio.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
-          }
+          Flow.get(v.getContext()).set(new RadioKey(radio));
         }
       }
     }

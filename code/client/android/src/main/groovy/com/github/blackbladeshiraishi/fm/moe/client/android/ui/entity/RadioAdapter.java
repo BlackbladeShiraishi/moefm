@@ -1,9 +1,7 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
@@ -31,13 +29,7 @@ public class RadioAdapter implements CardViewHoler.CardViewModel {
     return new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        try {
-          Flow.get(v.getContext()).set(new RadioKey(source));
-        } catch (IllegalStateException e) {
-          //TODO
-          Log.w("TODO", "should use flow", e);
-          Toast.makeText(v.getContext(), source.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
-        }
+        Flow.get(v.getContext()).set(new RadioKey(source));
       }
     };
   }

@@ -1,7 +1,5 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -44,14 +42,7 @@ public class MoeFmMainPageAdapter {
     View.OnClickListener onClickTitleContainerListener = new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        final Context context = v.getContext();
-        try {
-          Flow.get(context).set(AndroidListHotRadiosView.NAME);
-        } catch (IllegalStateException e) {
-          //TODO
-          Log.w("TODO", "should use flow", e);
-          dummyListener(title).onClick(v);
-        }
+        Flow.get(v.getContext()).set(AndroidListHotRadiosView.NAME);
       }
     };
     return new RadioListAdapter(onClickTitleContainerListener, title, mainPage.getHotRadios());
