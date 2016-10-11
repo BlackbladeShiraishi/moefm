@@ -1,7 +1,6 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 import android.view.View;
-import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api.entity.MoeFmMainPage;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
@@ -16,7 +15,6 @@ import javax.annotation.Nonnull;
 
 import flow.Flow;
 
-
 public class MoeFmMainPageAdapter {
 
   public static void updateCardClusterViewModelList(
@@ -24,18 +22,15 @@ public class MoeFmMainPageAdapter {
       @Nonnull MoeFmMainPage mainPage) {
     cardClusterViewModelList.clear();
     cardClusterViewModelList.add(hotRadios(mainPage));
-    cardClusterViewModelList.add(newAlbums(mainPage));
-    cardClusterViewModelList.add(hotAlbums(mainPage));
-    cardClusterViewModelList.add(albums(mainPage));
+    cardClusterViewModelList.add(newAlbumListCardClusterModel("新曲速递", mainPage.getNewAlbums()));
+    cardClusterViewModelList.add(newAlbumListCardClusterModel("音乐热榜", mainPage.getHotAlbums()));
+    cardClusterViewModelList.add(newAlbumListCardClusterModel("最新音乐", mainPage.getAlbums()));
   }
 
   public static List<CardClusterViewHolder.CardClusterViewModel> newCardClusterViewModelList(
       @Nonnull MoeFmMainPage mainPage) {
     List<CardClusterViewHolder.CardClusterViewModel> result = new ArrayList<>(4);
-    result.add(hotRadios(mainPage));
-    result.add(newAlbums(mainPage));
-    result.add(hotAlbums(mainPage));
-    result.add(albums(mainPage));
+    updateCardClusterViewModelList(result, mainPage);
     return result;
   }
 
@@ -50,29 +45,11 @@ public class MoeFmMainPageAdapter {
     return new RadioListAdapter(onClickTitleContainerListener, title, mainPage.getHotRadios());
   }
 
-  private static CardClusterViewHolder.CardClusterViewModel newAlbums(MoeFmMainPage mainPage) {
-    final String title = "新曲速递";
-    return new AlbumListAdapter(newShowAlbumListOnClickListener(mainPage.getNewAlbums()), title, mainPage.getNewAlbums());
+  private static CardClusterViewHolder.CardClusterViewModel newAlbumListCardClusterModel(
+      @Nonnull final String title, @Nonnull final List<Album> albumList) {
+    return new AlbumListAdapter(newShowAlbumListOnClickListener(albumList), title, albumList);
   }
 
-  private static CardClusterViewHolder.CardClusterViewModel hotAlbums(MoeFmMainPage mainPage) {
-    final String title = "音乐热榜";
-    return new AlbumListAdapter(newShowAlbumListOnClickListener(mainPage.getHotAlbums()), title, mainPage.getHotAlbums());
-  }
-
-  private static CardClusterViewHolder.CardClusterViewModel albums(MoeFmMainPage mainPage) {
-    final String title = "最新音乐";
-    return new AlbumListAdapter(newShowAlbumListOnClickListener(mainPage.getAlbums()), title, mainPage.getAlbums());
-  }
-
-  private static View.OnClickListener dummyListener(final String title) {
-    return new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Toast.makeText(v.getContext(), "Clicked " + title, Toast.LENGTH_LONG).show();
-      }
-    };
-  }
   private static View.OnClickListener newShowAlbumListOnClickListener(
       @Nonnull final List<Album> albumList) {
     return new View.OnClickListener() {
