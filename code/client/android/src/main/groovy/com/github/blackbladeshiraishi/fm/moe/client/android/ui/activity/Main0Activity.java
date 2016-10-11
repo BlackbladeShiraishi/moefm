@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
@@ -23,6 +24,7 @@ import flow.KeyDispatcher;
 import flow.State;
 import flow.TraversalCallback;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 
 public class Main0Activity extends AppCompatActivity {
@@ -74,6 +76,17 @@ public class Main0Activity extends AppCompatActivity {
             MoeFmApplication.get(incomingContext).getAppComponent().getRadioService(),
             AndroidSchedulers.mainThread()
         );
+        presenter.eventBus().ofType(ListHotRadiosPresenter.LoadErrorEvent.class)
+            .observeOn(AndroidSchedulers.mainThread()).subscribe(
+            new Action1<ListHotRadiosPresenter.LoadErrorEvent>() {
+              @Override
+              public void call(ListHotRadiosPresenter.LoadErrorEvent loadErrorEvent) {
+                final Throwable e = loadErrorEvent.getError();
+                final String message =
+                    String.format("[%s]%s", e.getClass().getSimpleName(), e.getMessage());
+                Toast.makeText(incomingContext, message, Toast.LENGTH_LONG).show();
+              }
+            });
         presenter.start();
         presenter.bindView(contentView);
         contentView.setTag(presenter);
