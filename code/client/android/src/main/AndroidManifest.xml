@@ -30,8 +30,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.RadioActivity"/>
-
         <activity android:name=".ui.activity.PlayListActivity"
                   android:launchMode="singleTask"
                   android:taskAffinity=""

@@ -3,8 +3,8 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.RadioActivity;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
@@ -36,7 +36,7 @@ public class RadioAdapter implements CardViewHoler.CardViewModel {
         } catch (IllegalStateException e) {
           //TODO
           Log.w("TODO", "should use flow", e);
-          RadioActivity.startThis(v.getContext(), source);
+          Toast.makeText(v.getContext(), source.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
         }
       }
     };
