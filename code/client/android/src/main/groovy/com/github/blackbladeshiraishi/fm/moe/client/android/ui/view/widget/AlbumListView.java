@@ -12,10 +12,13 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumKey;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import flow.Flow;
 
 public class AlbumListView extends FrameLayout {
 
@@ -65,9 +68,18 @@ public class AlbumListView extends FrameLayout {
     }
 
     @Override
-    public void onBindViewHolder(AlbumItemViewHolder holder, int position) {
+    public void onBindViewHolder(final AlbumItemViewHolder holder, int position) {
       final String title = albums.get(position).getTitle();
       holder.titleView.setText(title);
+      holder.titleView.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          final int position = holder.getAdapterPosition();
+          if (position != RecyclerView.NO_POSITION) {
+            Flow.get(v).set(new AlbumKey(albums.get(position)));
+          }
+        }
+      });
     }
 
     @Override

@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AlbumListView;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AlbumView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AndroidListHotRadiosView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainLayoutView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
@@ -100,6 +102,11 @@ public class MainActivity extends AppCompatActivity {
         RadioView contentView = new RadioView(incomingContext);
         layoutView.setContentView(contentView);
         contentView.setRadio(((RadioKey) incomingKey).getRadio());
+        contentView.refresh();
+      } else if (incomingKey.getClass().equals(AlbumKey.class)) {
+        AlbumView contentView = new AlbumView(incomingContext);
+        layoutView.setContentView(contentView);
+        contentView.setAlbum(((AlbumKey) incomingKey).getAlbum());
         contentView.refresh();
       } //TODO else
       callback.onTraversalCompleted();

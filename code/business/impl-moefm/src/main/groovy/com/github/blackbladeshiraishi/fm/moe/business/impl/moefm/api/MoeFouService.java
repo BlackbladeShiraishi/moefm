@@ -11,9 +11,20 @@ import rx.Observable;
  */
 public interface MoeFouService {
 
+  /**
+   * 电台的曲目
+   */
   // radio/relationships.json?obj_type=song&wiki_id={radio_id}&api_key={api_key}
   @GET("radio/relationships.json?obj_type=song")
   Observable<ResponseBody> radioSongs(
       @Query("api_key") String apiKey, @Query("wiki_id") long radioId);
+
+  /**
+   * 专辑的曲目
+   */
+  // music/subs.json?sub_type=song&wiki_id={album_id}&api_key={api_key}
+  @GET("music/subs.json?sub_type=song")
+  Observable<ResponseBody> albumSongs(
+      @Query("api_key") String apiKey, @Query("wiki_id") long albumId);
 
 }

@@ -3,12 +3,15 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 import android.view.View;
 
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 
 import java.util.Map;
 
 import javax.annotation.Nullable;
+
+import flow.Flow;
 
 public class AlbumAdapter implements CardViewHoler.CardViewModel {
 
@@ -29,7 +32,12 @@ public class AlbumAdapter implements CardViewHoler.CardViewModel {
   @Override
   @Nullable
   public View.OnClickListener getOnClickCardViewListener() {
-    return null;
+    return new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Flow.get(v).set(new AlbumKey(source));
+      }
+    };
   }
 
   @Override

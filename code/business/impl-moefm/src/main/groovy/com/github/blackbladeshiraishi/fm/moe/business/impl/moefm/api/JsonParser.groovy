@@ -101,20 +101,37 @@ class JsonParser {
     return result
   }
 
+  @Nonnull
   List<Song> parseRadioSongs(@Nullable String json) {
     if (json == null) {
       return Collections.emptyList()
     }
     final List<Song> result = []
     jsonSlurper.parseText(json).response.relationships.each {rawRelation ->
-      def rawSong = rawRelation.obj
-      def song = new Song(id: rawSong.sub_id, title: rawSong.sub_title, files: [])
-      rawSong.sub_upload.each { rawFile ->
-        song.files << new Song.File(quality: rawFile.up_quality, url: rawFile.up_url)
-      }
-      result << song
+      result << parseSubItemSong(rawRelation.obj)
     }
     return result
+  }
+
+  @Nonnull
+  List<Song> parseAlbumSongs(@Nullable String json) {
+    if (json == null) {
+      return Collections.emptyList()
+    }
+    final List<Song> result = []
+    jsonSlurper.parseText(json).response.subs.each {rawSubItemSong ->
+      result << parseSubItemSong(rawSubItemSong)
+    }
+    return result
+  }
+
+  @Nonnull
+  private static Song parseSubItemSong(@Nonnull def rawSong) {
+    def song = new Song(id: rawSong.sub_id, title: rawSong.sub_title, files: [])
+    rawSong.sub_upload.each { rawFile ->
+      song.files << new Song.File(quality: rawFile.up_quality, url: rawFile.up_url)
+    }
+    return song;
   }
 
 }
