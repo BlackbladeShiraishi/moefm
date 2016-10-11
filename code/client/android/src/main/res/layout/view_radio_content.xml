@@ -10,6 +10,6 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:clipToPadding="false"
-        tools:context=".ui.activity.Main0Activity"
+        tools:context=".ui.activity.MainActivity"
         tools:listitem="@layout/list_item_song"
 />

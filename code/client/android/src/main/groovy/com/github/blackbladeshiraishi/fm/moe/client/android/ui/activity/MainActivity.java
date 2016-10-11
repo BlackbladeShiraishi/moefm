@@ -27,7 +27,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 
-public class Main0Activity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
   private MainLayoutView layoutView;
 
