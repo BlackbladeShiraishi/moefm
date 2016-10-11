@@ -1,13 +1,11 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api.entity.MoeFmMainPage;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.HotRadioListActivity;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AndroidListHotRadiosView;
 
@@ -52,7 +50,7 @@ public class MoeFmMainPageAdapter {
         } catch (IllegalStateException e) {
           //TODO
           Log.w("TODO", "should use flow", e);
-          context.startActivity(new Intent(context, HotRadioListActivity.class));
+          dummyListener(title).onClick(v);
         }
       }
     };

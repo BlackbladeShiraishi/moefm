@@ -9,5 +9,5 @@
         android:gravity="center_vertical"
         style="@style/TextAppearance.AppCompat.Subhead"
         tools:text="Sample Title"
-        tools:showIn="@layout/list_hot_radios"
+        tools:showIn="@layout/view_list_hot_radios_content"
         />
