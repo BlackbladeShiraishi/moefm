@@ -1,6 +1,7 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.inject;
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.RadioService;
+import com.github.blackbladeshiraishi.fm.moe.business.api.SessionService;
 import com.github.blackbladeshiraishi.fm.moe.business.impl.core.inject.BusinessImplCoreModule;
 import com.github.blackbladeshiraishi.fm.moe.business.io.event.EventBus;
 
@@ -11,13 +12,16 @@ import dagger.Component;
 @Singleton
 @Component(modules = {
     BusinessImplCoreModule.class,
-    MoeFmModule.class
+    MoeFmModule.class,
+    AppModule.class
 })
 public interface AppComponent {
 
   EventBus getEventBus();
 
   RadioService getRadioService();
+
+  SessionService getSessionService();
 
   PlaySongComponent newPlaySongComponent();
 

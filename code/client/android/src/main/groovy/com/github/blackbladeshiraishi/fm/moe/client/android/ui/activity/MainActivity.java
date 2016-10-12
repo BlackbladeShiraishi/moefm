@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
       if (incomingKey.equals(MainPageView.NAME)) {
         MainPageView contentView = new MainPageView(incomingContext);
         layoutView.setContentView(contentView);
-        contentView.refresh();
       } else if (incomingKey.getClass().equals(AlbumListKey.class)) {
         AlbumListView contentView = new AlbumListView(incomingContext);
         layoutView.setContentView(contentView);
