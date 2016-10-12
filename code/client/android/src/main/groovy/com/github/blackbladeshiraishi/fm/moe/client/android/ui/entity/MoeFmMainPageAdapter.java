@@ -2,7 +2,7 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 import android.view.View;
 
-import com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api.entity.MoeFmMainPage;
+import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
