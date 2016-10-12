@@ -3,12 +3,14 @@ package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api
 import com.github.blackbladeshiraishi.fm.moe.business.api.RadioService
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import groovy.json.JsonSlurper
 import rx.Observable
 
 import javax.annotation.Nonnull
+import javax.annotation.Nullable
 
 class MoeFmRadioService implements RadioService {
 
@@ -41,6 +43,12 @@ class MoeFmRadioService implements RadioService {
     return moeFmService.hotRadios(apiKey)
         .map {jsonParser.parseHotRadios(it?.string())}
         .flatMap{Observable.from(it)}
+  }
+
+  @Override
+  Observable<List<Content>> searchContents(@Nonnull String keyword, @Nullable String type) {
+    return moeFouService.searchContents(apiKey, keyword, type)
+        .map {jsonParser.parseContents(it?.string())}
   }
 
   @Override

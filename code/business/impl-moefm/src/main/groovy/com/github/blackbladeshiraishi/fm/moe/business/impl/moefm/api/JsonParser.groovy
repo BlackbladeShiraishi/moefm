@@ -2,6 +2,7 @@ package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import groovy.json.JsonSlurper
@@ -99,6 +100,27 @@ class JsonParser {
       result << radio
     }
     return result
+  }
+
+  @Nonnull
+  List<Content> parseContents(@Nullable String json) {
+    final List<Content> result = []
+    if (json != null) {
+      jsonSlurper.parseText(json).response.wikis.each { rawWiki ->
+        result << parseContentWiki(rawWiki)
+      }
+    }
+    return result;
+  }
+
+  @Nonnull
+  private static Content parseContentWiki(@Nonnull def contentWiki) {
+    return new Content(
+            id: contentWiki.wiki_id,
+            type: contentWiki.wiki_type,
+            title: contentWiki.wiki_title,
+            cover: new HashMap<>(contentWiki.wiki_cover as Map)
+    )
   }
 
   @Nonnull

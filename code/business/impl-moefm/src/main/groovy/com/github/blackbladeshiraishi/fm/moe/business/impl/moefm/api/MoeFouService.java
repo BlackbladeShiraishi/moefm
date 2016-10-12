@@ -1,6 +1,9 @@
 package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api;
 
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -11,6 +14,17 @@ import rx.Observable;
  * @see <pre>http://open.moefou.org/docs/moe.fm</pre>
  */
 public interface MoeFouService {
+
+  /**
+   * 搜索条目
+   * @see <pre>http://open.moefou.org/docs/api/search/wiki</pre>
+   */
+  // search/wiki.json?keyword={keyword}&wiki_type={type}&api_key={api_key}
+  @GET("search/wiki.json")
+  Observable<ResponseBody> searchContents(
+      @Nonnull @Query("api_key") String apiKey,
+      @Nonnull @Query("keyword") String keyword,
+      @Nullable @Query("wiki_type") String type);
 
   /**
    * 电台列表
