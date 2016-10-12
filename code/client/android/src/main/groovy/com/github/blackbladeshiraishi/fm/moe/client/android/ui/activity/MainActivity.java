@@ -17,6 +17,7 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainL
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.RadioListView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.RadioView;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.SearchView;
 
 import java.util.Map;
 
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
       final Context incomingContext = incomingContexts.get(incomingKey);
       if (incomingKey.equals(MainPageView.NAME)) {
         MainPageView contentView = new MainPageView(incomingContext);
+        layoutView.setContentView(contentView);
+      } else if (incomingKey.equals(SearchView.NAME)) {
+        SearchView contentView = new SearchView(incomingContext);
         layoutView.setContentView(contentView);
       } else if (incomingKey.getClass().equals(AlbumListKey.class)) {
         AlbumListView contentView = new AlbumListView(incomingContext);

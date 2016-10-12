@@ -67,6 +67,8 @@ public class MainLayoutView extends DrawerLayout
       loadAlbumList();
     } else if (id == R.id.nav_radio_list) {
       loadRadioList();
+    } else if (id == R.id.nav_search) {
+      Flow.get(this).set(SearchView.NAME);
     } else {
       String selectedName = getResources().getResourceName(id);
       Toast.makeText(getContext(), "selected: " + selectedName, Toast.LENGTH_SHORT).show();
