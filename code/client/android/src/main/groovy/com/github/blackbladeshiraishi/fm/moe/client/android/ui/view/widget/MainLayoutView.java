@@ -26,7 +26,6 @@ import java.util.List;
 import flow.Flow;
 import rx.SingleSubscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MainLayoutView extends DrawerLayout
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -77,10 +76,8 @@ public class MainLayoutView extends DrawerLayout
   }
 
   private void loadAlbumList() {
-    MoeFmApplication.get(getContext()).getAppComponent().getRadioService().albums()
-        .subscribeOn(Schedulers.io())
-        .observeOn(Schedulers.computation())
-        .toList()
+    MoeFmApplication.get(getContext()).getAppComponent().getSessionService().albums()
+        .first()
         .toSingle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new SingleSubscriber<List<Album>>() {
@@ -97,10 +94,8 @@ public class MainLayoutView extends DrawerLayout
   }
 
   private void loadRadioList() {
-    MoeFmApplication.get(getContext()).getAppComponent().getRadioService().radios()
-        .subscribeOn(Schedulers.io())
-        .observeOn(Schedulers.computation())
-        .toList()
+    MoeFmApplication.get(getContext()).getAppComponent().getSessionService().radios()
+        .first()
         .toSingle()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new SingleSubscriber<List<Radio>>() {
