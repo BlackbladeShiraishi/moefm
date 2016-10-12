@@ -13,6 +13,13 @@ import rx.Observable;
 public interface MoeFouService {
 
   /**
+   * 电台列表
+   */
+  // wikis?wiki_type=radio&api_key={api_key}
+  @GET("wikis?wiki_type=radio")
+  Observable<ResponseBody> radios(@Query("api_key") String apiKey);
+
+  /**
    * 电台的曲目
    */
   // radio/relationships.json?obj_type=song&wiki_id={radio_id}&api_key={api_key}

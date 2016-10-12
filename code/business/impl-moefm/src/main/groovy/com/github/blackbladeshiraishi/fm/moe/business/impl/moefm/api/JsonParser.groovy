@@ -102,6 +102,26 @@ class JsonParser {
   }
 
   @Nonnull
+  List<Radio> parseRadios(@Nullable String json) {
+    final List<Radio> result = []
+    if (json != null) {
+      jsonSlurper.parseText(json).response.wikis.each { rawWiki ->
+        result << parseRadioWiki(rawWiki)
+      }
+    }
+    return result;
+  }
+
+  @Nonnull
+  private static Radio parseRadioWiki(@Nonnull def radioWiki) {
+    return new Radio(
+            id: radioWiki.wiki_id,
+            title: radioWiki.wiki_title,
+            cover: new HashMap<>(radioWiki.wiki_cover as Map)
+    )
+  }
+
+  @Nonnull
   List<Album> parseAlbums(@Nullable String json) {
     final List<Album> result = []
     if (json != null) {

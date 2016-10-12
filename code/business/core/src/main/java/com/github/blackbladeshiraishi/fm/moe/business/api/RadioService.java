@@ -16,6 +16,11 @@ public interface RadioService {
   Observable<Radio> hotRadios();
 
   /**
+   * radio list
+   */
+  Observable<Radio> radios();
+
+  /**
    * songs of radio
    */
   Observable<Song> radioSongs(@Nonnull Radio radio);
