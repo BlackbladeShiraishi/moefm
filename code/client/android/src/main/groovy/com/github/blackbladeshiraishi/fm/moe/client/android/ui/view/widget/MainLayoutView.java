@@ -62,7 +62,9 @@ public class MainLayoutView extends DrawerLayout
   @Override
   public boolean onNavigationItemSelected(@NonNull MenuItem item) {
     int id = item.getItemId();
-    if (id == R.id.nav_album_list) {
+    if (id == R.id.nav_home) {
+      Flow.get(this).set(MainPageView.NAME);
+    } else if (id == R.id.nav_album_list) {
       loadAlbumList();
     } else if (id == R.id.nav_radio_list) {
       loadRadioList();
