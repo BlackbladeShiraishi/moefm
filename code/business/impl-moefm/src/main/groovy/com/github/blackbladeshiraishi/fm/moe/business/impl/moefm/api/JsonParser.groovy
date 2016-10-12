@@ -102,6 +102,26 @@ class JsonParser {
   }
 
   @Nonnull
+  List<Album> parseAlbums(@Nullable String json) {
+    final List<Album> result = []
+    if (json != null) {
+      jsonSlurper.parseText(json).response.wikis.each { rawWiki ->
+        result << parseAlbumWiki(rawWiki)
+      }
+    }
+    return result;
+  }
+
+  @Nonnull
+  private static Album parseAlbumWiki(@Nonnull def albumWiki) {
+    return new Album(
+            id: albumWiki.wiki_id,
+            title: albumWiki.wiki_title,
+            cover: new HashMap<>(albumWiki.wiki_cover as Map)
+    )
+  }
+
+  @Nonnull
   List<Song> parseRadioSongs(@Nullable String json) {
     if (json == null) {
       return Collections.emptyList()

@@ -8,6 +8,7 @@ import rx.Observable;
 
 /**
  * api of https://api.moefou.org/
+ * @see <pre>http://open.moefou.org/docs/moe.fm</pre>
  */
 public interface MoeFouService {
 
@@ -18,6 +19,13 @@ public interface MoeFouService {
   @GET("radio/relationships.json?obj_type=song")
   Observable<ResponseBody> radioSongs(
       @Query("api_key") String apiKey, @Query("wiki_id") long radioId);
+
+  /**
+   * 专辑列表
+   */
+  // wikis?wiki_type=music&api_key={api_key}
+  @GET("wikis?wiki_type=music")
+  Observable<ResponseBody> albums(@Query("api_key") String apiKey);
 
   /**
    * 专辑的曲目

@@ -21,6 +21,11 @@ public interface RadioService {
   Observable<Song> radioSongs(@Nonnull Radio radio);
 
   /**
+   * album list
+   */
+  Observable<Album> albums();
+
+  /**
    * songs of album
    */
   Observable<Song> albumSongs(@Nonnull Album album);

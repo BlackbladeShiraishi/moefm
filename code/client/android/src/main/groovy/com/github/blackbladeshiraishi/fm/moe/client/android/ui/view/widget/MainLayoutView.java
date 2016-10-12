@@ -14,7 +14,17 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
+
+import java.util.List;
+
+import flow.Flow;
+import rx.SingleSubscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainLayoutView extends DrawerLayout
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,10 +60,34 @@ public class MainLayoutView extends DrawerLayout
   @Override
   public boolean onNavigationItemSelected(@NonNull MenuItem item) {
     int id = item.getItemId();
-    String selectedName = getResources().getResourceName(id);
-    Toast.makeText(getContext(), "selected: " + selectedName, Toast.LENGTH_SHORT).show();
+    if (id == R.id.nav_album_list) {
+      loadAlbumList();
+    } else {
+      String selectedName = getResources().getResourceName(id);
+      Toast.makeText(getContext(), "selected: " + selectedName, Toast.LENGTH_SHORT).show();
+    }
     closeDrawer(GravityCompat.START);
     return true;
+  }
+
+  private void loadAlbumList() {
+    MoeFmApplication.get(getContext()).getAppComponent().getRadioService().albums()
+        .subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.computation())
+        .toList()
+        .toSingle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new SingleSubscriber<List<Album>>() {
+          @Override
+          public void onSuccess(List<Album> value) {
+            Flow.get(MainLayoutView.this).set(new AlbumListKey(value));
+          }
+          @Override
+          public void onError(Throwable e) {
+            String message = String.format("[%s]%s", e.getClass().getSimpleName(), e.getMessage());
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+          }
+        });
   }
 
   public void setContentView(View contentView) {
