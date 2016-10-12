@@ -11,11 +11,13 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AlbumListView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AlbumView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AndroidListHotRadiosView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainLayoutView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.RadioListView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.RadioView;
 import com.github.blackbladeshiraishi.fm.moe.facade.presenter.ListHotRadiosPresenter;
 
@@ -77,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         AlbumListView contentView = new AlbumListView(incomingContext);
         layoutView.setContentView(contentView);
         contentView.setAlbums(((AlbumListKey) incomingKey).getAlbumList());
+      } else if (incomingKey.getClass().equals(RadioListKey.class)) {
+        RadioListView contentView = new RadioListView(incomingContext);
+        layoutView.setContentView(contentView);
+        contentView.setRadios(((RadioListKey) incomingKey).getRadioList());
       } else if (incomingKey.equals(AndroidListHotRadiosView.NAME)) {
         AndroidListHotRadiosView contentView = new AndroidListHotRadiosView(incomingContext);
         layoutView.setContentView(contentView);
@@ -108,7 +114,11 @@ public class MainActivity extends AppCompatActivity {
         layoutView.setContentView(contentView);
         contentView.setAlbum(((AlbumKey) incomingKey).getAlbum());
         contentView.refresh();
-      } //TODO else
+      } else {
+        final String message = String.format(
+            "[%s]%s is under construct", incomingKey.getClass().getSimpleName(), incomingKey);
+        Toast.makeText(incomingContext, message, Toast.LENGTH_LONG).show();
+      }
       callback.onTraversalCompleted();
     }
   }

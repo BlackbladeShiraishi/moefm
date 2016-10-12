@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 
 import java.util.List;
 
@@ -62,6 +64,8 @@ public class MainLayoutView extends DrawerLayout
     int id = item.getItemId();
     if (id == R.id.nav_album_list) {
       loadAlbumList();
+    } else if (id == R.id.nav_radio_list) {
+      loadRadioList();
     } else {
       String selectedName = getResources().getResourceName(id);
       Toast.makeText(getContext(), "selected: " + selectedName, Toast.LENGTH_SHORT).show();
@@ -81,6 +85,26 @@ public class MainLayoutView extends DrawerLayout
           @Override
           public void onSuccess(List<Album> value) {
             Flow.get(MainLayoutView.this).set(new AlbumListKey(value));
+          }
+          @Override
+          public void onError(Throwable e) {
+            String message = String.format("[%s]%s", e.getClass().getSimpleName(), e.getMessage());
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+          }
+        });
+  }
+
+  private void loadRadioList() {
+    MoeFmApplication.get(getContext()).getAppComponent().getRadioService().radios()
+        .subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.computation())
+        .toList()
+        .toSingle()
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new SingleSubscriber<List<Radio>>() {
+          @Override
+          public void onSuccess(List<Radio> value) {
+            Flow.get(MainLayoutView.this).set(new RadioListKey(value));
           }
           @Override
           public void onError(Throwable e) {
