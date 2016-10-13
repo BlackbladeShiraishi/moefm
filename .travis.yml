@@ -38,6 +38,9 @@ script:
     # see http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.
     - ./gradlew build -PdisablePreDex
 
+after_failure:
+    - cat $TRAVIS_BUILD_DIR/code/client/android/build/outputs/lint-results-debug.xml
+
 deploy:
   provider: bintray
   # because of "before_install: cd code"
