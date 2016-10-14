@@ -8,6 +8,8 @@ class Radio implements Serializable {
 
   String title
 
+  List<Meta> meta
+
   /** key -> url map */
   Map<String, String> cover
 

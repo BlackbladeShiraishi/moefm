@@ -1,5 +1,6 @@
 package com.github.blackbladeshiraishi.fm.moe.domain.entity;
 
+import java.util.List;
 import java.util.Map;
 
 public class Content {
@@ -9,6 +10,8 @@ public class Content {
   private String type;
 
   private String title;
+
+  private List<Meta> meta;
 
   /** key -> url map */
   private Map<String, String> cover;
@@ -35,6 +38,14 @@ public class Content {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public List<Meta> getMeta() {
+    return meta;
+  }
+
+  public void setMeta(List<Meta> meta) {
+    this.meta = meta;
   }
 
   public Map<String, String> getCover() {

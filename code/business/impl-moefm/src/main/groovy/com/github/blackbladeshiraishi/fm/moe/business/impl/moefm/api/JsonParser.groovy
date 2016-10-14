@@ -1,10 +1,7 @@
 package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.*
 import groovy.json.JsonSlurper
 import groovy.transform.TypeChecked
 import groovy.transform.TypeCheckingMode
@@ -43,11 +40,7 @@ class JsonParser {
   private static List<Radio> getHotRadios(@Nonnull Object jsonObject) {
     final List<Radio> result = []
     jsonObject.response.hot_radios.each {radio ->
-      result << new Radio(
-          id: radio.wiki_id,
-          title: radio.wiki_title,
-          cover: new HashMap<>(radio.wiki_cover as Map)
-      )
+      result << parseRadioWiki(radio)
     }
     return result
   }
@@ -119,8 +112,19 @@ class JsonParser {
             id: contentWiki.wiki_id,
             type: contentWiki.wiki_type,
             title: contentWiki.wiki_title,
+            meta: parseMetaList(contentWiki.wiki_meta),
             cover: new HashMap<>(contentWiki.wiki_cover as Map)
     )
+  }
+
+  private static List<Meta> parseMetaList(@Nonnull def metaList) {
+    final List<Meta> result = []
+    metaList.each { result << parseMeta(it) }
+    return result
+  }
+
+  private static Meta parseMeta(@Nonnull def meta) {
+    return new Meta(key: meta.meta_key, type: meta.meta_type, value: meta.meta_value)
   }
 
   @Nonnull
@@ -139,6 +143,7 @@ class JsonParser {
     return new Radio(
             id: radioWiki.wiki_id,
             title: radioWiki.wiki_title,
+            meta: parseMetaList(radioWiki.wiki_meta),
             cover: new HashMap<>(radioWiki.wiki_cover as Map)
     )
   }

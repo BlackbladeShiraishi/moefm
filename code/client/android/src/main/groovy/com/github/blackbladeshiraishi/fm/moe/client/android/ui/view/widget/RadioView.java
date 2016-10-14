@@ -15,11 +15,15 @@ import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
+import com.github.blackbladeshiraishi.fm.moe.client.android.utils.HtmlCompat;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Meta;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -83,7 +87,7 @@ public class RadioView extends FrameLayout {
     }
     radioTitleView.setText(radio.getTitle());
     radioAuthorView.setText(radio.getTitle());
-    radioDescriptionView.setText(radio.getTitle());
+    radioDescriptionView.setText(HtmlCompat.fromHtml(getDescription(radio)));
     MoeFmApplication.get(getContext()).getAppComponent().getRadioService().radioSongs(radio)
         .subscribeOn(Schedulers.io())
         .toList()
@@ -105,6 +109,17 @@ public class RadioView extends FrameLayout {
             radioSongListView.setSongList(songList);
           }
         });
+  }
+
+  private static String getDescription(@Nonnull Radio radio) {
+    if (radio.getMeta() != null) {
+      for (Meta meta : radio.getMeta()) {
+        if ("简介".equals(meta.getKey())) {
+          return meta.getValue();
+        }
+      }
+    }
+    return "（无）";
   }
 
   private static class TabAdapter extends PagerAdapter {
