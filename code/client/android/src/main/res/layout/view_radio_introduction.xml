@@ -1,87 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/text_field_vertical_padding"
-        android:paddingBottom="@dimen/text_field_vertical_padding"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/text_field_vertical_center_padding"
-            style="@style/TextAppearance.AppCompat.Caption"
-            android:gravity="center_vertical"
-            android:text="电台" />
+            android:paddingBottom="@dimen/text_field_vertical_padding"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title_view"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/text_field_vertical_center_padding"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:gravity="center_vertical"
+                android:text="电台" />
+
+            <TextView
+                android:id="@+id/title_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:gravity="center_vertical"
+                tools:text="Title Here" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:gravity="center_vertical"
-            tools:text="Title Here" />
+            android:paddingBottom="@dimen/text_field_vertical_padding"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/text_field_vertical_center_padding"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:gravity="center_vertical"
+                android:text="创建者" />
+
+            <TextView
+                android:id="@+id/author_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:gravity="center_vertical"
+                tools:text="Author Here" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/text_field_vertical_center_padding"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:gravity="center_vertical"
+                android:text="简介" />
+
+            <TextView
+                android:id="@+id/description_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:gravity="center_vertical"
+                tools:text="Description Here" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/text_field_vertical_padding"
-        android:paddingBottom="@dimen/text_field_vertical_padding"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/text_field_vertical_center_padding"
-            style="@style/TextAppearance.AppCompat.Caption"
-            android:gravity="center_vertical"
-            android:text="创建者" />
-
-        <TextView
-            android:id="@+id/author_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:gravity="center_vertical"
-            tools:text="Author Here" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/text_field_vertical_padding"
-        android:paddingBottom="@dimen/text_field_vertical_padding"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/text_field_vertical_center_padding"
-            style="@style/TextAppearance.AppCompat.Caption"
-            android:gravity="center_vertical"
-            android:text="简介" />
-
-        <TextView
-            android:id="@+id/description_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:gravity="center_vertical"
-            tools:text="Description Here" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
