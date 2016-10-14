@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
@@ -27,6 +28,9 @@ import rx.schedulers.Schedulers;
 public class RadioView extends FrameLayout {
 
   private final SongListView radioSongListView;
+  private final TextView radioTitleView;
+  private final TextView radioAuthorView;
+  private final TextView radioDescriptionView;
 
   private Radio radio;
 
@@ -53,9 +57,18 @@ public class RadioView extends FrameLayout {
     inflater.inflate(R.layout.view_radio, this);
     ViewPager tabsView = (ViewPager) findViewById(R.id.tabs_view);
 
-    radioSongListView = new SongListView(getContext());
+    // Tab Views
     List<Tab> tabs = new ArrayList<>(2);
+    // introduction
+    View radioIntroductionView = inflater.inflate(R.layout.view_radio_introduction, this, false);
+    tabs.add(new Tab("简介", radioIntroductionView));
+    radioTitleView = (TextView) radioIntroductionView.findViewById(R.id.title_view);
+    radioAuthorView = (TextView) radioIntroductionView.findViewById(R.id.author_view);
+    radioDescriptionView = (TextView) radioIntroductionView.findViewById(R.id.description_view);
+    // song list
+    radioSongListView = new SongListView(getContext());
     tabs.add(new Tab("曲目", radioSongListView));
+
     tabsView.setAdapter(new TabAdapter(tabs));
   }
 
@@ -68,6 +81,9 @@ public class RadioView extends FrameLayout {
       //TODO show message
       return;
     }
+    radioTitleView.setText(radio.getTitle());
+    radioAuthorView.setText(radio.getTitle());
+    radioDescriptionView.setText(radio.getTitle());
     MoeFmApplication.get(getContext()).getAppComponent().getRadioService().radioSongs(radio)
         .subscribeOn(Schedulers.io())
         .toList()
