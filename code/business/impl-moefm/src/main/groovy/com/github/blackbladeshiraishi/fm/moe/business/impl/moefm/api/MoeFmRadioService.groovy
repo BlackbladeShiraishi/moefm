@@ -83,7 +83,7 @@ class MoeFmRadioService implements RadioService {
   @Override
   Observable<User> user(String uid) {
     return moeFouService.user(apiKey, uid)
-        .map { jsonParser.parseUser(it.string()) }
+        .map { it == null ? null : jsonParser.parseUser(it.string()) }
   }
 
 }
