@@ -48,11 +48,7 @@ class JsonParser {
   private static List<Album> getNewAlbums(@Nonnull Object jsonObject) {
     final List<Album> result = []
     jsonObject.response.new_musics.each {album ->
-      result << new Album(
-          id: album.wiki_id,
-          title: album.wiki_title,
-          cover: new HashMap<>(album.wiki_cover as Map)
-      )
+      result << parseAlbumWiki(album)
     }
     return result
   }
@@ -60,11 +56,7 @@ class JsonParser {
   private static List<Album> getHotAlbums(@Nonnull Object jsonObject) {
     final List<Album> result = []
     jsonObject.response.hot_musics.each {album ->
-      result << new Album(
-          id: album.wiki_id,
-          title: album.wiki_title,
-          cover: new HashMap<>(album.wiki_cover as Map)
-      )
+      result << parseAlbumWiki(album)
     }
     return result
   }
@@ -72,11 +64,7 @@ class JsonParser {
   private static List<Album> getAlbums(@Nonnull Object jsonObject) {
     final List<Album> result = []
     jsonObject.response.musics.each {album ->
-      result << new Album(
-          id: album.wiki_id,
-          title: album.wiki_title,
-          cover: new HashMap<>(album.wiki_cover as Map)
-      )
+      result << parseAlbumWiki(album)
     }
     return result
   }
@@ -118,7 +106,11 @@ class JsonParser {
     )
   }
 
-  private static List<Meta> parseMetaList(@Nonnull def metaList) {
+  @Nullable
+  private static List<Meta> parseMetaList(@Nullable def metaList) {
+    if (metaList == null) {
+      return null
+    }
     final List<Meta> result = []
     metaList.each { result << parseMeta(it) }
     return result
@@ -166,6 +158,7 @@ class JsonParser {
     return new Album(
             id: albumWiki.wiki_id,
             title: albumWiki.wiki_title,
+            meta: parseMetaList(albumWiki.wiki_meta),
             cover: new HashMap<>(albumWiki.wiki_cover as Map)
     )
   }

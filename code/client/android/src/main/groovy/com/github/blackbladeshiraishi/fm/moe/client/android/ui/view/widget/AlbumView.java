@@ -24,6 +24,7 @@ import rx.schedulers.Schedulers;
 
 public class AlbumView extends FrameLayout {
 
+  private final AlbumIntroductionView albumIntroductionView;
   private final SongListView albumSongListView;
 
   private Album album;
@@ -53,6 +54,9 @@ public class AlbumView extends FrameLayout {
 
     // Tab Views
     List<TabAdapter.Tab> tabs = new ArrayList<>(2);
+    // introduction view
+    albumIntroductionView = new AlbumIntroductionView(getContext());
+    tabs.add(new TabAdapter.Tab("简介", albumIntroductionView));
     // song list
     albumSongListView = new SongListView(getContext());
     tabs.add(new TabAdapter.Tab("曲目", albumSongListView));
@@ -69,6 +73,7 @@ public class AlbumView extends FrameLayout {
       //TODO show message
       return;
     }
+    albumIntroductionView.setAlbum(album);
     MoeFmApplication.get(getContext()).getAppComponent().getRadioService().albumSongs(album)
         .subscribeOn(Schedulers.io())
         .toList()

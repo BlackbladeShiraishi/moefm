@@ -95,6 +95,7 @@ public class ContentListView extends FrameLayout {
             final Album album = new Album();
             album.setId(content.getId());
             album.setTitle(content.getTitle());
+            album.setMeta(content.getMeta());
             album.setCover(content.getCover());
             Flow.get(v).set(new AlbumKey(album));
           }

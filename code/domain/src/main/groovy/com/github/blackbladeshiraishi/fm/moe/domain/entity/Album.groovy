@@ -6,6 +6,8 @@ class Album {
 
   String title
 
+  List<Meta> meta
+
   /** key -> url map */
   Map<String, String> cover
 
