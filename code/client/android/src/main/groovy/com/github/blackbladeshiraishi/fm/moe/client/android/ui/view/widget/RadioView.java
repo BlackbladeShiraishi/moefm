@@ -3,18 +3,17 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter.TabAdapter;
 import com.github.blackbladeshiraishi.fm.moe.client.android.utils.HtmlCompat;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Meta;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
@@ -63,16 +62,16 @@ public class RadioView extends FrameLayout {
     ViewPager tabsView = (ViewPager) findViewById(R.id.tabs_view);
 
     // Tab Views
-    List<Tab> tabs = new ArrayList<>(2);
+    List<TabAdapter.Tab> tabs = new ArrayList<>(2);
     // introduction
     View radioIntroductionView = inflater.inflate(R.layout.view_radio_introduction, this, false);
-    tabs.add(new Tab("简介", radioIntroductionView));
+    tabs.add(new TabAdapter.Tab("简介", radioIntroductionView));
     radioTitleView = (TextView) radioIntroductionView.findViewById(R.id.title_view);
     radioAuthorView = (TextView) radioIntroductionView.findViewById(R.id.author_view);
     radioDescriptionView = (TextView) radioIntroductionView.findViewById(R.id.description_view);
     // song list
     radioSongListView = new SongListView(getContext());
-    tabs.add(new Tab("曲目", radioSongListView));
+    tabs.add(new TabAdapter.Tab("曲目", radioSongListView));
 
     tabsView.setAdapter(new TabAdapter(tabs));
   }
@@ -150,53 +149,6 @@ public class RadioView extends FrameLayout {
       }
     }
     return "（无）";
-  }
-
-  private static class TabAdapter extends PagerAdapter {
-
-    final List<Tab> tabs;
-
-    private TabAdapter(List<Tab> tabs) {
-      this.tabs = tabs;
-    }
-
-    @Override
-    public int getCount() {
-      return tabs.size();
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-      return tabs.get(position).title;
-    }
-
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-      return view == object;
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-      final View view = tabs.get(position).view;
-      container.addView(view);
-      return view;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-      // do nothing //TODO check it
-    }
-
-  }
-
-  private static class Tab {
-    final String title;
-    final View view;
-
-    public Tab(String title, View view) {
-      this.title = title;
-      this.view = view;
-    }
   }
 
 }
