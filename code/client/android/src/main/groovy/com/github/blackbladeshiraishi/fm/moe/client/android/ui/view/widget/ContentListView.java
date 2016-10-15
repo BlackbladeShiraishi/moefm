@@ -87,6 +87,7 @@ public class ContentListView extends FrameLayout {
             final Radio radio = new Radio();
             radio.setId(content.getId());
             radio.setTitle(content.getTitle());
+            radio.setModifiedUserId(content.getModifiedUserId());
             radio.setMeta(content.getMeta());
             radio.setCover(content.getCover());
             Flow.get(v).set(new RadioKey(radio));

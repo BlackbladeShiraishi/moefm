@@ -11,6 +11,8 @@ public class Content {
 
   private String title;
 
+  private String modifiedUserId;
+
   private List<Meta> meta;
 
   /** key -> url map */
@@ -38,6 +40,14 @@ public class Content {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public String getModifiedUserId() {
+    return modifiedUserId;
+  }
+
+  public void setModifiedUserId(String modifiedUserId) {
+    this.modifiedUserId = modifiedUserId;
   }
 
   public List<Meta> getMeta() {

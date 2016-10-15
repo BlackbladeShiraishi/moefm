@@ -6,6 +6,8 @@ class Radio {
 
   String title
 
+  String modifiedUserId
+
   List<Meta> meta
 
   /** key -> url map */

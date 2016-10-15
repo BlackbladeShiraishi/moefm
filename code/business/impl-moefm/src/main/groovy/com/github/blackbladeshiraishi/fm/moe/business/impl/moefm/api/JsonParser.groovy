@@ -112,6 +112,7 @@ class JsonParser {
             id: contentWiki.wiki_id,
             type: contentWiki.wiki_type,
             title: contentWiki.wiki_title,
+            modifiedUserId: contentWiki.wiki_modified_user,
             meta: parseMetaList(contentWiki.wiki_meta),
             cover: new HashMap<>(contentWiki.wiki_cover as Map)
     )
@@ -143,6 +144,7 @@ class JsonParser {
     return new Radio(
             id: radioWiki.wiki_id,
             title: radioWiki.wiki_title,
+            modifiedUserId: radioWiki.wiki_modified_user,
             meta: parseMetaList(radioWiki.wiki_meta),
             cover: new HashMap<>(radioWiki.wiki_cover as Map)
     )
@@ -199,6 +201,16 @@ class JsonParser {
       song.files << new Song.File(quality: rawFile.up_quality, url: rawFile.up_url)
     }
     return song;
+  }
+
+  @Nonnull
+  User parseUser(@Nonnull String json) {
+    def user = jsonSlurper.parseText(json).response.user
+    return new User(
+            uid: user.uid,
+            nickname: user.user_nickname,
+            avatar: new HashMap<>(user.user_avatar)
+    )
   }
 
 }

@@ -6,6 +6,7 @@ import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.User
 import groovy.json.JsonSlurper
 import rx.Observable
 
@@ -77,6 +78,12 @@ class MoeFmRadioService implements RadioService {
     return moeFouService.albumSongs(apiKey, album.id)
         .map {jsonParser.parseAlbumSongs(it?.string())}
         .flatMap{Observable.from(it)}
+  }
+
+  @Override
+  Observable<User> user(String uid) {
+    return moeFouService.user(apiKey, uid)
+        .map { jsonParser.parseUser(it.string()) }
   }
 
 }

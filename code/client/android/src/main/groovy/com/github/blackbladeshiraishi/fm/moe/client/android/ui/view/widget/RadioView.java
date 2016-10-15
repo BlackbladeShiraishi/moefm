@@ -19,6 +19,7 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.utils.HtmlCompat;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Meta;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,7 @@ public class RadioView extends FrameLayout {
       return;
     }
     radioTitleView.setText(radio.getTitle());
-    radioAuthorView.setText(radio.getTitle());
+    refreshAuthor();
     radioDescriptionView.setText(HtmlCompat.fromHtml(getDescription(radio)));
     MoeFmApplication.get(getContext()).getAppComponent().getRadioService().radioSongs(radio)
         .subscribeOn(Schedulers.io())
@@ -107,6 +108,35 @@ public class RadioView extends FrameLayout {
           @Override
           public void onNext(List<Song> songList) {
             radioSongListView.setSongList(songList);
+          }
+        });
+  }
+
+  private void refreshAuthor() {
+    final String uid = radio.getModifiedUserId();
+    if (uid == null || uid.isEmpty()) {
+      radioAuthorView.setText("（无）");
+      return;
+    }
+    radioAuthorView.setText("uid: " + uid);
+    MoeFmApplication.get(getContext()).getAppComponent().getRadioService()
+        .user(uid)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Observer<User>() {
+          @Override
+          public void onCompleted() {
+          }
+
+          @Override
+          public void onError(Throwable e) {
+            String message = String.format("[%s]%s", e.getClass().getSimpleName(), e.getMessage());
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+          }
+
+          @Override
+          public void onNext(User user) {
+            radioAuthorView.setText(user.getNickname());
           }
         });
   }

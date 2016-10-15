@@ -5,6 +5,7 @@ import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.User;
 
 import java.util.List;
 
@@ -43,5 +44,10 @@ public interface RadioService {
    * songs of album
    */
   Observable<Song> albumSongs(@Nonnull Album album);
+
+  /**
+   * detail of user
+   */
+  Observable<User> user(String uid);
 
 }
