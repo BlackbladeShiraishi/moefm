@@ -6,6 +6,7 @@ buildscript {
     classpath 'com.android.tools.build:gradle:2.2.1'
     classpath 'org.codehaus.groovy:groovy-android-gradle-plugin:1.1.0'
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    classpath 'me.tatarka:gradle-retrolambda:3.3.0'
     classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
 
     // NOTE: Do not place your application dependencies here; they belong
@@ -16,6 +17,7 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'groovyx.android'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 // uncomment this to show dexcount. not use always for faster build
 //apply plugin: 'com.getkeepsafe.dexcount'
 
@@ -23,6 +25,10 @@ android {
   compileSdkVersion 24
   buildToolsVersion "24.0.3"
 
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
   defaultConfig {
     applicationId "com.github.blackbladeshiraishi.fm.moe.client.android"
     minSdkVersion 15
