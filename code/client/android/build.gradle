@@ -4,7 +4,6 @@ buildscript {
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:2.2.1'
-    classpath 'org.codehaus.groovy:groovy-android-gradle-plugin:1.1.0'
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     classpath 'me.tatarka:gradle-retrolambda:3.3.0'
     classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
@@ -15,7 +14,6 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'groovyx.android'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 // uncomment this to show dexcount. not use always for faster build
@@ -61,15 +59,6 @@ new ConfigSlurper().parse(file('settings.properties').getText('UTF-8'))
         variant.resValue "string", key, value
       }
     }
-
-androidGroovy {
-  options {
-    configure(groovyOptions) {
-      encoding = 'UTF-8'
-      configurationScript = file "$rootDir/config/groovy/compiler-config.groovy"
-    }
-  }
-}
 
 dependencies {
   def androidSupportVersion = '24.2.1'
