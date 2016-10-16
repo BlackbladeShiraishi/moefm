@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 
 import flow.ClassKey;
 
-//TODO check is't can contain List<Radio>
+//TODO check is't can contain List<Content>
 public class RadioListKey extends ClassKey {
 
   @Nonnull

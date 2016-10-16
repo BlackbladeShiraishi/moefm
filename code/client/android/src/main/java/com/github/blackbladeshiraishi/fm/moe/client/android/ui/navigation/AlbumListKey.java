@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 
 import flow.ClassKey;
 
-//TODO check is't can contain List<Album>
+//TODO check is't can contain List<Content>
 public class AlbumListKey extends ClassKey {
 
   @Nonnull

@@ -3,7 +3,6 @@ package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api
 import com.github.blackbladeshiraishi.fm.moe.business.api.RadioService
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.User
 import groovy.json.JsonSlurper
@@ -36,13 +35,6 @@ class MoeFmRadioService implements RadioService {
   Observable<MoeFmMainPage> mainPage() {
     return moeFmService.mainPage(apiKey)
         .map {jsonParser.parseMainPage(it?.string())}
-  }
-
-  @Override
-  Observable<Radio> hotRadios() {
-    return moeFmService.hotRadios(apiKey)
-        .map {jsonParser.parseHotRadios(it?.string())}
-        .flatMap{Observable.from(it)}
   }
 
   @Override

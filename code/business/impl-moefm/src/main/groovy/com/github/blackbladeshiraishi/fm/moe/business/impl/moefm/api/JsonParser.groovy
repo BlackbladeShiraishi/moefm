@@ -69,20 +69,6 @@ class JsonParser {
     return result
   }
 
-  List<Radio> parseHotRadios(@Nullable String json) {
-    if (json == null) {
-      return Collections.emptyList()
-    }
-    final List<Radio> result = []
-    jsonSlurper.parseText(json).response.hot_radios.each {rawRadio ->
-      def radio = new Radio()
-      radio.id = rawRadio.wiki_id
-      radio.title = rawRadio.wiki_title
-      result << radio
-    }
-    return result
-  }
-
   @Nonnull
   List<Content> parseContents(@Nullable String json) {
     final List<Content> result = []
@@ -118,49 +104,6 @@ class JsonParser {
 
   private static Meta parseMeta(@Nonnull def meta) {
     return new Meta(key: meta.meta_key, type: meta.meta_type, value: meta.meta_value)
-  }
-
-  @Nonnull
-  List<Radio> parseRadios(@Nullable String json) {
-    final List<Radio> result = []
-    if (json != null) {
-      jsonSlurper.parseText(json).response.wikis.each { rawWiki ->
-        result << parseRadioWiki(rawWiki)
-      }
-    }
-    return result;
-  }
-
-  @Nonnull
-  private static Radio parseRadioWiki(@Nonnull def radioWiki) {
-    return new Radio(
-            id: radioWiki.wiki_id,
-            title: radioWiki.wiki_title,
-            modifiedUserId: radioWiki.wiki_modified_user,
-            meta: parseMetaList(radioWiki.wiki_meta),
-            cover: new HashMap<>(radioWiki.wiki_cover as Map)
-    )
-  }
-
-  @Nonnull
-  List<Album> parseAlbums(@Nullable String json) {
-    final List<Album> result = []
-    if (json != null) {
-      jsonSlurper.parseText(json).response.wikis.each { rawWiki ->
-        result << parseAlbumWiki(rawWiki)
-      }
-    }
-    return result;
-  }
-
-  @Nonnull
-  private static Album parseAlbumWiki(@Nonnull def albumWiki) {
-    return new Album(
-            id: albumWiki.wiki_id,
-            title: albumWiki.wiki_title,
-            meta: parseMetaList(albumWiki.wiki_meta),
-            cover: new HashMap<>(albumWiki.wiki_cover as Map)
-    )
   }
 
   @Nonnull
