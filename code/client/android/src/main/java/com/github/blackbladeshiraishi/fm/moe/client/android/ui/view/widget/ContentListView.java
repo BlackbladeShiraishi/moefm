@@ -12,8 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumKey;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.ContentKey;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.ArrayList;
@@ -81,11 +80,7 @@ public class ContentListView extends FrameLayout {
           }
         }
         private void onClickContent(View v, Content content) {
-          if ("radio".equals(content.getType())) {
-            Flow.get(v).set(new RadioKey(content));
-          } else if ("music".equals(content.getType())) {
-            Flow.get(v).set(new AlbumKey(content));
-          }
+          Flow.get(v).set(new ContentKey(content));
         }
       });
     }

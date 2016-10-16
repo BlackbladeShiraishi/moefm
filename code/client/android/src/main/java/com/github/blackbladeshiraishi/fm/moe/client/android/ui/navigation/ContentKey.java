@@ -4,23 +4,23 @@ import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import javax.annotation.Nonnull;
 
-public class RadioKey {
+public class ContentKey {
 
   @Nonnull
-  private final Content radio;
+  private final Content content;
 
-  public RadioKey(@Nonnull Content radio) {
-    this.radio = radio;
+  public ContentKey(@Nonnull Content content) {
+    this.content = content;
   }
 
   @Nonnull
-  public Content getRadio() {
-    return radio;
+  public Content getContent() {
+    return content;
   }
 
   @Override
   public int hashCode() {
-    long id = radio.getId();
+    long id = content.getId();
     return (int)(id ^ (id >>> 32)); // compatible with Long.hashCode()
   }
 
@@ -35,7 +35,7 @@ public class RadioKey {
     if (obj.getClass() != getClass()) {
       return false;
     }
-    return ((RadioKey)obj).radio.getId() == radio.getId();
+    return ((ContentKey)obj).content.getId() == content.getId();
   }
 
 }

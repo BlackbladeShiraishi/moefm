@@ -7,9 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.ContentKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AlbumView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.ContentListView;
@@ -17,6 +16,7 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainL
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.RadioView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.SearchView;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.Map;
 
@@ -79,16 +79,22 @@ public class MainActivity extends AppCompatActivity {
         ContentListView contentView = new ContentListView(incomingContext);
         layoutView.setContentView(contentView);
         contentView.setContent(((RadioListKey) incomingKey).getRadioList());
-      } else if (incomingKey.getClass().equals(RadioKey.class)) {
-        RadioView contentView = new RadioView(incomingContext);
-        layoutView.setContentView(contentView);
-        contentView.setRadio(((RadioKey) incomingKey).getRadio());
-        contentView.refresh();
-      } else if (incomingKey.getClass().equals(AlbumKey.class)) {
-        AlbumView contentView = new AlbumView(incomingContext);
-        layoutView.setContentView(contentView);
-        contentView.setAlbum(((AlbumKey) incomingKey).getAlbum());
-        contentView.refresh();
+      } else if (incomingKey.getClass().equals(ContentKey.class)) {
+        final Content content = ((ContentKey) incomingKey).getContent();
+        if ("radio".equals(content.getType())) {
+          RadioView contentView = new RadioView(incomingContext);
+          layoutView.setContentView(contentView);
+          contentView.setRadio(content);
+          contentView.refresh();
+        } else if ("music".equals(content.getType())) {
+          AlbumView contentView = new AlbumView(incomingContext);
+          layoutView.setContentView(contentView);
+          contentView.setAlbum(content);
+          contentView.refresh();
+        } else {
+          String message = "unknown content type: " + content.getType();
+          Toast.makeText(incomingContext, message, Toast.LENGTH_LONG).show();
+        }
       } else {
         final String message = String.format(
             "[%s]%s is under construct", incomingKey.getClass().getSimpleName(), incomingKey);

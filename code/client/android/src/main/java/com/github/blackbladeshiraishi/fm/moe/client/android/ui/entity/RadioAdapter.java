@@ -3,7 +3,7 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 import android.view.View;
 
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.ContentKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
@@ -29,7 +29,7 @@ public class RadioAdapter implements CardViewHoler.CardViewModel {
     return new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Flow.get(v.getContext()).set(new RadioKey(source));
+        Flow.get(v.getContext()).set(new ContentKey(source));
       }
     };
   }
