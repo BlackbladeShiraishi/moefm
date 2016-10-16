@@ -1,6 +1,5 @@
 package com.github.blackbladeshiraishi.fm.moe.business.api.entity;
 
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.List;
@@ -9,11 +8,11 @@ public class MoeFmMainPage implements MainPage {
 
   private List<Content> hotRadios;
 
-  private List<Album> newAlbums;
+  private List<Content> newAlbums;
 
-  private List<Album> hotAlbums;
+  private List<Content> hotAlbums;
 
-  private List<Album> albums;
+  private List<Content> albums;
 
   public List<Content> getHotRadios() {
     return hotRadios;
@@ -23,27 +22,27 @@ public class MoeFmMainPage implements MainPage {
     this.hotRadios = hotRadios;
   }
 
-  public List<Album> getNewAlbums() {
+  public List<Content> getNewAlbums() {
     return newAlbums;
   }
 
-  public void setNewAlbums(List<Album> newAlbums) {
+  public void setNewAlbums(List<Content> newAlbums) {
     this.newAlbums = newAlbums;
   }
 
-  public List<Album> getHotAlbums() {
+  public List<Content> getHotAlbums() {
     return hotAlbums;
   }
 
-  public void setHotAlbums(List<Album> hotAlbums) {
+  public void setHotAlbums(List<Content> hotAlbums) {
     this.hotAlbums = hotAlbums;
   }
 
-  public List<Album> getAlbums() {
+  public List<Content> getAlbums() {
     return albums;
   }
 
-  public void setAlbums(List<Album> albums) {
+  public void setAlbums(List<Content> albums) {
     this.albums = albums;
   }
 

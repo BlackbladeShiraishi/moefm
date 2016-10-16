@@ -1,7 +1,6 @@
 package com.github.blackbladeshiraishi.fm.moe.business.api;
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MainPage;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
@@ -38,12 +37,12 @@ public interface RadioService {
   /**
    * album list
    */
-  Observable<Album> albums();
+  Observable<Content> albums();
 
   /**
    * songs of album
    */
-  Observable<Song> albumSongs(@Nonnull Album album);
+  Observable<Song> albumSongs(long albumId);
 
   /**
    * detail of user

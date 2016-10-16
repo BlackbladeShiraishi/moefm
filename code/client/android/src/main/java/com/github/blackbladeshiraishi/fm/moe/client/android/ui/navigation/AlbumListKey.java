@@ -1,6 +1,6 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation;
 
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.List;
 
@@ -12,14 +12,14 @@ import flow.ClassKey;
 public class AlbumListKey extends ClassKey {
 
   @Nonnull
-  private final List<Album> albumList;
+  private final List<Content> albumList;
 
-  public AlbumListKey(@Nonnull List<Album> albumList) {
+  public AlbumListKey(@Nonnull List<Content> albumList) {
     this.albumList = albumList;
   }
 
   @Nonnull
-  public List<Album> getAlbumList() {
+  public List<Content> getAlbumList() {
     return albumList;
   }
 

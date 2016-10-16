@@ -10,7 +10,7 @@ import android.widget.ScrollView;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.utils.HtmlCompat;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Meta;
 
 import java.util.List;
@@ -59,7 +59,7 @@ public class AlbumIntroductionView extends ScrollView {
     addView(fieldsContainerView);
   }
 
-  public void setAlbum(@Nullable Album album) {
+  public void setAlbum(@Nullable Content album) {
     if (album == null || album.getMeta() == null) {
       fieldsContainerView.removeAllViews();
       return;

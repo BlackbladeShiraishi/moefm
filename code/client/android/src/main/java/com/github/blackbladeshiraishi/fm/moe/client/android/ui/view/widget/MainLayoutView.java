@@ -18,7 +18,6 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.List;
@@ -82,9 +81,9 @@ public class MainLayoutView extends DrawerLayout
         .first()
         .toSingle()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new SingleSubscriber<List<Album>>() {
+        .subscribe(new SingleSubscriber<List<Content>>() {
           @Override
-          public void onSuccess(List<Album> value) {
+          public void onSuccess(List<Content> value) {
             Flow.get(MainLayoutView.this).set(new AlbumListKey(value));
           }
           @Override

@@ -1,7 +1,6 @@
 package com.github.blackbladeshiraishi.fm.moe.business.api;
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.List;
@@ -20,6 +19,6 @@ public interface SessionService {
   /**
    * album list
    */
-  Observable<List<Album>> albums();
+  Observable<List<Content>> albums();
 
 }

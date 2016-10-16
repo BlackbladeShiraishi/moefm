@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.Map;
 
@@ -17,9 +17,9 @@ public class AlbumAdapter implements CardViewHoler.CardViewModel {
 
   private static final String[] COVER_KEY = new String[]{"square", "small", "medium", "large"};
 
-  public final Album source;
+  public final Content source;
 
-  public AlbumAdapter(Album source) {
+  public AlbumAdapter(Content source) {
     this.source = source;
   }
 

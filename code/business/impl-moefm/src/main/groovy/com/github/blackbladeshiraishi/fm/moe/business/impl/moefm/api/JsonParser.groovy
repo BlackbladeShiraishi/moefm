@@ -45,26 +45,26 @@ class JsonParser {
     return result
   }
 
-  private static List<Album> getNewAlbums(@Nonnull Object jsonObject) {
-    final List<Album> result = []
+  private static List<Content> getNewAlbums(@Nonnull Object jsonObject) {
+    final List<Content> result = []
     jsonObject.response.new_musics.each {album ->
-      result << parseAlbumWiki(album)
+      result << parseContentWiki(album)
     }
     return result
   }
 
-  private static List<Album> getHotAlbums(@Nonnull Object jsonObject) {
-    final List<Album> result = []
+  private static List<Content> getHotAlbums(@Nonnull Object jsonObject) {
+    final List<Content> result = []
     jsonObject.response.hot_musics.each {album ->
-      result << parseAlbumWiki(album)
+      result << parseContentWiki(album)
     }
     return result
   }
 
-  private static List<Album> getAlbums(@Nonnull Object jsonObject) {
-    final List<Album> result = []
+  private static List<Content> getAlbums(@Nonnull Object jsonObject) {
+    final List<Content> result = []
     jsonObject.response.musics.each {album ->
-      result << parseAlbumWiki(album)
+      result << parseContentWiki(album)
     }
     return result
   }

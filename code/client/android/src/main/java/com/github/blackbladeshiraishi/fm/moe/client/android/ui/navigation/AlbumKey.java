@@ -1,20 +1,20 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation;
 
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import javax.annotation.Nonnull;
 
 public class AlbumKey {
 
   @Nonnull
-  private final Album album;
+  private final Content album;
 
-  public AlbumKey(@Nonnull Album album) {
+  public AlbumKey(@Nonnull Content album) {
     this.album = album;
   }
 
   @Nonnull
-  public Album getAlbum() {
+  public Content getAlbum() {
     return album;
   }
 

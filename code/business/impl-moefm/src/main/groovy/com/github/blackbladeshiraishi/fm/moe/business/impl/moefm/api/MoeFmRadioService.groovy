@@ -2,7 +2,6 @@ package com.github.blackbladeshiraishi.fm.moe.business.impl.moefm.api
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.RadioService
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song
@@ -67,15 +66,15 @@ class MoeFmRadioService implements RadioService {
   }
 
   @Override
-  Observable<Album> albums() {
+  Observable<Content> albums() {
     return moeFouService.albums(apiKey)
-        .map {jsonParser.parseAlbums(it?.string())}
+        .map {jsonParser.parseContents(it?.string())}
         .flatMap{Observable.from(it)}
   }
 
   @Override
-  Observable<Song> albumSongs(@Nonnull Album album) {
-    return moeFouService.albumSongs(apiKey, album.id)
+  Observable<Song> albumSongs(long albumId) {
+    return moeFouService.albumSongs(apiKey, albumId)
         .map {jsonParser.parseAlbumSongs(it?.string())}
         .flatMap{Observable.from(it)}
   }

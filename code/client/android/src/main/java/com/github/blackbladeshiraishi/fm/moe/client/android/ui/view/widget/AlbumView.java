@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter.TabAdapter;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class AlbumView extends FrameLayout {
   private final AlbumIntroductionView albumIntroductionView;
   private final SongListView albumSongListView;
 
-  private Album album;
+  private Content album;
 
   public AlbumView(Context context) {
     super(context);
@@ -64,7 +64,7 @@ public class AlbumView extends FrameLayout {
     tabsView.setAdapter(new TabAdapter(tabs));
   }
 
-  public void setAlbum(Album album) {
+  public void setAlbum(Content album) {
     this.album = album;
   }
 
@@ -74,7 +74,7 @@ public class AlbumView extends FrameLayout {
       return;
     }
     albumIntroductionView.setAlbum(album);
-    MoeFmApplication.get(getContext()).getAppComponent().getRadioService().albumSongs(album)
+    MoeFmApplication.get(getContext()).getAppComponent().getRadioService().albumSongs(album.getId())
         .subscribeOn(Schedulers.io())
         .toList()
         .observeOn(AndroidSchedulers.mainThread())

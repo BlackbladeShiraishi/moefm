@@ -6,7 +6,6 @@ import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.ArrayList;
@@ -52,13 +51,13 @@ public class MoeFmMainPageAdapter {
   }
 
   private static CardClusterViewHolder.CardClusterViewModel newAlbumListCardClusterModel(
-      @Nonnull final String title, @Nonnull final List<Album> albumList) {
+      @Nonnull final String title, @Nonnull final List<Content> albumList) {
     return new AlbumListAdapter(newShowAlbumListOnClickListener(albumList), title, albumList);
   }
 
   @Nonnull
   private static View.OnClickListener newShowAlbumListOnClickListener(
-      @Nonnull final List<Album> albumList) {
+      @Nonnull final List<Content> albumList) {
     return new View.OnClickListener() {
       @Override
       public void onClick(View v) {
