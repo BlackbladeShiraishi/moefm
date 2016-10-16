@@ -15,8 +15,8 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter.TabAdapter;
 import com.github.blackbladeshiraishi.fm.moe.client.android.utils.HtmlCompat;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Meta;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.User;
 
@@ -36,7 +36,7 @@ public class RadioView extends FrameLayout {
   private final TextView radioAuthorView;
   private final TextView radioDescriptionView;
 
-  private Radio radio;
+  private Content radio;
 
   public RadioView(Context context) {
     super(context);
@@ -76,7 +76,7 @@ public class RadioView extends FrameLayout {
     tabsView.setAdapter(new TabAdapter(tabs));
   }
 
-  public void setRadio(Radio radio) {
+  public void setRadio(Content radio) {
     this.radio = radio;
   }
 
@@ -88,7 +88,7 @@ public class RadioView extends FrameLayout {
     radioTitleView.setText(radio.getTitle());
     refreshAuthor();
     radioDescriptionView.setText(HtmlCompat.fromHtml(getDescription(radio)));
-    MoeFmApplication.get(getContext()).getAppComponent().getRadioService().radioSongs(radio)
+    MoeFmApplication.get(getContext()).getAppComponent().getRadioService().radioSongs(radio.getId())
         .subscribeOn(Schedulers.io())
         .toList()
         .observeOn(AndroidSchedulers.mainThread())
@@ -140,7 +140,7 @@ public class RadioView extends FrameLayout {
         });
   }
 
-  private static String getDescription(@Nonnull Radio radio) {
+  private static String getDescription(@Nonnull Content radio) {
     if (radio.getMeta() != null) {
       for (Meta meta : radio.getMeta()) {
         if ("简介".equals(meta.getKey())) {

@@ -53,15 +53,15 @@ class MoeFmRadioService implements RadioService {
   }
 
   @Override
-  Observable<Radio> radios() {
+  Observable<Content> radios() {
     return moeFouService.radios(apiKey)
-        .map {jsonParser.parseRadios(it?.string())}
+        .map {jsonParser.parseContents(it?.string())}
         .flatMap{Observable.from(it)}
   }
 
   @Override
-  Observable<Song> radioSongs(@Nonnull Radio radio) {
-    return moeFouService.radioSongs(apiKey, radio.id)
+  Observable<Song> radioSongs(long radioId) {
+    return moeFouService.radioSongs(apiKey, radioId)
         .map {jsonParser.parseRadioSongs(it?.string())}
         .flatMap{Observable.from(it)}
   }

@@ -2,7 +2,7 @@ package com.github.blackbladeshiraishi.fm.moe.business.api;
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface SessionService {
   /**
    * radio list
    */
-  Observable<List<Radio>> radios();
+  Observable<List<Content>> radios();
 
   /**
    * album list

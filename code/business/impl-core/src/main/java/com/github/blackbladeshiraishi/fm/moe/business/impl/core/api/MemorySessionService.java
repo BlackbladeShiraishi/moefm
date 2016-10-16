@@ -6,7 +6,7 @@ import com.github.blackbladeshiraishi.fm.moe.business.api.ThreadService;
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage;
 import com.github.blackbladeshiraishi.fm.moe.business.impl.core.utils.SkipCompleteRxOperator;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class MemorySessionService implements SessionService {
 
   private final BehaviorSubject<MoeFmMainPage> mainPageSubject = BehaviorSubject.create();
   private final BehaviorSubject<List<Album>> albumsSubject = BehaviorSubject.create();
-  private final BehaviorSubject<List<Radio>> radiosSubject = BehaviorSubject.create();
+  private final BehaviorSubject<List<Content>> radiosSubject = BehaviorSubject.create();
 
   @Inject
   public MemorySessionService(RadioService radioService, ThreadService threadService) {
@@ -51,7 +51,7 @@ public class MemorySessionService implements SessionService {
   }
 
   @Override
-  public Observable<List<Radio>> radios() {
+  public Observable<List<Content>> radios() {
     if (!radiosSubject.hasValue()) {
       loadRadios();
     }
@@ -79,7 +79,7 @@ public class MemorySessionService implements SessionService {
   private void loadRadios() {
     radioService.radios()
         .toList()
-        .lift(new SkipCompleteRxOperator<List<Radio>>())
+        .lift(new SkipCompleteRxOperator<List<Content>>())
         .observeOn(threadService.getSingleThreadScheduler())
         .subscribeOn(Schedulers.io())
         .subscribe(radiosSubject);

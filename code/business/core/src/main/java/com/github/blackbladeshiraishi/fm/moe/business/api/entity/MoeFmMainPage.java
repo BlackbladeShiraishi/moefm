@@ -1,13 +1,13 @@
 package com.github.blackbladeshiraishi.fm.moe.business.api.entity;
 
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.List;
 
 public class MoeFmMainPage implements MainPage {
 
-  private List<Radio> hotRadios;
+  private List<Content> hotRadios;
 
   private List<Album> newAlbums;
 
@@ -15,11 +15,11 @@ public class MoeFmMainPage implements MainPage {
 
   private List<Album> albums;
 
-  public List<Radio> getHotRadios() {
+  public List<Content> getHotRadios() {
     return hotRadios;
   }
 
-  public void setHotRadios(List<Radio> hotRadios) {
+  public void setHotRadios(List<Content> hotRadios) {
     this.hotRadios = hotRadios;
   }
 

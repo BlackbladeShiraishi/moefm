@@ -13,9 +13,9 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioK
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AlbumListView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AlbumView;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.ContentListView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainLayoutView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.RadioListView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.RadioView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.SearchView;
 
@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
         layoutView.setContentView(contentView);
         contentView.setAlbums(((AlbumListKey) incomingKey).getAlbumList());
       } else if (incomingKey.getClass().equals(RadioListKey.class)) {
-        RadioListView contentView = new RadioListView(incomingContext);
+        ContentListView contentView = new ContentListView(incomingContext);
         layoutView.setContentView(contentView);
-        contentView.setRadios(((RadioListKey) incomingKey).getRadioList());
+        contentView.setContent(((RadioListKey) incomingKey).getRadioList());
       } else if (incomingKey.getClass().equals(RadioKey.class)) {
         RadioView contentView = new RadioView(incomingContext);
         layoutView.setContentView(contentView);

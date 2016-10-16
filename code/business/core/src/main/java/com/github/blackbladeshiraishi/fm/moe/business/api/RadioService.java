@@ -28,12 +28,12 @@ public interface RadioService {
   /**
    * radio list
    */
-  Observable<Radio> radios();
+  Observable<Content> radios();
 
   /**
    * songs of radio
    */
-  Observable<Song> radioSongs(@Nonnull Radio radio);
+  Observable<Song> radioSongs(long radioId);
 
   /**
    * album list

@@ -16,7 +16,6 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumK
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,13 +83,7 @@ public class ContentListView extends FrameLayout {
         }
         private void onClickContent(View v, Content content) {
           if ("radio".equals(content.getType())) {
-            final Radio radio = new Radio();
-            radio.setId(content.getId());
-            radio.setTitle(content.getTitle());
-            radio.setModifiedUserId(content.getModifiedUserId());
-            radio.setMeta(content.getMeta());
-            radio.setCover(content.getCover());
-            Flow.get(v).set(new RadioKey(radio));
+            Flow.get(v).set(new RadioKey(content));
           } else if ("music".equals(content.getType())) {
             final Album album = new Album();
             album.setId(content.getId());

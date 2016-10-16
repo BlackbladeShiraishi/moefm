@@ -7,7 +7,7 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumL
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Album;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +37,12 @@ public class MoeFmMainPageAdapter {
 
   private static CardClusterViewHolder.CardClusterViewModel hotRadios(final MoeFmMainPage mainPage) {
     final String title = "流行电台";
-    final List<Radio> hotRadios = mainPage.getHotRadios();
+    final List<Content> hotRadios = mainPage.getHotRadios();
     return new RadioListAdapter(newShowRadioListOnClickListener(hotRadios), title, hotRadios);
   }
   @Nonnull
   private static View.OnClickListener newShowRadioListOnClickListener(
-      @Nonnull final List<Radio> radioList) {
+      @Nonnull final List<Content> radioList) {
     return new View.OnClickListener() {
       @Override
       public void onClick(View v) {

@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.Map;
 
@@ -17,9 +17,9 @@ public class RadioAdapter implements CardViewHoler.CardViewModel {
 
   private static final String[] COVER_KEY = new String[]{"square", "small", "medium", "large"};
 
-  public final Radio source;
+  public final Content source;
 
-  public RadioAdapter(Radio source) {
+  public RadioAdapter(Content source) {
     this.source = source;
   }
 

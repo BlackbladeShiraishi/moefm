@@ -1,20 +1,20 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation;
 
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import javax.annotation.Nonnull;
 
 public class RadioKey {
 
   @Nonnull
-  private final Radio radio;
+  private final Content radio;
 
-  public RadioKey(@Nonnull Radio radio) {
+  public RadioKey(@Nonnull Content radio) {
     this.radio = radio;
   }
 
   @Nonnull
-  public Radio getRadio() {
+  public Content getRadio() {
     return radio;
   }
 

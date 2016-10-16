@@ -1,6 +1,6 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation;
 
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Radio;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.List;
 
@@ -12,14 +12,14 @@ import flow.ClassKey;
 public class RadioListKey extends ClassKey {
 
   @Nonnull
-  private final List<Radio> radioList;
+  private final List<Content> radioList;
 
-  public RadioListKey(@Nonnull List<Radio> radioList) {
+  public RadioListKey(@Nonnull List<Content> radioList) {
     this.radioList = radioList;
   }
 
   @Nonnull
-  public List<Radio> getRadioList() {
+  public List<Content> getRadioList() {
     return radioList;
   }
 

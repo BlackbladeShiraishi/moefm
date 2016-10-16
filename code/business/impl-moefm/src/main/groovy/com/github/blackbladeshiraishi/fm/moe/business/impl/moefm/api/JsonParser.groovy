@@ -37,10 +37,10 @@ class JsonParser {
     )
   }
 
-  private static List<Radio> getHotRadios(@Nonnull Object jsonObject) {
-    final List<Radio> result = []
+  private static List<Content> getHotRadios(@Nonnull Object jsonObject) {
+    final List<Content> result = []
     jsonObject.response.hot_radios.each {radio ->
-      result << parseRadioWiki(radio)
+      result << parseContentWiki(radio)
     }
     return result
   }
