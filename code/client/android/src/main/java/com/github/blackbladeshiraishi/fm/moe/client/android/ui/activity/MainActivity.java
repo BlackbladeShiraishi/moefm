@@ -10,13 +10,11 @@ import android.widget.Toast;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.ContentKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.AlbumView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.ContentListView;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.ContentView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainLayoutView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.RadioView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.SearchView;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 
 import java.util.Map;
 
@@ -80,21 +78,10 @@ public class MainActivity extends AppCompatActivity {
         layoutView.setContentView(contentView);
         contentView.setContent(((RadioListKey) incomingKey).getRadioList());
       } else if (incomingKey.getClass().equals(ContentKey.class)) {
-        final Content content = ((ContentKey) incomingKey).getContent();
-        if ("radio".equals(content.getType())) {
-          RadioView contentView = new RadioView(incomingContext);
-          layoutView.setContentView(contentView);
-          contentView.setRadio(content);
-          contentView.refresh();
-        } else if ("music".equals(content.getType())) {
-          AlbumView contentView = new AlbumView(incomingContext);
-          layoutView.setContentView(contentView);
-          contentView.setAlbum(content);
-          contentView.refresh();
-        } else {
-          String message = "unknown content type: " + content.getType();
-          Toast.makeText(incomingContext, message, Toast.LENGTH_LONG).show();
-        }
+        ContentView contentView = new ContentView(incomingContext);
+        layoutView.setContentView(contentView);
+        contentView.setContent(((ContentKey) incomingKey).getContent());
+        contentView.refresh();
       } else {
         final String message = String.format(
             "[%s]%s is under construct", incomingKey.getClass().getSimpleName(), incomingKey);

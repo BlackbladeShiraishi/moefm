@@ -1,11 +1,8 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
@@ -16,7 +13,6 @@ import com.github.blackbladeshiraishi.fm.moe.domain.entity.Meta;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.User;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,7 +22,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.github.blackbladeshiraishi.fm.moe.client.android.R.dimen.text_field_vertical_padding;
 
-public class RadioIntroductionView extends ScrollView {
+public class RadioIntroductionView extends ContentIntroductionView {
 
   private final LinearLayout fieldsContainerView;
 
@@ -44,12 +40,6 @@ public class RadioIntroductionView extends ScrollView {
 
   public RadioIntroductionView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-  }
-
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public RadioIntroductionView(Context context, AttributeSet attrs, int defStyleAttr,
-                               int defStyleRes) {
-    super(context, attrs, defStyleAttr, defStyleRes);
   }
 
   // init
@@ -82,9 +72,13 @@ public class RadioIntroductionView extends ScrollView {
     fieldsContainerView.addView(descriptionView);
   }
 
-  public void setRadio(@Nullable Content radio) {
+  @Override
+  public void setContent(Content radio) {
     if (radio == null) {
       return;
+    }
+    if (!"radio".equals(radio.getType())) {
+      throw new IllegalArgumentException("illegal content type: " + radio.getType());
     }
     titleView.setText(radio.getTitle());
     setAuthor(radio);

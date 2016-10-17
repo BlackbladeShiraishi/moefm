@@ -1,12 +1,9 @@
 package com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.utils.HtmlCompat;
@@ -14,8 +11,6 @@ import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Meta;
 
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 import rx.Observable;
 import rx.functions.Action1;
@@ -25,7 +20,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.github.blackbladeshiraishi.fm.moe.client.android.R.dimen.text_field_vertical_padding;
 
 
-public class AlbumIntroductionView extends ScrollView {
+public class AlbumIntroductionView extends ContentIntroductionView {
 
   private final LinearLayout fieldsContainerView;
 
@@ -41,12 +36,6 @@ public class AlbumIntroductionView extends ScrollView {
     super(context, attrs, defStyleAttr);
   }
 
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public AlbumIntroductionView(Context context, AttributeSet attrs, int defStyleAttr,
-                               int defStyleRes) {
-    super(context, attrs, defStyleAttr, defStyleRes);
-  }
-
   // init
   {
     fieldsContainerView = new LinearLayout(getContext());
@@ -59,10 +48,14 @@ public class AlbumIntroductionView extends ScrollView {
     addView(fieldsContainerView);
   }
 
-  public void setAlbum(@Nullable Content album) {
+  @Override
+  public void setContent(Content album) {
     if (album == null || album.getMeta() == null) {
       fieldsContainerView.removeAllViews();
       return;
+    }
+    if (!"music".equals(album.getType())) {
+      throw new IllegalArgumentException("illegal content type: " + album.getType());
     }
     final List<Meta> metaList = album.getMeta();
     final int centerSpace = getResources().getDimensionPixelSize(text_field_vertical_padding);
