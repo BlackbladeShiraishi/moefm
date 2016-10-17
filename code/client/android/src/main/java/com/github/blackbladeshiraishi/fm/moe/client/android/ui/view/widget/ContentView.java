@@ -3,6 +3,7 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -65,6 +66,9 @@ public class ContentView extends FrameLayout {
 
     tabAdapter = new TabAdapter(tabs);
     tabsView.setAdapter(tabAdapter);
+
+    final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+    tabLayout.setupWithViewPager(tabsView, true);
   }
 
   public void setContent(Content content) {
