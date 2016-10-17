@@ -13,4 +13,8 @@
     <string name="action_refresh">刷新</string>
     <string name="action_more">更多</string>
 
+    <string name="radio">电台</string>
+    <string name="author">创建者</string>
+    <string name="description">简介</string>
+
 </resources>

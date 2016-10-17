@@ -68,6 +68,11 @@ public class LabeledTextView extends LinearLayout {
     }
   }
 
+  public void setLable(int resid) {
+    lableView.setText(resid);
+    lableView.setVisibility(VISIBLE);
+  }
+
   public void setText(CharSequence text) {
     textView.setText(text);
   }
