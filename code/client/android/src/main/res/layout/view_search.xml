@@ -15,7 +15,7 @@
             android:paddingRight="16dp"
             android:ems="10"
             android:inputType="textNoSuggestions"
-            android:hint="Keyword"
+            android:hint="@string/keyword"
             tools:text="Keyword"/>
 
     <com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.ContentListView
