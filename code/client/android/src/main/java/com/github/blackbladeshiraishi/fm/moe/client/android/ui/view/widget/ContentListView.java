@@ -9,14 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.ContentKey;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import flow.Flow;
 
@@ -59,19 +62,34 @@ public class ContentListView extends FrameLayout {
     contentListAdapter.notifyDataSetChanged();
   }
 
+  private static String selectCover(Map<String, String> cover) {
+    final String[] COVER_KEY = {"square", "small", "medium", "large"};
+    String result = null;
+    for (String key : COVER_KEY) {
+      result = cover.get(key);
+      if (result != null) {
+        break;
+      }
+    }
+    return result;
+  }
+
   private class ContentListAdapter extends RecyclerView.Adapter<ContentItemViewHolder> {
     @Override
     public ContentItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-      final View rootView =
-          LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_radio, parent, false);
+      final View rootView = LayoutInflater.from(parent.getContext())
+          .inflate(R.layout.list_item_single_line_with_avatar, parent, false);
       return new ContentItemViewHolder(rootView);
     }
 
     @Override
     public void onBindViewHolder(final ContentItemViewHolder holder, int position) {
-      final String title = content.get(position).getTitle();
-      holder.titleView.setText(title);
-      holder.titleView.setOnClickListener(new OnClickListener() {
+      final Content currentContent = ContentListView.this.content.get(position);
+      Picasso.with(holder.imageView.getContext())
+          .load(selectCover(currentContent.getCover()))
+          .into(holder.imageView);
+      holder.titleView.setText(currentContent.getTitle());
+      holder.itemView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
           final int position = holder.getAdapterPosition();
@@ -89,14 +107,17 @@ public class ContentListView extends FrameLayout {
     public int getItemCount() {
       return content.size();
     }
+
   }
 
   private static class ContentItemViewHolder extends RecyclerView.ViewHolder {
-    TextView titleView;
+    final ImageView imageView;
+    final TextView titleView;
 
     ContentItemViewHolder(View itemView) {
       super(itemView);
-      titleView = (TextView) itemView;
+      imageView = (ImageView) itemView.findViewById(R.id.image_view);
+      titleView = (TextView) itemView.findViewById(R.id.text_view);
     }
   }
 

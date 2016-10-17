@@ -11,4 +11,4 @@
         android:paddingBottom="8dp"
         android:clipToPadding="false"
         tools:context=".ui.activity.MainActivity"
-        tools:listitem="@layout/list_item_radio"/>
+        tools:listitem="@layout/list_item_single_line_with_avatar"/>

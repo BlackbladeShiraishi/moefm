@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
@@ -60,8 +61,8 @@ public class SongListView extends FrameLayout {
   private class SongListAdapter extends RecyclerView.Adapter<SongItemViewHolder> {
     @Override
     public SongItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-      final View rootView =
-          LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_radio, parent, false);
+      final View rootView = LayoutInflater.from(parent.getContext())
+          .inflate(R.layout.list_item_single_line_with_avatar, parent, false);
       return new SongItemViewHolder(rootView);
     }
 
@@ -69,7 +70,7 @@ public class SongListView extends FrameLayout {
     public void onBindViewHolder(final SongItemViewHolder holder, int position) {
       final String title = songList.get(position).getTitle();
       holder.titleView.setText(title);
-      holder.titleView.setOnClickListener(new OnClickListener() {
+      holder.itemView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
           final int position = holder.getAdapterPosition();
@@ -90,11 +91,13 @@ public class SongListView extends FrameLayout {
   }
 
   private static class SongItemViewHolder extends RecyclerView.ViewHolder {
-    TextView titleView;
+    final ImageView imageView;
+    final TextView titleView;
 
     SongItemViewHolder(View itemView) {
       super(itemView);
-      titleView = (TextView) itemView;
+      imageView = (ImageView) itemView.findViewById(R.id.image_view);
+      titleView = (TextView) itemView.findViewById(R.id.text_view);;
     }
   }
 
