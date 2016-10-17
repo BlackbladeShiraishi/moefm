@@ -81,6 +81,11 @@ class JsonParser {
   }
 
   @Nonnull
+  Content parseContentDetail(@Nonnull String json) {
+    parseContentWiki(jsonSlurper.parseText(json).response.wiki)
+  }
+
+  @Nonnull
   private static Content parseContentWiki(@Nonnull def contentWiki) {
     return new Content(
             id: contentWiki.wiki_id,
@@ -132,7 +137,7 @@ class JsonParser {
 
   @Nonnull
   private static Song parseSubItemSong(@Nonnull def rawSong) {
-    def song = new Song(id: rawSong.sub_id, title: rawSong.sub_title, files: [])
+    def song = new Song(id: rawSong.sub_id, albumId: rawSong.sub_parent_wiki, title: rawSong.sub_title, files: [])
     rawSong.sub_upload.each { rawFile ->
       song.files << new Song.File(quality: rawFile.up_quality, url: rawFile.up_url)
     }

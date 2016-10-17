@@ -8,6 +8,7 @@ public class Song implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private long id;
+  private long albumId;
   private String title;
   private List<File> files;
 
@@ -17,6 +18,14 @@ public class Song implements Serializable {
 
   public void setId(long id) {
     this.id = id;
+  }
+
+  public long getAlbumId() {
+    return albumId;
+  }
+
+  public void setAlbumId(long albumId) {
+    this.albumId = albumId;
   }
 
   public String getTitle() {

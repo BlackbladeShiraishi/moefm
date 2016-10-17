@@ -12,12 +12,18 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.service.MusicService;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class SongListView extends FrameLayout {
 
@@ -58,6 +64,18 @@ public class SongListView extends FrameLayout {
     songListAdapter.notifyDataSetChanged();
   }
 
+  private static String selectCover(Map<String, String> cover) {
+    final String[] COVER_KEY = {"square", "small", "medium", "large"};
+    String result = null;
+    for (String key : COVER_KEY) {
+      result = cover.get(key);
+      if (result != null) {
+        break;
+      }
+    }
+    return result;
+  }
+
   private class SongListAdapter extends RecyclerView.Adapter<SongItemViewHolder> {
     @Override
     public SongItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -68,8 +86,9 @@ public class SongListView extends FrameLayout {
 
     @Override
     public void onBindViewHolder(final SongItemViewHolder holder, int position) {
-      final String title = songList.get(position).getTitle();
-      holder.titleView.setText(title);
+      Song song = songList.get(position);
+      holder.titleView.setText(song.getTitle());
+      startLoadCover(song, holder.imageView);
       holder.itemView.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -87,6 +106,23 @@ public class SongListView extends FrameLayout {
     @Override
     public int getItemCount() {
       return songList.size();
+    }
+
+    private void startLoadCover(Song song, ImageView imageView) {
+      MoeFmApplication.get(imageView.getContext()).getAppComponent().getRadioService()
+          .albumDetail(song.getAlbumId())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribeOn(Schedulers.io())
+          .subscribe(content -> {
+            Picasso
+                .with(imageView.getContext())
+                .load(selectCover(content.getCover()))
+                .into(imageView);
+          }, error -> {
+            // TODO
+            String message = "can't load albumDetail to set cover of song: " + song.getTitle();
+            new RuntimeException(message, error).printStackTrace();
+          });
     }
   }
 

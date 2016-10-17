@@ -65,6 +65,12 @@ class MoeFmRadioService implements RadioService {
   }
 
   @Override
+  Observable<Content> albumDetail(long albumId) {
+    return moeFouService.albumDetail(apiKey, albumId)
+        .map { it == null ? null : jsonParser.parseContentDetail(it.string()) }
+  }
+
+  @Override
   Observable<Song> albumSongs(long albumId) {
     return moeFouService.albumSongs(apiKey, albumId)
         .map {jsonParser.parseAlbumSongs(it?.string())}

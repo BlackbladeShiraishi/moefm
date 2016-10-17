@@ -37,6 +37,11 @@ public interface RadioService {
   Observable<Content> albums();
 
   /**
+   * detail of album
+   */
+  Observable<Content> albumDetail(long albumId);
+
+  /**
    * songs of album
    */
   Observable<Song> albumSongs(long albumId);

@@ -49,6 +49,14 @@ public interface MoeFouService {
   Observable<ResponseBody> albums(@Query("api_key") String apiKey);
 
   /**
+   * 专辑的基础资料
+   */
+  // music/detail.json?api_key={api_key}&wiki_id={album_id}
+  @GET("music/detail.json")
+  Observable<ResponseBody> albumDetail(
+      @Query("api_key") String apiKey, @Query("wiki_id") long albumId);
+
+  /**
    * 专辑的曲目
    */
   // music/subs.json?sub_type=song&wiki_id={album_id}&api_key={api_key}
