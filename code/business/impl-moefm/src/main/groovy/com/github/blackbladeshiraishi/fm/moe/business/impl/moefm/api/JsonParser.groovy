@@ -118,7 +118,9 @@ class JsonParser {
     }
     final List<Song> result = []
     jsonSlurper.parseText(json).response.relationships.each {rawRelation ->
-      result << parseSubItemSong(rawRelation.obj)
+      if (rawRelation.obj != null) {
+        result << parseSubItemSong(rawRelation.obj)
+      }
     }
     return result
   }
