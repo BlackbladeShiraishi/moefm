@@ -21,6 +21,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -105,7 +106,21 @@ public class ContentView extends FrameLayout {
       return;
     }
     contentIntroductionView.setContent(content);
-    MoeFmApplication.get(getContext()).getAppComponent().getRadioService().radioSongs(content.getId())
+    refreshSongList();
+  }
+
+  private void refreshSongList() {
+    Observable<Song> songObservable;
+    if ("radio".equals(content.getType())) {
+      songObservable = MoeFmApplication.get(getContext()).getAppComponent().getRadioService()
+          .radioSongs(content.getId());
+    } else if ("music".equals(content.getType())) {
+      songObservable = MoeFmApplication.get(getContext()).getAppComponent().getRadioService()
+          .albumSongs(content.getId());
+    } else {
+      songObservable = Observable.empty();
+    }
+    songObservable
         .subscribeOn(Schedulers.io())
         .toList()
         .observeOn(AndroidSchedulers.mainThread())
