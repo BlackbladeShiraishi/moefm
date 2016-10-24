@@ -4,7 +4,6 @@ buildscript {
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:2.2.2'
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     classpath 'me.tatarka:gradle-retrolambda:3.3.0'
     classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1'
 
@@ -14,7 +13,6 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 // uncomment this to show dexcount. not use always for faster build
 //apply plugin: 'com.getkeepsafe.dexcount'
@@ -98,7 +96,7 @@ dependencies {
 
   //Dagger 2
   compile "com.google.dagger:dagger:$daggerVersion"
-  apt "com.google.dagger:dagger-compiler:$daggerVersion"
+  annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
   testCompile "junit:junit:$junitVersion"
 }
