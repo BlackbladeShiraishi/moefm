@@ -3,6 +3,7 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -51,17 +54,27 @@ public class SongListView extends FrameLayout {
   // init
   {
     final LayoutInflater inflater = LayoutInflater.from(getContext());
-    inflater.inflate(R.layout.view_album_list_content, this);//TODO
-    final RecyclerView songListView = (RecyclerView) findViewById(R.id.album_list);
+    inflater.inflate(R.layout.view_song_list, this);
+    final RecyclerView songListView = (RecyclerView) findViewById(R.id.song_list);
 
     songListAdapter = new SongListAdapter();
     songListView.setAdapter(songListAdapter);
+
+    final FloatingActionButton playAllButton = (FloatingActionButton) findViewById(R.id.fab);
+    playAllButton.setOnClickListener(this::onClickPlayAll);
   }
 
   public void setSongList(List<Song> songList) {
     this.songList.clear();
     this.songList.addAll(songList);
     songListAdapter.notifyDataSetChanged();
+  }
+
+  private void onClickPlayAll(@Nonnull View playAllButton) {
+    final Context context = playAllButton.getContext();
+    for (Song song : songList) {
+      MusicService.playSong(context, song);
+    }
   }
 
   private static String selectCover(Map<String, String> cover) {
