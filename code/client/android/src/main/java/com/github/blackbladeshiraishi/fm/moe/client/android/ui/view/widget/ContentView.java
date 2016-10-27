@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -19,7 +20,7 @@ import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import rx.Observable;
 import rx.Observer;
@@ -31,7 +32,7 @@ public class ContentView extends FrameLayout {
   private final List<TabAdapter.Tab> tabs;
   private final TabAdapter tabAdapter;
 
-  private final SongListView songListView;
+  private View songListView;
   private ContentIntroductionView contentIntroductionView;
 
   private Content content;
@@ -61,10 +62,6 @@ public class ContentView extends FrameLayout {
 
     // Tab Views
     tabs = new ArrayList<>(2);
-    // song list
-    songListView = new SongListView(getContext());
-    tabs.add(new TabAdapter.Tab("曲目", songListView));
-
     tabAdapter = new TabAdapter(tabs);
     tabsView.setAdapter(tabAdapter);
 
@@ -88,14 +85,23 @@ public class ContentView extends FrameLayout {
     setContentIntroductionView(contentIntroductionView);
   }
 
-  private void setContentIntroductionView(@Nonnull ContentIntroductionView introductionView) {
+  private void setContentIntroductionView(@Nullable ContentIntroductionView introductionView) {
     this.contentIntroductionView = introductionView;
-    if (tabs.size() == 1) {
-      tabs.add(0, new TabAdapter.Tab("简介", introductionView));
-    } else if (tabs.size() == 2) {
-      tabs.set(0, new TabAdapter.Tab("简介", introductionView));
-    } else {
-      throw new IllegalStateException("illegal tabs.size():" + tabs.size());
+    notifyDataSetChanged();
+  }
+
+  private void setSongListView(@Nullable View songListView) {
+    this.songListView = songListView;
+    notifyDataSetChanged();
+  }
+
+  private void notifyDataSetChanged() {
+    tabs.clear();
+    if (contentIntroductionView != null) {
+      tabs.add(new TabAdapter.Tab("简介", contentIntroductionView));
+    }
+    if (songListView != null) {
+      tabs.add(new TabAdapter.Tab("曲目", songListView));
     }
     tabAdapter.notifyDataSetChanged();
   }
@@ -137,9 +143,15 @@ public class ContentView extends FrameLayout {
 
           @Override
           public void onNext(List<Song> songList) {
-            songListView.setSongList(songList);
+            showLoadedSongList(songList);
           }
         });
+  }
+
+  private void showLoadedSongList(List<Song> loadedSongList) {
+    SongListView songListView = new SongListView(getContext());
+    songListView.setSongList(loadedSongList);
+    setSongListView(songListView);
   }
 
 }
