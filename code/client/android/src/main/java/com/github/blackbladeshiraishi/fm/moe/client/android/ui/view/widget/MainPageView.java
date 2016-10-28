@@ -20,9 +20,11 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterV
 import java.util.List;
 import java.util.Locale;
 
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainPageView extends FrameLayout {
 
@@ -56,7 +58,10 @@ public class MainPageView extends FrameLayout {
 
   private void subscribe() {
     unsubscribe();
-    subscription = MoeFmApplication.get(getContext()).getAppComponent().getSessionService().mainPage()
+    subscription = Observable
+        .fromCallable(() -> MoeFmApplication.get(getContext()).getAppComponent().getSessionService().mainPage())
+        .flatMap(it -> it)
+        .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Subscriber<MoeFmMainPage>() {
           @Override
