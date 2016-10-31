@@ -12,6 +12,7 @@ import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.Conten
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.ContentListView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.ContentView;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.DecoratedContentListView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainLayoutView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.MainPageView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.SearchView;
@@ -68,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
         layoutView.setContentView(contentView);
       } else if (incomingKey.equals(SearchView.NAME)) {
         SearchView contentView = new SearchView(incomingContext);
+        layoutView.setContentView(contentView);
+      } else if (incomingKey.equals(DecoratedContentListView.RADIO_LIST) ||
+                 incomingKey.equals(DecoratedContentListView.ALBUM_LIST)) {
+        DecoratedContentListView contentView = new DecoratedContentListView(incomingContext);
         layoutView.setContentView(contentView);
       } else if (incomingKey.getClass().equals(AlbumListKey.class)) {
         ContentListView contentView = new ContentListView(incomingContext);

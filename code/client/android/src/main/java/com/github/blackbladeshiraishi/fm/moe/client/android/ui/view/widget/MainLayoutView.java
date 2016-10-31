@@ -14,17 +14,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
-import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
-
-import java.util.List;
 
 import flow.Flow;
-import rx.SingleSubscriber;
-import rx.android.schedulers.AndroidSchedulers;
 
 public class MainLayoutView extends DrawerLayout
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -63,9 +55,9 @@ public class MainLayoutView extends DrawerLayout
     if (id == R.id.nav_home) {
       Flow.get(this).set(MainPageView.NAME);
     } else if (id == R.id.nav_album_list) {
-      loadAlbumList();
+      Flow.get(this).set(DecoratedContentListView.ALBUM_LIST);
     } else if (id == R.id.nav_radio_list) {
-      loadRadioList();
+      Flow.get(this).set(DecoratedContentListView.RADIO_LIST);
     } else if (id == R.id.nav_search) {
       Flow.get(this).set(SearchView.NAME);
     } else {
@@ -74,42 +66,6 @@ public class MainLayoutView extends DrawerLayout
     }
     closeDrawer(GravityCompat.START);
     return true;
-  }
-
-  private void loadAlbumList() {
-    MoeFmApplication.get(getContext()).getAppComponent().getSessionService().albums()
-        .first()
-        .toSingle()
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new SingleSubscriber<List<Content>>() {
-          @Override
-          public void onSuccess(List<Content> value) {
-            Flow.get(MainLayoutView.this).set(new AlbumListKey(value));
-          }
-          @Override
-          public void onError(Throwable e) {
-            String message = String.format("[%s]%s", e.getClass().getSimpleName(), e.getMessage());
-            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-          }
-        });
-  }
-
-  private void loadRadioList() {
-    MoeFmApplication.get(getContext()).getAppComponent().getSessionService().radios()
-        .first()
-        .toSingle()
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new SingleSubscriber<List<Content>>() {
-          @Override
-          public void onSuccess(List<Content> value) {
-            Flow.get(MainLayoutView.this).set(new RadioListKey(value));
-          }
-          @Override
-          public void onError(Throwable e) {
-            String message = String.format("[%s]%s", e.getClass().getSimpleName(), e.getMessage());
-            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-          }
-        });
   }
 
   public void setContentView(View contentView) {
