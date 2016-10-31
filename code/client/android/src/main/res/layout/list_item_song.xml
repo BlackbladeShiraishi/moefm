@@ -8,6 +8,7 @@
         android:paddingRight="16dp"
         android:gravity="center_vertical"
         style="@style/TextAppearance.AppCompat.Subhead"
+        android:background="@drawable/clickable_background"
         tools:text="Sample Title"
         tools:showIn="@layout/activity_play_list"
         />
