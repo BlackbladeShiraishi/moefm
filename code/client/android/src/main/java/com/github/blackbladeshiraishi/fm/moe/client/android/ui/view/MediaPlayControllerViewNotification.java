@@ -5,19 +5,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
 
+import com.github.blackbladeshiraishi.fm.moe.business.api.RadioService;
+import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.service.MusicService;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.activity.PlayListActivity;
+import com.github.blackbladeshiraishi.fm.moe.domain.entity.Content;
 import com.github.blackbladeshiraishi.fm.moe.domain.entity.Song;
 import com.github.blackbladeshiraishi.fm.moe.facade.view.BaseView;
 import com.github.blackbladeshiraishi.fm.moe.facade.view.MediaPlayControllerView;
 import com.github.blackbladeshiraishi.fm.moe.facade.view.View;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.EnumSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subjects.BehaviorSubject;
 
 public class MediaPlayControllerViewNotification
         extends BaseView<MediaPlayControllerView, View.Event<MediaPlayControllerView>>
@@ -31,6 +42,8 @@ public class MediaPlayControllerViewNotification
   private final NotificationCompat.Builder notificationBuilder;
   private final Set<Button> buttons =
       EnumSet.of(Button.SKIP_PREVIOUS, Button.PLAY, Button.SKIP_NEXT);
+
+  private final BehaviorSubject<Song> songSubject = BehaviorSubject.create();
 
   public MediaPlayControllerViewNotification(Context context, NotificationSender notificationSender) {
     this.context = context.getApplicationContext();
@@ -48,12 +61,57 @@ public class MediaPlayControllerViewNotification
         .setContentIntent(
             PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT));
     updateButtons();
+
+    bindSongObservable();
+  }
+
+  private void bindSongObservable() {
+    RadioService radioService = MoeFmApplication.get(context).getAppComponent().getRadioService();
+    Picasso picasso = Picasso.with(context);
+    songSubject
+        .observeOn(Schedulers.io())
+        .filter(song -> song != null)
+        .switchMap(song ->
+                       radioService.albumDetail(song.getAlbumId())
+                           .onErrorResumeNext(Observable.empty())
+                           .map(MediaPlayControllerViewNotification::selectCover)
+                           .map(url -> {
+                             try {
+                               return picasso.load(url).get();//TODO use cache
+                             } catch (IOException e) {
+                               return null;
+                             }
+                           })
+        )
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(bitmap -> {
+          notificationBuilder.setLargeIcon(bitmap);
+          send();
+        });
   }
 
   @Override
   public void showSong(@Nullable Song song) {
+    songSubject.onNext(song);
     notificationBuilder.setContentText(song == null ? null : song.getTitle());
     send();
+  }
+
+  @Nullable
+  private static String selectCover(@Nullable Content album) {
+    final String[] COVER_KEY = {"square", "small", "medium", "large"};
+    if (album == null) {
+      return null;
+    }
+    final Map<String, String> cover = album.getCover();
+    String result = null;
+    for (String key : COVER_KEY) {
+      result = cover.get(key);
+      if (result != null) {
+        break;
+      }
+    }
+    return result;
   }
 
   @Override
