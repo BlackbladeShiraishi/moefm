@@ -29,6 +29,8 @@ public class MediaPlayerWrapper implements Player {
 
   private int positionWhenUnprepared = 0;
 
+  //TODO add to InternalState1
+  private boolean isClosed = false;
   @Nonnull
   private InternalState1 internalState1 = InternalState1.PAUSING;
   @Nonnull
@@ -56,6 +58,19 @@ public class MediaPlayerWrapper implements Player {
           .takeUntil(eventBus.ofType(Player.PauseEvent.class))
           .subscribe(next -> eventBus.onNext(new Player.TickEvent(this)));
     });
+  }
+
+  @Override
+  public void close() {
+    if (!isClosed) {
+      isClosed = true;
+      unbindMediaPlayer();//TODO need emit close event ?
+    }
+  }
+
+  @Override
+  public boolean isClosed() {
+    return isClosed;
   }
 
   private void bindMediaPlayer(@Nonnull MediaPlayer mediaPlayer) {

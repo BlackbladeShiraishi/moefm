@@ -33,6 +33,10 @@ public interface Player {
    */
   void uninitialize();
 
+  void close();
+
+  boolean isClosed();
+
   enum Reason {
     PLAY_COMPlETED,
     STOP_COMMAND,

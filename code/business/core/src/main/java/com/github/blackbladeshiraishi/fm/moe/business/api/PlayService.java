@@ -22,9 +22,12 @@ public interface PlayService {
 
   void pause();
 
+  void close();
+
   enum State {
     Playing,
-    Pausing
+    Pausing,
+    Closed
   }
 
   class Event {
@@ -58,6 +61,12 @@ public interface PlayService {
 
     public PauseEvent(Object reason, int location) {
       super(State.Pausing, reason, location);
+    }
+  }
+
+  class CloseEvent extends StateChangeEvent {
+    public CloseEvent(Object reason, int location) {
+      super(State.Closed, reason, location);
     }
   }
 

@@ -23,6 +23,7 @@ public class MusicService extends Service {
   public static final String ACTION_PLAY = ACTION_PREFIX + "PLAY";
   public static final String ACTION_SKIP_NEXT = ACTION_PREFIX + "SKIP_NEXT";
   public static final String ACTION_SKIP_PREVIOUS = ACTION_PREFIX + "SKIP_PREVIOUS";
+  public static final String ACTION_SHUTDOWN = ACTION_PREFIX + "SHUTDOWN";
 
   public static final String EXTRA_SONG = "extra_song";
 
@@ -49,9 +50,16 @@ public class MusicService extends Service {
   public static Intent buildSkipPreviousIntent(Context context) {
     return buildIntent(context).setAction(ACTION_SKIP_PREVIOUS);
   }
+  public static Intent buildShutdownIntent(Context context) {
+    return buildIntent(context).setAction(ACTION_SHUTDOWN);
+  }
 
   public static void playSong(Context context, Song song) {
     context.startService(buildPlaySongIntent(context, song));
+  }
+
+  public static void shutdown(Context context) {
+    context.startService(buildShutdownIntent(context));
   }
 
   public MusicService() {
@@ -120,6 +128,14 @@ public class MusicService extends Service {
           if (playService.getLocation() > 0) {
             playService.setLocation(playService.getLocation() - 1);
           }
+        }
+          break;
+        case ACTION_SHUTDOWN:
+        {
+          PlayService playService = MoeFmApplication.get(this).getPlaySongComponent().getPlayService();
+          playService.close();
+          stopForeground(true);
+          stopSelf();
         }
           break;
         default:

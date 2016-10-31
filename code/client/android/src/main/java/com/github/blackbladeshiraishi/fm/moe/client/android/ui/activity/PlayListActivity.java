@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
+
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
 import com.github.blackbladeshiraishi.fm.moe.client.android.inject.PlaySongComponent;
+import com.github.blackbladeshiraishi.fm.moe.client.android.service.MusicService;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter.PlayListAdapter;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.MediaPlayControllerViewHolder;
 import com.github.blackbladeshiraishi.fm.moe.facade.presenter.MediaPlayControllerPresenter;
+
 import rx.android.schedulers.AndroidSchedulers;
 
 public class PlayListActivity extends AppCompatActivity {
@@ -76,6 +81,19 @@ public class PlayListActivity extends AppCompatActivity {
     mediaPlayControllerViewHolder = null;
     recyclerView = null;
     super.onDestroy();
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    super.onCreateOptionsMenu(menu);
+    menu.add(R.string.action_shutdown)
+        .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+        .setOnMenuItemClickListener(menuItem -> {
+          finish();
+          MusicService.shutdown(this);
+          return true;
+        });
+    return true;
   }
 
 }

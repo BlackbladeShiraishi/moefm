@@ -113,6 +113,8 @@ class DefaultPlayService implements PlayService {
       event = new PlayService.PlayEvent(reason, location)
     } else if (state == PlayService.State.Pausing) {
       event = new PlayService.PauseEvent(reason, location)
+    } else if (state == PlayService.State.Closed) {
+      event = new PlayService.CloseEvent(reason, location)
     } else {
       event = new PlayService.StateChangeEvent(state, reason, location)
     }
@@ -190,4 +192,12 @@ class DefaultPlayService implements PlayService {
     }
     player.pause()
   }
+
+  @Override
+  void close() {
+    pause();
+    changeState(PlayService.State.Closed);
+    player.close();
+  }
+
 }

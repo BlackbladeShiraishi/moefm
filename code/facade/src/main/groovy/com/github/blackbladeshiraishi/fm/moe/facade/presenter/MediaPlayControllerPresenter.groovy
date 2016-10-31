@@ -108,6 +108,9 @@ class MediaPlayControllerPresenter {
           view.showSong(locationSong)
           updateLocation(event.location, playService.playList.size())
         },
+        playService.eventBus().ofType(PlayService.CloseEvent).observeOn(uiScheduler).subscribe{
+          unbindPlayService()
+        },
         // bind playService.playList events to view
         playService.playList.eventBus().ofType(PlayList.Event).observeOn(uiScheduler).subscribe{
           updateLocation(playService.location, playService.playList.size())
@@ -115,8 +118,11 @@ class MediaPlayControllerPresenter {
         // bind playService.player events to view
         playService.player.eventBus().ofType(Player.TickEvent).observeOn(uiScheduler).subscribe{
           Player.Event event->
-          view.duration = event.player.duration
-          view.position = event.player.position
+          def player = event.player
+          if (!player.isClosed()) {
+            view.duration = player.duration
+            view.position = player.position
+          }
         },
         // bind view events to playService
         view.eventBus().ofType(MediaPlayControllerView.ClickSkipNextEvent).subscribe{

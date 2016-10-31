@@ -12,6 +12,7 @@
     <string name="action_skip_next">下一首</string>
     <string name="action_refresh">刷新</string>
     <string name="action_more">更多</string>
+    <string name="action_shutdown">退出</string>
 
     <string name="home">主页</string>
     <string name="radio_list">电台列表</string>

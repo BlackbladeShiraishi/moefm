@@ -12,6 +12,8 @@ class MockPlayer implements Player {
 
   private final Subject<Player.Event, Player.Event> eventBus = PublishSubject.create()
 
+  private boolean isClosed = false;
+
   private Song song
 
   private int position
@@ -68,6 +70,16 @@ class MockPlayer implements Player {
   @Override
   void uninitialize() {
     song = null
+  }
+
+  @Override
+  void close() {
+    isClosed = true;
+  }
+
+  @Override
+  boolean isClosed() {
+    return isClosed
   }
 
   void playCompletedNow() {
