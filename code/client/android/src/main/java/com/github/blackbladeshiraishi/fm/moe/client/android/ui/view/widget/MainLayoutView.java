@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
+import com.github.blackbladeshiraishi.fm.moe.client.android.service.MusicService;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.StringKeys;
 
 import flow.Flow;
 
@@ -60,6 +62,9 @@ public class MainLayoutView extends DrawerLayout
       Flow.get(this).set(DecoratedContentListView.RADIO_LIST);
     } else if (id == R.id.nav_search) {
       Flow.get(this).set(SearchView.NAME);
+    } else if (id == R.id.action_shutdown) {
+      MusicService.shutdown(getContext());
+      Flow.get(this).set(StringKeys.SHUTDOWN);
     } else {
       String selectedName = getResources().getResourceName(id);
       Toast.makeText(getContext(), "selected: " + selectedName, Toast.LENGTH_SHORT).show();

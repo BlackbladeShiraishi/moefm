@@ -16,4 +16,8 @@
                 android:title="@string/search"/>
     </group>
 
+    <group android:id="@+id/actions">
+        <item android:id="@+id/action_shutdown" android:title="@string/action_shutdown"/>
+    </group>
+
 </menu>

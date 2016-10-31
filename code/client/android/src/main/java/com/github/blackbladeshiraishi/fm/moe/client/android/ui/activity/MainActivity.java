@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.ContentKey;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.RadioListKey;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.StringKeys;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.ContentListView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.ContentView;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.DecoratedContentListView;
@@ -64,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
                           @NonNull TraversalCallback callback) {
       final Object incomingKey = incomingState.getKey();
       final Context incomingContext = incomingContexts.get(incomingKey);
-      if (incomingKey.equals(MainPageView.NAME)) {
+      if (incomingKey.equals(StringKeys.SHUTDOWN)) {
+        finish();
+      } else if (incomingKey.equals(MainPageView.NAME)) {
         MainPageView contentView = new MainPageView(incomingContext);
         layoutView.setContentView(contentView);
       } else if (incomingKey.equals(SearchView.NAME)) {
