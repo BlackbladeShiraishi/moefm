@@ -63,8 +63,8 @@ public class MainLayoutView extends DrawerLayout
     } else if (id == R.id.nav_search) {
       Flow.get(this).set(SearchView.NAME);
     } else if (id == R.id.action_shutdown) {
-      MusicService.shutdown(getContext());
       Flow.get(this).set(StringKeys.SHUTDOWN);
+      MusicService.shutdown(getContext());
     } else {
       String selectedName = getResources().getResourceName(id);
       Toast.makeText(getContext(), "selected: " + selectedName, Toast.LENGTH_SHORT).show();
