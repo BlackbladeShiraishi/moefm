@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage;
@@ -95,12 +94,12 @@ public class MainPageView extends FrameLayout {
   }
 
   private void showMainPage(MoeFmMainPage moeFmMainPage) {
-    ScrollView scrollView = new ScrollView(getContext());
-    MainPageContentView contentView = new MainPageContentView(getContext());
+    View view = LayoutInflater.from(getContext()).inflate(R.layout.view_main_page, this, false);
+    MainPageContentView contentView =
+        (MainPageContentView) view.findViewById(R.id.main_page_content);
     contentView.setMainPage(moeFmMainPage, 4);
 
-    scrollView.addView(contentView);
-    setContentView(scrollView);
+    setContentView(view);
   }
 
   private void setContentView(View contentView) {
