@@ -142,9 +142,11 @@ public class MainPageView extends FrameLayout {
   }
 
   private void showSearchResult(List<Content> contents) {
-    final ContentListView contentListView = new ContentListView(getContext());
+    LayoutInflater inflater = LayoutInflater.from(getContext());
+    View v = inflater.inflate(R.layout.view_main_page_search_result, contentContainerView, false);
+    final ContentListView contentListView = (ContentListView) v.findViewById(R.id.search_result);
     contentListView.setContent(contents);
-    setContentView(contentListView);
+    setContentView(v);
     // update state
     isShowingSearchResult = true;
   }
