@@ -2,12 +2,11 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity;
 
 import android.view.View;
 
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
+import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget.CardClusterView.CardClusterViewModel;
 
 import javax.annotation.Nullable;
 
-public abstract class BaseCardClusterViewModel
-    implements CardClusterViewHolder.CardClusterViewModel {
+public abstract class BaseCardClusterViewModel implements CardClusterViewModel {
 
   public final View.OnClickListener onClickTitleContainerListener;
 

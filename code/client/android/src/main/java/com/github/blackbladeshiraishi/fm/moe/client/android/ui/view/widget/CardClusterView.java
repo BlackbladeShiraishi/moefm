@@ -11,10 +11,11 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardViewHoler;
 
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class CardClusterView extends FrameLayout {
 
@@ -50,7 +51,7 @@ public class CardClusterView extends FrameLayout {
     cardContainer = (ViewGroup) findViewById(R.id.card_container);
   }
 
-  public void bindData(CardClusterViewHolder.CardClusterViewModel vm, int maxColumn) {
+  public void bindData(CardClusterViewModel vm, int maxColumn) {
     // set more button
     View.OnClickListener titleClickListener = vm.getOnClickTitleContainerListener();
     if (titleClickListener != null) {
@@ -87,6 +88,15 @@ public class CardClusterView extends FrameLayout {
     } else {
       cardContainer.setVisibility(View.GONE);
     }
+  }
+
+  public interface CardClusterViewModel {
+    @Nullable
+    View.OnClickListener getOnClickTitleContainerListener();
+    @Nullable
+    String getTitle();
+    @Nullable
+    List<CardViewHoler.CardViewModel> getCardViewModels();
   }
 
 }
