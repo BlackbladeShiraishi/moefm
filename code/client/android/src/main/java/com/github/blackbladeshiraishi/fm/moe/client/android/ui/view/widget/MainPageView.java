@@ -2,22 +2,17 @@ package com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.business.api.entity.MoeFmMainPage;
 import com.github.blackbladeshiraishi.fm.moe.client.android.MoeFmApplication;
 import com.github.blackbladeshiraishi.fm.moe.client.android.R;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.adapter.CardClusterViewModelListAdapter;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.entity.MoeFmMainPageAdapter;
-import com.github.blackbladeshiraishi.fm.moe.client.android.ui.view.CardClusterViewHolder;
 
-import java.util.List;
 import java.util.Locale;
 
 import rx.Observable;
@@ -100,14 +95,12 @@ public class MainPageView extends FrameLayout {
   }
 
   private void showMainPage(MoeFmMainPage moeFmMainPage) {
-    RecyclerView recyclerView = new RecyclerView(getContext());
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    ScrollView scrollView = new ScrollView(getContext());
+    MainPageContentView contentView = new MainPageContentView(getContext());
+    contentView.setMainPage(moeFmMainPage, 4);
 
-    final List<CardClusterViewHolder.CardClusterViewModel> dataSet =
-        MoeFmMainPageAdapter.newCardClusterViewModelList(moeFmMainPage);
-    recyclerView.setAdapter(new CardClusterViewModelListAdapter(dataSet, 4));
-
-    setContentView(recyclerView);
+    scrollView.addView(contentView);
+    setContentView(scrollView);
   }
 
   private void setContentView(View contentView) {
