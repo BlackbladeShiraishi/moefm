@@ -33,6 +33,7 @@ public class MainPageView extends FrameLayout {
 
   private final android.support.v7.widget.SearchView searchView;
   private final FrameLayout contentContainerView;
+  private final View loadingProgressView;
 
   private boolean isShowingSearchResult = false;
 
@@ -55,10 +56,12 @@ public class MainPageView extends FrameLayout {
     LayoutInflater.from(getContext()).inflate(R.layout.view_main_page, this);
     searchView = (android.support.v7.widget.SearchView) findViewById(R.id.search);
     contentContainerView = (FrameLayout) findViewById(R.id.content_container);
+    loadingProgressView = findViewById(R.id.loading_progress);
 
     if (searchView != null) {
       RxSearchView.queryTextChangeEvents(searchView)
           .filter(SearchViewQueryTextEvent::isSubmitted)
+          .doOnNext(event -> showLoading())
           .map(event->event.queryText().toString())
           .observeOn(Schedulers.io())
           .switchMap(s->{
@@ -129,11 +132,16 @@ public class MainPageView extends FrameLayout {
   }
 
   private void showLoading() {
-    View v = LayoutInflater.from(getContext()).inflate(R.layout.view_loading_progress, this, false);
-    setContentView(v);
+    loadingProgressView.setVisibility(VISIBLE);
+  }
+
+  private void hideLoading() {
+    loadingProgressView.setVisibility(GONE);
   }
 
   private void showMainPage(MoeFmMainPage moeFmMainPage) {
+    hideLoading();
+
     NestedScrollView scrollView = new NestedScrollView(getContext());
     MainPageContentView contentView = new MainPageContentView(getContext());
     contentView.setMainPage(moeFmMainPage, 4);
@@ -142,6 +150,8 @@ public class MainPageView extends FrameLayout {
   }
 
   private void showSearchResult(List<Content> contents) {
+    hideLoading();
+
     LayoutInflater inflater = LayoutInflater.from(getContext());
     View v = inflater.inflate(R.layout.view_main_page_search_result, contentContainerView, false);
     final ContentListView contentListView = (ContentListView) v.findViewById(R.id.search_result);
