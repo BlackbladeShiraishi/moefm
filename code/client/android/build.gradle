@@ -93,6 +93,7 @@ dependencies {
       exclude group: 'org.codehaus.groovy', module: 'groovy-all'
   }*/
   compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+  compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'
 
   //Dagger 2
   compile "com.google.dagger:dagger:$daggerVersion"

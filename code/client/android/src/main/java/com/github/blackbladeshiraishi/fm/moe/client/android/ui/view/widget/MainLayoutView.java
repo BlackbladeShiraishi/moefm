@@ -106,7 +106,9 @@ public class MainLayoutView extends DrawerLayout
       if (event.isTracking() && !event.isCanceled()) {
 
         // DO BACK ACTION HERE
-        return onBackPressed();
+        if (onBackPressed()) {
+          return true;
+        }
 
       }
     }
