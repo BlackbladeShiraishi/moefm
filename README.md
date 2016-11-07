@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/BlackbladeShiraishi/moefm.svg?branch=master)](https://travis-ci.org/BlackbladeShiraishi/moefm)
 [![codebeat badge](https://codebeat.co/badges/766a640c-c8d8-4041-9529-efa97ce56b8e)](https://codebeat.co/projects/github-com-blackbladeshiraishi-moefm)
-[![Bintray](https://img.shields.io/bintray/v/blackbladeshiraishi/generic/moefm.svg)](https://bintray.com/blackbladeshiraishi/generic/moefm/_latestVersion)
+[![Download](https://api.bintray.com/packages/blackbladeshiraishi/generic/moefm/images/download.svg)](https://bintray.com/blackbladeshiraishi/generic/moefm/_latestVersion)
 
 # 萌否电台APP
 
