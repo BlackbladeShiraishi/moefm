@@ -60,6 +60,9 @@ public class PlayListActivity extends AppCompatActivity {
     adapter = new PlayListAdapter(playSongComponent.getPlayList(), playSongComponent.getPlayService());
     recyclerView.setAdapter(adapter);
     mediaPlayControllerPresenter.bindPlayService(playSongComponent.getPlayService());
+    // scroll to playing song
+    final int playingLocation = playSongComponent.getPlayService().getLocation();
+    recyclerView.smoothScrollToPosition(playingLocation);
   }
 
   @Override
