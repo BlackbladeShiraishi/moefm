@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -90,6 +91,9 @@ public class SongListView extends FrameLayout {
   }
 
   private class SongListAdapter extends RecyclerView.Adapter<SongItemViewHolder> {
+    private final int IMAGE_VIEW_SUBSCRIPTION_TAG_KEY =
+        R.id.view_song_list_item_cover_image_loading_request_tag_key;
+
     @Override
     public SongItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       final View rootView = LayoutInflater.from(parent.getContext())
@@ -101,6 +105,7 @@ public class SongListView extends FrameLayout {
     public void onBindViewHolder(final SongItemViewHolder holder, int position) {
       Song song = songList.get(position);
       holder.titleView.setText(song.getTitle());
+      cancelLoadCover(holder.imageView);
       startLoadCover(song, holder.imageView);
       holder.itemView.setOnClickListener(new OnClickListener() {
         @Override
@@ -122,7 +127,8 @@ public class SongListView extends FrameLayout {
     }
 
     private void startLoadCover(Song song, ImageView imageView) {
-      MoeFmApplication.get(imageView.getContext()).getAppComponent().getRadioService()
+      Subscription subscribe = MoeFmApplication.get(imageView.getContext()).getAppComponent()
+          .getRadioService()
           .albumDetail(song.getAlbumId())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribeOn(Schedulers.io())
@@ -136,6 +142,15 @@ public class SongListView extends FrameLayout {
             String message = "can't load albumDetail to set cover of song: " + song.getTitle();
             new RuntimeException(message, error).printStackTrace();
           });
+      imageView.setTag(IMAGE_VIEW_SUBSCRIPTION_TAG_KEY, subscribe);
+    }
+    private void cancelLoadCover(ImageView imageView) {
+      Subscription oldLoading = (Subscription) imageView.getTag(IMAGE_VIEW_SUBSCRIPTION_TAG_KEY);
+      if (oldLoading != null) {
+        oldLoading.unsubscribe();
+      }
+      Picasso.with(imageView.getContext()).cancelRequest(imageView);
+      imageView.setImageDrawable(null);
     }
   }
 

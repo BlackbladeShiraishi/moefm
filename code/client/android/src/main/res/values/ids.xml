@@ -6,4 +6,6 @@
 
     <item type="id" name="playing_songs"/>
 
+    <item type="id" name="view_song_list_item_cover_image_loading_request_tag_key"/>
+
 </resources>
