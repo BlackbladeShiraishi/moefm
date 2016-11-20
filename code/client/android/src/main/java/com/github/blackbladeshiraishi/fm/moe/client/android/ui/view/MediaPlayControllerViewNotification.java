@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -71,6 +72,7 @@ public class MediaPlayControllerViewNotification
     songSubject
         .observeOn(Schedulers.io())
         .filter(song -> song != null)
+        .debounce(100, TimeUnit.MILLISECONDS)
         .switchMap(song ->
                        radioService.albumDetail(song.getAlbumId())
                            .onErrorResumeNext(Observable.empty())
