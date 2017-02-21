@@ -1,4 +1,4 @@
 dependencies {
   compile project(':business:core')
-  compile 'gq.baijie:rxlist:-SNAPSHOT'
+  compile 'gq.baijie:rxlist:bb9204a2dc'
 }
