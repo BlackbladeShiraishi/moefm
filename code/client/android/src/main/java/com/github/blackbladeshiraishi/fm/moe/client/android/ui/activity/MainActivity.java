@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.github.blackbladeshiraishi.fm.moe.client.android.ui.navigation.AlbumListKey;
@@ -30,6 +31,7 @@ import flow.TraversalCallback;
 public class MainActivity extends AppCompatActivity {
 
   private MainLayoutView layoutView;
+  private View contentView;
 
   // ##### flow #####
   @Override
@@ -63,37 +65,43 @@ public class MainActivity extends AppCompatActivity {
                           @NonNull Direction direction,
                           @NonNull Map<Object, Context> incomingContexts,
                           @NonNull TraversalCallback callback) {
+      // save outgoingState
+      if (outgoingState != null && contentView != null) {
+        outgoingState.save(contentView);
+      }
+      // transit to new state
       final Object incomingKey = incomingState.getKey();
       final Context incomingContext = incomingContexts.get(incomingKey);
       if (incomingKey.equals(StringKeys.SHUTDOWN)) {
         finish();
       } else if (incomingKey.equals(MainPageView.NAME)) {
-        MainPageView contentView = new MainPageView(incomingContext);
-        layoutView.setContentView(contentView);
+        contentView = new MainPageView(incomingContext);
       } else if (incomingKey.equals(SearchView.NAME)) {
-        SearchView contentView = new SearchView(incomingContext);
-        layoutView.setContentView(contentView);
+        contentView = new SearchView(incomingContext);
       } else if (incomingKey.equals(DecoratedContentListView.RADIO_LIST) ||
                  incomingKey.equals(DecoratedContentListView.ALBUM_LIST)) {
-        DecoratedContentListView contentView = new DecoratedContentListView(incomingContext);
-        layoutView.setContentView(contentView);
+        contentView = new DecoratedContentListView(incomingContext);
       } else if (incomingKey.getClass().equals(AlbumListKey.class)) {
-        ContentListView contentView = new ContentListView(incomingContext);
-        layoutView.setContentView(contentView);
-        contentView.setContent(((AlbumListKey) incomingKey).getAlbumList());
+        ContentListView contentListView = new ContentListView(incomingContext);
+        contentListView.setContent(((AlbumListKey) incomingKey).getAlbumList());
+        contentView = contentListView;
       } else if (incomingKey.getClass().equals(RadioListKey.class)) {
-        ContentListView contentView = new ContentListView(incomingContext);
-        layoutView.setContentView(contentView);
-        contentView.setContent(((RadioListKey) incomingKey).getRadioList());
+        ContentListView contentListView = new ContentListView(incomingContext);
+        contentListView.setContent(((RadioListKey) incomingKey).getRadioList());
+        contentView = contentListView;
       } else if (incomingKey.getClass().equals(ContentKey.class)) {
-        ContentView contentView = new ContentView(incomingContext);
-        layoutView.setContentView(contentView);
-        contentView.setContent(((ContentKey) incomingKey).getContent());
-        contentView.refresh();
+        ContentView radioContentView = new ContentView(incomingContext);
+        radioContentView.setContent(((ContentKey) incomingKey).getContent());
+        radioContentView.refresh();
+        contentView = radioContentView;
       } else {
         final String message = String.format(
             "[%s]%s is under construct", incomingKey.getClass().getSimpleName(), incomingKey);
         Toast.makeText(incomingContext, message, Toast.LENGTH_LONG).show();
+      }
+      if (contentView != null) {
+        layoutView.setContentView(contentView);
+        incomingState.restore(contentView);
       }
       callback.onTraversalCompleted();
     }
